@@ -1,3 +1,3 @@
 <template>
-    Dashboard.vue
+    <div>views/dashboard/Dashboard.vue</div>
 </template>
