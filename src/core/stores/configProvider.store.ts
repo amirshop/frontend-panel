@@ -1,12 +1,19 @@
 import { defineStore } from 'pinia'
-import { useColorMode, useLocalStorage } from '@vueuse/core'
-import { ComponentsSizesEnum, DirectionsEnum, LanguagesEnum, LocaleMapping } from '@/core/enums'
+import { useColorMode, useLocalStorage, type BasicColorMode } from '@vueuse/core'
+import {
+  ComponentsSizesEnum,
+  DirectionsEnum,
+  LanguagesEnum,
+  LocaleMapping,
+  ColorModeEnum,
+} from '@/core/enums'
 import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
 import 'dayjs/locale/fa'
 import dayjs from 'dayjs'
 import jalali from '@zoomit/dayjs-jalali-plugin'
 import { ref, watch } from 'vue'
 import type { AliasToken } from 'ant-design-vue/es/theme/internal'
+import { useI18n } from 'vue-i18n'
 
 export const useConfigProviderStore = defineStore('Config provider', () => {
   const token = useLocalStorage<Partial<AliasToken>>('token', {
@@ -14,25 +21,30 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
     fontFamily: 'Vazirmatn FD',
   })
   const direction = useLocalStorage<DirectionsEnum>('direction', DirectionsEnum.LTR)
-  const size = useLocalStorage<ComponentsSizesEnum>('size', ComponentsSizesEnum.Large)
+  const size = useLocalStorage<ComponentsSizesEnum>('size', ComponentsSizesEnum.LARGE)
   const language = useLocalStorage<LanguagesEnum>('language', LanguagesEnum.ENGLISH)
   const locale = useLocalStorage('locale', LocaleMapping[language.value])
 
+  const color = useColorMode()
+  const colorMode = useLocalStorage('colorMode', color.value)
+
   dayjs.extend(jalali)
-  watch(
-    () => locale.value,
-    () => {
-      if (language.value === LanguagesEnum.ENGLISH) {
-        direction.value = DirectionsEnum.LTR
-        dayjs.calendar('gregory')
-      }
 
-      if (language.value === LanguagesEnum.FARSI) {
-        direction.value = DirectionsEnum.RTL
-        dayjs.calendar('jalali')
-      }
-    },
-  )
+  const i18n = useI18n()
 
-  return { token, language, direction, size, locale }
+  watch(language, () => {
+    i18n.locale.value = language.value
+
+    if (language.value === LanguagesEnum.ENGLISH) {
+      dayjs.calendar('gregory')
+      locale.value = LocaleMapping[language.value]
+    }
+
+    if (language.value === LanguagesEnum.FARSI) {
+      dayjs.calendar('jalali')
+      locale.value = LocaleMapping[language.value]
+    }
+  })
+
+  return { token, language, direction, size, locale, colorMode }
 })

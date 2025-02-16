@@ -1,5 +1,10 @@
 <template>
   <RadioGroup class="radio-group-color" @change="(e) => (primaryColor = e.target.value)">
+    <Tooltip title="blue">
+      <Radio value="#2B7FFFFF">
+        <div class="w-8 h-8 rounded bg-blue" />
+      </Radio>
+    </Tooltip>
     <Tooltip title="cyan">
       <Radio value="#22d3ee">
         <div class="w-8 h-8 rounded bg-cyan" />
@@ -24,11 +29,6 @@
       </Radio>
     </Tooltip>
 
-    <Tooltip title="blue">
-      <Radio value="#2B7FFFFF">
-        <div class="w-8 h-8 rounded bg-blue" />
-      </Radio>
-    </Tooltip>
     <Tooltip title="indigo">
       <Radio value="#7C86FFFF">
         <div class="w-8 h-8 rounded bg-indigo" />

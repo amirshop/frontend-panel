@@ -35,9 +35,13 @@ export const enum FilterTypeEnum {
   DATE,
 }
 export const enum ComponentsSizesEnum {
-  Small = 'small',
-  Middle = 'middle',
-  Large = 'large',
+  SMALL = 'small',
+  MIDDLE = 'middle',
+  LARGE = 'large',
+}
+export const enum ColorModeEnum  {
+  DARK = 'dark',
+  LIGHT = 'light',
 }
 export type LocaleType = keyof typeof LocaleMapping
 export const LocaleMapping = {

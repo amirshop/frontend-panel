@@ -1,71 +1,79 @@
 <template>
   <Card>
-        <Form layout="vertical" class="flex flex-col h-full">
-      <FormItem label="Overall style settings">
-        <RadioGroupImage v-model:value="checkedRadio" :items="items" />
+    <Form layout="vertical" class="flex flex-col h-full">
+      <FormItem :label="t('colorMode')">
+        <RadioGroupImage v-model:value="configProviderStore.colorMode" :items="items" />
       </FormItem>
 
-      <FormItem label="Theme color">
+      <FormItem :label="t('themeColor')">
         <RadioGroupColor
           v-model:value="configProviderStore.token.colorPrimary"
           :colorList="colorList"
         />
       </FormItem>
 
-      <Divider />
-      <FormItem label="Language">
-        <Select v-model:value="configProviderStore.language">
-          <SelectOption :value="LanguagesEnum.FARSI">FARSI</SelectOption>
-          <SelectOption :value="LanguagesEnum.ENGLISH">English</SelectOption>
-        </Select>
+      <FormItem :label="t('language')">
+        <RadioGroup v-model:value="configProviderStore.language">
+          <RadioButton :value="LanguagesEnum.FARSI">
+            <div class="flex items-center gap-4">
+              <Icon icon="twemoji:flag-iran" :height="28" />
+              <span>فارسی</span>
+            </div>
+          </RadioButton>
+          <RadioButton :value="LanguagesEnum.ENGLISH">
+            <div class="flex items-center gap-4">
+              <Icon icon="twemoji:flag-united-kingdom" :height="28" />
+              <span>English</span>
+            </div>
+          </RadioButton>
+        </RadioGroup>
       </FormItem>
 
-      <FormItem label="Direction">
+      <FormItem :label="t('direction')">
         <RadioGroup v-model:value="configProviderStore.direction">
-          <RadioButton :value="DirectionsEnum.LTR">ltr</RadioButton>
-          <RadioButton :value="DirectionsEnum.RTL">rtl</RadioButton>
+          <RadioButton :value="DirectionsEnum.LTR">
+            <div class="inline-flex items-center gap-2">
+              <Icon icon="ooui:outdent-ltr" />
+              <span>{{ t('left') }}</span>
+            </div>
+          </RadioButton>
+          <RadioButton :value="DirectionsEnum.RTL">
+            <div class="inline-flex items-center gap-2">
+              <Icon icon="ooui:outdent-rtl" />
+              <span>{{ t('right') }}</span>
+            </div>
+          </RadioButton>
         </RadioGroup>
       </FormItem>
 
-      <FormItem label="Components size">
+      <FormItem :label="t('componentsSize')">
         <RadioGroup v-model:value="configProviderStore.size">
-          <RadioButton :value="ComponentsSizesEnum.Large">Large</RadioButton>
-          <RadioButton :value="ComponentsSizesEnum.Middle">Middle</RadioButton>
-          <RadioButton :value="ComponentsSizesEnum.Small">Small</RadioButton>
+          <RadioButton :value="ComponentsSizesEnum.LARGE">{{ t('large') }}</RadioButton>
+          <RadioButton :value="ComponentsSizesEnum.MIDDLE">{{ t('middle') }}</RadioButton>
+          <RadioButton :value="ComponentsSizesEnum.SMALL">{{ t('small') }}</RadioButton>
         </RadioGroup>
       </FormItem>
-
-      <Divider class="flex-1" />
 
       <Divider />
       <div class="flex gap-x-4">
-        <Button type="primary" @click="emits('ok', false)"> Save </Button>
-        <Button type="ghost" @click="emits('close', false)"> Reset </Button>
+        <Button type="primary" @click="emits('ok', false)"> {{ t('save') }} </Button>
+        <Button type="ghost" @click="emits('close', false)"> {{ t('cancel') }} </Button>
       </div>
     </Form>
   </Card>
 </template>
 <script setup lang="ts">
-import {  reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useConfigProviderStore } from '@/core/stores/configProvider.store'
-import {
-  Button,
-  Select,
-  SelectOption,
-  Card,
-  Form,
-  FormItem,
-  RadioButton,
-  RadioGroup,
-  Divider,
-} from 'ant-design-vue/es'
+import { Button, Card, Form, FormItem, RadioButton, RadioGroup, Divider } from 'ant-design-vue/es'
 
 import { DirectionsEnum, ComponentsSizesEnum, LanguagesEnum } from '@/core/enums'
 import RadioGroupColor from '@/core/components/RadioGroupColor.vue'
 import RadioGroupImage from '@/core/components/RadioGroupImage.vue'
+import { useI18n } from 'vue-i18n'
+import { Icon } from '@iconify/vue/dist/iconify.js'
 const configProviderStore = useConfigProviderStore()
-
-
+const { t } = useI18n()
 const emits = defineEmits(['close', 'ok'])
 const colorList = reactive([
   {
@@ -102,19 +110,19 @@ const colorList = reactive([
 const checkedRadio = ref()
 const items = reactive([
   {
-    label: 'Dark',
+    label: t('auto'),
     src: 'https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg',
-    value: 'dark',
+    value: 'auto',
   },
   {
-    label: 'Light',
+    label: t('light'),
     src: 'https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg',
     value: 'light',
   },
   {
-    label: 'Night',
+    label: t('dark'),
     src: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
-    value: 'night',
+    value: 'dark',
   },
 ])
 </script>
