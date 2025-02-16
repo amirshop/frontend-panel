@@ -1,0 +1,45 @@
+export default {
+  rules: {
+    required: "This field is required",
+    email: "Email is not entered correctly",
+    password:
+      "6-40 characters, lowercase, uppercase, number, special character.",
+    ltr: "Only English characters",
+    initNumber: "Only whole numbers",
+    floatNumber: "Only numbers with or without a decimal",
+    number: "This field must be a number",
+    url: "Please enter a valid URL address",
+    ipv4: "Please enter a valid IPv4 address",
+    mobile: "Please enter a valid mobile number",
+    phone: "Please enter a valid phone number",
+    ipv4OrUrl: "Please enter a valid IP address or URL",
+    value:
+      "Please enter a unique identifier (e.g., my_identifier or myIdentifier).",
+    nationalCode: "Please enter a valid national code",
+    persian: "Only Persian characters",
+    englishAlphabet: "Only English alphabets",
+    englishNumber: "Only English numbers",
+    englishSpecialCharacter: "Only English special characters",
+    englishNumberOrAlphabet: "Only English numbers or alphabets",
+    persianNumber: "Only Persian numbers",
+    persianAlphabet: "Only Persian alphabets",
+    persianNumberOrAlphabet: "Only Persian numbers or alphabets",
+  },
+
+  form: {
+    username: "Username",
+    password: "Password",
+    login: "Login",
+    forget: "Forget Password",
+  },
+  panel: {
+    color: "Panel color",
+    exit: "Exit",
+    language: "Panel language",
+  },
+  search: "Search",
+  reset: "Reset",
+  filter: "Filter",
+  startDate: "Start date",
+  endDate: "End date",
+};
