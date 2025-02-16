@@ -7,8 +7,9 @@ export default [
     component: () => import('../views/dashboard/Dashboard.vue'),
   },
   {
-    path: '/settings',
-    name: 'TheSettings',
-    component: () => import('@/views/setting/Setting.vue'),
+    path: '/users',
+    name: 'TheUsers',
+    component: () => import('../views/users/UsersIndex.vue'),
   },
+
 ] as RouteRecordRaw[]
