@@ -19,4 +19,8 @@ export default {
   attribute: 'ویژگی',
   tags: 'برچسب ها',
   tag: 'برچسب',
+  options: 'گزینه ها',
+  option: 'گزینه',
+  reviews: 'نقد و بررسی ها',
+  review: 'نقد و بررسی',
 }
