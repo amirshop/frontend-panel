@@ -63,7 +63,7 @@ export const useMenus = () => {
         {
           key: 'TheAttributes',
           label: t('attributes'),
-          icon: () => h(Icon, { icon: 'tabler:input-checked', height: 18 }),
+          icon: () => h(Icon, { icon: 'pajamas:issue-type-feature', height: 18 }),
         },
         {
           key: 'TheOptions',
@@ -79,11 +79,6 @@ export const useMenus = () => {
           key: 'TheTags',
           label: t('tags'),
           icon: () => h(Icon, { icon: 'tabler:tag', height: 18 }),
-        },
-        {
-          key: 'TheBadges',
-          label: t('badges'),
-          icon: () => h(Icon, { icon: 'tabler:badge-check', height: 18 }),
         },
       ],
     },
