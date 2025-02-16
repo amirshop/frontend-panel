@@ -9,7 +9,7 @@
       class="h-full"
       v-model:selectedKeys="selectedKeys"
       mode="inline"
-      :items="menuStore.menuItems"
+      :items="menus.menuItems.value"
       @click="handleClick"
       @openChange="router.push({ name: selectedKeys[0] })"
     />
@@ -20,9 +20,9 @@ import { onMounted, ref, watch } from 'vue'
 import type { MenuProps } from 'ant-design-vue'
 import { Menu, LayoutSider } from 'ant-design-vue/es'
 import { useRoute, useRouter } from 'vue-router'
-import { useMenuStore } from '@/core/stores/menu.store'
+import { useMenus } from '@/menus'
 
-const menuStore = useMenuStore()
+const menus = useMenus()
 
 const collapsed = ref<boolean>(false)
 
