@@ -1,14 +1,15 @@
 <template>
   <RadioGroup class="radio-group-image">
-    <Tooltip :title="item.label" v-for="item in props.items" :key="item.value">
+    <Tooltip :title="t(`${item.label}`)" v-for="item in props.items" :key="item.value">
       <Radio :value="item.value">
-        <img :class="props.imageClass" :src="item.src" :alt="item.label" />
+        <img :class="props.imageClass" :src="item.src" :alt="t(`${item.label}`)" />
       </Radio>
     </Tooltip>
   </RadioGroup>
 </template>
 <script setup lang="ts">
 import { Radio, RadioGroup, Tooltip } from 'ant-design-vue/es'
+import { useI18n } from 'vue-i18n'
 
 interface Item {
   label: string
@@ -20,7 +21,7 @@ interface Props {
   imageClass?: string
   shadowColor?: string
 }
-
+const { t } = useI18n()
 const props = withDefaults(defineProps<Props>(), {
   items: () => [],
   imageClass: '',

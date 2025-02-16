@@ -35,14 +35,13 @@ export default {
     exit: 'Exit',
     language: 'Panel language',
   },
-  menus: {
-    settings: 'Settings',
-  },
+
   search: 'Search',
   reset: 'Reset',
   filter: 'Filter',
   startDate: 'Start date',
   endDate: 'End date',
+  // new
   language: 'language',
   save: 'Save',
   cancel: 'Cancel',
@@ -57,5 +56,9 @@ export default {
   dark: 'Dark',
   light: 'Light',
   auto: 'Auto',
-  colorMode: 'Color mode'
+  colorMode: 'Color mode',
+  settings: 'Settings',
+  dashboard: 'Dashboard',
+  users: 'Users',
+  user: 'User',
 }

@@ -1,3 +1,6 @@
 export default {
-  language: 'language',
+  products: 'Products',
+  product: 'Product',
+  customers: 'Customers',
+  customer: 'Customer',
 }

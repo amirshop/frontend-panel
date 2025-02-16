@@ -57,5 +57,9 @@ export default {
   dark: 'تاریک',
   light: 'روشن',
   auto: 'خودکار',
-  colorMode: 'حالت رنگ'
+  colorMode: 'حالت رنگ',
+  settings: 'تنظیمات',
+  dashboard: 'داشبورد',
+  users: 'کاربران',
+  user: 'کاربر',
 }

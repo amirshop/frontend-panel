@@ -1,5 +1,5 @@
 <template>
-  <LayoutSider collapsible v-model:collapsed="collapsed">
+  <LayoutSider v-model:collapsed="collapsed" collapsible>
     <div class="h-12 bg-primary flex justify-center items-center gap-x-2">
       <img class="h-10 w-10 object-contain" src="/logo.png" alt="" srcset="" />
       <span v-if="!collapsed" class="text-white">سامانه نهال</span>

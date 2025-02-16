@@ -110,17 +110,17 @@ const colorList = reactive([
 const checkedRadio = ref()
 const items = reactive([
   {
-    label: t('auto'),
+    label: 'auto',
     src: 'https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg',
     value: 'auto',
   },
   {
-    label: t('light'),
+    label:'light',
     src: 'https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg',
     value: 'light',
   },
   {
-    label: t('dark'),
+    label: 'dark',
     src: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
     value: 'dark',
   },
