@@ -19,5 +19,9 @@ export default {
   attribute: 'Attribute',
   tags: 'Tags',
   tag: 'Tag',
+  options: 'Options',
+  option: 'Option',
+  reviews: 'Reviews',
+  review: 'Review',
   
 }
