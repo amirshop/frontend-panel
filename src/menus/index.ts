@@ -1,42 +1,37 @@
-export default [
+import type { ItemType } from 'ant-design-vue'
+import { h, reactive } from 'vue'
+import { Icon } from '@iconify/vue'
+
+export const menuItems: ItemType[] = reactive([
   {
     key: 'TheDashboard',
     label: 'Dashboard',
-    icon: 'tabler:layout-dashboard',
+    icon: () => h(Icon, { icon: 'tabler:layout-dashboard' }),
   },
+  { type: 'divider' },
+
   {
     key: 'TheSettings',
     label: 'Settings',
-    icon: 'tabler:settings',
+    icon: () => h(Icon, { icon: 'tabler:settings' }),
+    children: [
+      {
+        key: 'TheDashboard',
+        label: 'Dashboard',
+        icon: () => h(Icon, { icon: 'tabler:layout-dashboard' }),
+      },
+      { type: 'divider' },
+
+      {
+        key: 'TheDashboard',
+        label: 'Dashboard',
+        icon: () => h(Icon, { icon: 'tabler:layout-dashboard' }),
+      },
+      {
+        key: 'TheDashboard',
+        label: 'Dashboard',
+        icon: () => h(Icon, { icon: 'tabler:layout-dashboard' }),
+      },
+    ],
   },
-  //   {
-  //     key: 'TheCompanyList',
-  //     label: 'company',
-  //     icon: 'ph:building-office',
-  //   },
-  //   {
-  //     key: 'TheUsers',
-  //     label: 'users',
-  //     icon: 'tabler:users-group',
-  //   },
-  //   {
-  //     key: 'TheServicesRequest',
-  //     label: 'servicesRequest',
-  //     icon: 'tabler:file-text',
-  //   },
-  //   {
-  //     key: 'TheProjects',
-  //     label: 'projects',
-  //     icon: 'eos-icons:project-outlined',
-  //   },
-  //   {
-  //     key: 'TheApiMarket',
-  //     label: 'apiMarket',
-  //     icon: 'ic:twotone-miscellaneous-services',
-  //   },
-  //   {
-  //     key: 'ThePlans',
-  //     label: 'plans',
-  //     icon: 'iconoir:reports',
-  //   },
-]
+])
