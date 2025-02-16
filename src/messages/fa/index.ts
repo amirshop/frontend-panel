@@ -1,4 +1,6 @@
 export default {
+  siteName: 'فروشگاه امیر',
+  siteTitle: 'فروشگاه امیر | پنل مدیریت',
   products: 'محصولات',
   product: 'محصول',
   customers: 'مشتریان',

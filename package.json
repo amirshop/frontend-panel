@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^12.6.1",
+    "@vueuse/head": "^2.0.0",
     "@zoomit/dayjs-jalali-plugin": "^0.0.7",
     "ant-design-vue": "^4.2.6",
     "axios": "^1.7.9",

@@ -1,4 +1,6 @@
 export default {
+  siteName: 'Amir Shop',
+  siteTitle: 'Amir Shop | Admin Panel',
   products: 'Products',
   product: 'Product',
   customers: 'Customers',
