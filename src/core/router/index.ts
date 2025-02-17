@@ -19,7 +19,7 @@ const router = createRouter({
             {
               path: '/settings',
               name: 'TheSettings',
-              component: () => import('@/core/views/settings/SettingsIndex.vue'),
+              component: () => import('@/core/views/settings/Index.vue'),
             },
           ],
         },
