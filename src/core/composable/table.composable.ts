@@ -1,6 +1,5 @@
 import { ref, reactive, computed } from 'vue'
-import * as XLSX from 'xlsx'
-import { useAsyncState, useDebounceFn, useFullscreen } from '@vueuse/core'
+import { useAsyncState, useDebounceFn } from '@vueuse/core'
 import _ from 'lodash'
 import type { TablePaginationConfig, TableProps } from 'ant-design-vue/es/table'
 import type {
@@ -8,7 +7,6 @@ import type {
   SorterResult,
   TableCurrentDataSource,
 } from 'ant-design-vue/lib/table/interface'
-import html2canvas from 'html2canvas'
 
 interface FetchParams {
   page: number
@@ -24,7 +22,7 @@ interface FetchResult<T> {
   total: number
 }
 
-export const useTable = () => {
+export const useTable = <T>() => {
   const fetchData = ref<((params: FetchParams) => Promise<FetchResult<T>>) | null>(null)
   const defaultParams: Partial<FetchParams> = {}
 
@@ -65,23 +63,6 @@ export const useTable = () => {
     { immediate: true },
   )
 
-  // const handleTableChange: TableProps<T>['onChange'] = (
-  //   newPagination: TablePaginationConfig,
-  //   newFilters: Record<string, FilterValue | null>,
-  //   newSorter: SorterResult<T> | SorterResult<T>[],
-  //   extra: TableCurrentDataSource<T>,
-  // ) => {
-  //   pagination.current = newPagination.current ?? 1
-  //   pagination.pageSize = newPagination.pageSize ?? 10
-  //   Object.assign(filters, _.cloneDeep(newFilters))
-
-  //   const singleSorter = Array.isArray(newSorter) ? newSorter[0] : newSorter
-  //   sorter.field = singleSorter?.order ? (singleSorter.field as string) : null
-  //   sorter.order = singleSorter?.order || null
-
-  //   reload()
-  // }
-
   const handleTableChange: TableProps['onChange'] = (
     newPagination: TablePaginationConfig,
     newFilters: Record<string, FilterValue | null>,
@@ -101,50 +82,6 @@ export const useTable = () => {
 
   const handleSearch = useDebounceFn(() => reload(), 500)
 
-  const exportExcel = () => {
-    const ws = XLSX.utils.json_to_sheet(tableData.value)
-    const wb = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1')
-    XLSX.writeFile(wb, 'export.xlsx')
-  }
-
-  const exportJson = () => {
-    const json = JSON.stringify(tableData.value, null, 2)
-    const blob = new Blob([json], { type: 'application/json' })
-    const link = document.createElement('a')
-    link.href = URL.createObjectURL(blob)
-    link.download = 'export.json'
-    link.click()
-  }
-
-  const exportXml = () => {
-    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<rows>\n'
-    tableData.value.forEach((row) => {
-      xml += '  <row>\n'
-      Object.entries(row).forEach(([key, value]) => {
-        xml += `    <${key}>${value}</${key}>\n`
-      })
-      xml += '  </row>\n'
-    })
-    xml += '</rows>'
-
-    const blob = new Blob([xml], { type: 'application/xml' })
-    const link = document.createElement('a')
-    link.href = URL.createObjectURL(blob)
-    link.download = 'export.xml'
-    link.click()
-  }
-
-  const exportImage = async () => {
-    const azTable = document.getElementById('az-table')
-    if (!azTable) return
-    const canvas = await html2canvas(azTable)
-    const link = document.createElement('a')
-    link.href = canvas.toDataURL('image/png')
-    link.download = 'export.png'
-    link.click()
-  }
-
   return {
     tableData,
     loading,
@@ -155,10 +92,6 @@ export const useTable = () => {
     reload,
     handleTableChange,
     handleSearch,
-    exportExcel,
-    exportJson,
-    exportXml,
-    exportImage,
     fetchData,
   }
 }
