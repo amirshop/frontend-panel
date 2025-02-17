@@ -61,4 +61,5 @@ export default {
   dashboard: 'Dashboard',
   users: 'Users',
   user: 'User',
+  resetTable: 'Reset table',
 }
