@@ -4,6 +4,7 @@
     :locale="configProviderStore.locale"
     :component-size="configProviderStore.size"
     :direction="configProviderStore.direction"
+    :ref="configProviderStore.fullscreen.appRef"
   >
     <RouterView />
   </ConfigProvider>
