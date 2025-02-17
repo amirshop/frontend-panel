@@ -18,17 +18,17 @@
         </Tooltip>
 
         <Divider type="vertical" />
-        <Tooltip title="فیلتر جدول" size="small">
+        <Tooltip :title="t('tableFilter')" size="small">
           <Badge :count="activeFiltersCount">
             <AzButton type="link" size="small" @click="filterMode.toggle" icon="tabler:filter">
-              فیلتر
+              {{ t('filter') }}
             </AzButton>
           </Badge>
         </Tooltip>
 
         <Divider type="vertical" />
         <Dropdown>
-          <Tooltip title="exportData">
+          <Tooltip :title="t('exportData')">
             <AzButton
               type="link"
               size="small"
@@ -36,7 +36,7 @@
               @click.prevent
               icon="tabler:table-export"
             >
-              {{ t('exportFile') }}
+              {{ t('export') }}
             </AzButton>
           </Tooltip>
           <template #overlay>
@@ -85,9 +85,9 @@
 
       <Transition name="slide">
         <Card
-          class="py-4 bg-gray-50"
+          class="py-4 bg-gray-50 my-4"
           v-if="filterMode.isOpen.value"
-          title="لیست فیلترها"
+          :title="t('filterList')"
           size="small"
         >
           <template #extra>
@@ -216,9 +216,8 @@ const columns = reactive<ColumnsType>([
   },
 ])
 
-// استفاده از useLocalStorage برای ذخیره فیلترها
 const filterList = reactive([
-  { title: 'Name', type: FilterTypeEnum.STRING, value: undefined as string | undefined },
+  { title: 'phone', type: FilterTypeEnum.STRING, value: undefined as string | undefined },
   { title: 'Age', type: FilterTypeEnum.NUMBER, value: undefined as number | undefined },
   { title: 'IsActive', type: FilterTypeEnum.BOOLEAN, value: undefined as boolean | undefined },
   {
