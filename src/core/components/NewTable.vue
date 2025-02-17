@@ -36,13 +36,14 @@
               @click.prevent
               icon="tabler:table-export"
             >
+              {{ t('exportFile') }}
             </AzButton>
           </Tooltip>
           <template #overlay>
             <div class="bg-slate-200 grid grid-cols-2 gap-2 p-2 shadow rounded">
               <Tooltip :title="t('excel')">
                 <Icon
-                  @click="userTable.exportExcel"
+                  @click="exportFile.excel(userTable.tableData.value)"
                   class="bg-white rounded p-2 cursor-pointer"
                   icon="vscode-icons:file-type-excel"
                   :height="48"
@@ -50,7 +51,7 @@
               </Tooltip>
               <Tooltip :title="t('json')">
                 <Icon
-                  @click="userTable.exportJson"
+                  @click="exportFile.json(userTable.tableData.value)"
                   class="bg-white rounded p-2 cursor-pointer"
                   icon="vscode-icons:file-type-json"
                   :height="48"
@@ -58,7 +59,7 @@
               </Tooltip>
               <Tooltip :title="t('image')">
                 <Icon
-                  @click="userTable.exportImage"
+                  @click="exportFile.image('az-table')"
                   class="bg-white rounded p-2 cursor-pointer"
                   icon="vscode-icons:file-type-image"
                   :height="48"
@@ -66,7 +67,7 @@
               </Tooltip>
               <Tooltip :title="t('xml')">
                 <Icon
-                  @click="userTable.exportXml"
+                  @click="exportFile.xml(userTable.tableData.value)"
                   class="bg-white rounded p-2 cursor-pointer"
                   icon="vscode-icons:file-type-xml"
                   :height="48"
@@ -80,10 +81,6 @@
         <Tooltip :title="t('resetTable')">
           <AzButton type="link" size="small" @click="userTable.reload" icon="tabler:refresh" />
         </Tooltip>
-        <!-- <Divider type="vertical" />
-        <Tooltip title="بزرگنمایی">
-          <AzFullScreen @click="userTable.fullscreen.toggle" />
-        </Tooltip> -->
       </div>
 
       <Transition name="slide">
@@ -134,10 +131,13 @@
     </div>
     <Table
       :columns="columns"
+    
       :data-source="userTable.tableData.value"
       :pagination="{
         ...userTable.pagination,
-        position: ['topRight', 'bottomRight'],
+        position: [
+          configProviderStore.direction === DirectionsEnum.RTL ? 'bottomLeft' : 'bottomRight',
+        ],
         locale: { items_per_page: '' },
       }"
       :direction="configProviderStore.direction"
@@ -172,11 +172,12 @@ import { useConfigProviderStore } from '@/core/stores/configProvider.store'
 import { useModal, useTable } from '../composable'
 import { Icon } from '@iconify/vue/dist/iconify.js'
 import type { FilterValue } from 'ant-design-vue/es/table/interface'
-import { FilterTypeEnum } from '../enums'
+import { FilterTypeEnum, DirectionsEnum } from '../enums'
 import { useI18n } from 'vue-i18n'
+import { useExportFile } from '@/core/composable/exportFile.composable'
 
 const { t } = useI18n()
-
+const exportFile = useExportFile()
 const emits = defineEmits(['addRecord'])
 const columns = reactive<ColumnsType>([
   {
@@ -260,7 +261,7 @@ const queryData = async (params: FetchParams) => {
 const userTable = useTable()
 
 onMounted(async () => {
-  userTable.fetchData.value = queryData
+  userTable.fetchData.value = await queryData
   await userTable.reload()
 })
 
