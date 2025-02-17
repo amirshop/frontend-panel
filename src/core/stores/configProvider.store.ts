@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useColorMode, useLocalStorage, type BasicColorMode } from '@vueuse/core'
+import { useColorMode, useCssVar, useLocalStorage, type BasicColorMode } from '@vueuse/core'
 import {
   ComponentsSizesEnum,
   DirectionsEnum,
@@ -16,6 +16,7 @@ import { computed, ref, watch } from 'vue'
 import type { AliasToken } from 'ant-design-vue/es/theme/internal'
 import { useI18n } from 'vue-i18n'
 import { useFullscreen } from '@vueuse/core'
+import { theme } from 'ant-design-vue'
 
 export const useConfigProviderStore = defineStore('Config provider', () => {
   const direction = useLocalStorage<DirectionsEnum>('direction', DirectionsEnum.LTR)
@@ -25,17 +26,13 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
   const fontFamily = computed(() => {
     return language.value === LanguagesEnum.ENGLISH ? 'Poppins' : 'FD Vazirmatn'
   })
-  console.log(fontFamily.value)
-  console.log(fontFamily.value)
-  console.log(fontFamily.value)
-  console.log(fontFamily.value)
-  console.log(fontFamily.value)
-  
-  const token = useLocalStorage<Partial<AliasToken>>('token', {
-    colorPrimary: ColorsEnum.PRIMARY,
-    fontFamily: fontFamily.value,
-  })
 
+  const primaryColor = useCssVar('--primary-color')
+  const primaryFontFamily = useCssVar('--primary-font-family')
+  const token = useLocalStorage<Partial<AliasToken>>('token', {
+    colorPrimary: primaryColor.value,
+    fontFamily: primaryFontFamily.value,
+  })
   const color = useColorMode()
   const colorMode = useLocalStorage('colorMode', color.value)
 
@@ -52,11 +49,13 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
     if (language.value === LanguagesEnum.ENGLISH) {
       dayjs.calendar('gregory')
       locale.value = LocaleMapping[language.value]
+      primaryFontFamily.value = 'Poppins'
     }
 
     if (language.value === LanguagesEnum.FARSI) {
       dayjs.calendar('jalali')
       locale.value = LocaleMapping[language.value]
+      primaryFontFamily.value = 'FD Vazirmatn'
     }
   })
 
@@ -68,5 +67,7 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
     locale,
     colorMode,
     fullscreen: { ...fullscreen, appRef },
+    primaryColor,
+    primaryFontFamily,
   }
 })

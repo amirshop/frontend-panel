@@ -1,6 +1,8 @@
 <template>
   <ConfigProvider
-    :theme="{ token: configProviderStore.token }"
+    :theme="{
+      token: configProviderStore.token,
+    }"
     :locale="configProviderStore.locale"
     :component-size="configProviderStore.size"
     :direction="configProviderStore.direction"
@@ -10,7 +12,7 @@
   </ConfigProvider>
 </template>
 <script lang="ts" setup>
-import { ConfigProvider  } from 'ant-design-vue/es'
+import { ConfigProvider } from 'ant-design-vue/es'
 import { RouterView } from 'vue-router'
 import { useConfigProviderStore } from '@/core/stores/configProvider.store'
 
