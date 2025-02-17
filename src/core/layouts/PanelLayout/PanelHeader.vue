@@ -1,6 +1,6 @@
 <template>
   <LayoutHeader
-    class="!bg-gradient-to-r  !leading-12 !p-inline-4 flex items-center"
+    class="!bg-gradient-to-r !leading-12 !p-inline-4 flex items-center"
     :class="
       configProviderStore.language === LanguagesEnum.ENGLISH
         ? '!from-blue !to-primary'
@@ -28,12 +28,24 @@
           </Menu>
         </template>
       </Dropdown>
-      <LockScreen />
+      <Divider type="vertical" class="bg-white" />
+      <Tooltip title="بزرگنمایی" size="small">
+        <AzButton
+          icon="lets-icons:full"
+          type="text"
+          class="text-white"
+          @click="configProviderStore.fullscreen.toggle"
+        />
+      </Tooltip>
+      <Divider type="vertical" class="bg-white" />
+      <Tooltip title="قفل صفحه" size="small">
+        <LockScreen />
+      </Tooltip>
     </div>
   </LayoutHeader>
 </template>
 <script lang="ts" setup>
-import { Dropdown, LayoutHeader, Menu, MenuItem } from 'ant-design-vue/es'
+import { Dropdown, LayoutHeader, Menu, MenuItem, Divider } from 'ant-design-vue/es'
 import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/core/stores/auth.store'
@@ -42,6 +54,7 @@ import LockScreen from '@/core/components/LockScreen.vue'
 import { AzButton } from '@/core/components'
 import { useI18n } from 'vue-i18n'
 import { LanguagesEnum } from '@/core/enums'
+import AzFullScreen from '@/core/components/AzFullScreen.vue'
 
 const configProviderStore = useConfigProviderStore()
 const authStore = useAuthStore()
