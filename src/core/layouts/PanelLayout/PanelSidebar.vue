@@ -61,6 +61,10 @@ const router = useRouter()
 
 const handleClick: MenuProps['onClick'] = (e) => {
   router.push({ name: `${e.key}` })
+  if(windowSize.width.value <= 640){
+
+    collapsed.value = !collapsed.value
+  }
 }
 </script>
 <style lang="less">
@@ -72,5 +76,9 @@ const handleClick: MenuProps['onClick'] = (e) => {
       line-height: 50.5px;
     }
   }
+}
+:where(.css-dev-only-do-not-override-1602zqi).ant-layout .ant-layout-sider-zero-width-trigger{
+  background: var(--primary-color);
+  border-radius: 0 0 16px 0
 }
 </style>
