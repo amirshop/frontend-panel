@@ -29,10 +29,10 @@ export const enum SortDirEnum {
   DESCENDING = 'desc',
 }
 export const enum FilterTypeEnum {
-  STRING,
-  NUMBER,
-  BOOLEAN,
-  DATE,
+  STRING = 'string',
+  NUMBER = 'number',
+  BOOLEAN = 'boolean',
+  DATE = 'date',
 }
 export const enum ComponentsSizesEnum {
   SMALL = 'small',
