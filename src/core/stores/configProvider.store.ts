@@ -17,15 +17,14 @@ import { useI18n } from 'vue-i18n'
 import { useFullscreen } from '@vueuse/core'
 
 export const useConfigProviderStore = defineStore('Config provider', () => {
-  const token = useLocalStorage<Partial<AliasToken>>('token', {
-    colorPrimary: '#3b82f6',
-    fontFamily: 'Vazirmatn FD',
-  })
   const direction = useLocalStorage<DirectionsEnum>('direction', DirectionsEnum.LTR)
   const size = useLocalStorage<ComponentsSizesEnum>('size', ComponentsSizesEnum.LARGE)
   const language = useLocalStorage<LanguagesEnum>('language', LanguagesEnum.ENGLISH)
   const locale = useLocalStorage('locale', LocaleMapping[language.value])
-
+  const token = useLocalStorage<Partial<AliasToken>>('token', {
+    colorPrimary: '#3b82f6',
+    fontFamily: language.value == LanguagesEnum.ENGLISH ? 'fangsong' : 'Vazirmatn FD',
+  })
   const color = useColorMode()
   const colorMode = useLocalStorage('colorMode', color.value)
 
