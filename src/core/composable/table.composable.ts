@@ -1,13 +1,15 @@
-import { ref, reactive, computed } from 'vue'
 import { useAsyncState, useDebounceFn } from '@vueuse/core'
-import _ from 'lodash'
-import type { TablePaginationConfig, TableProps } from 'ant-design-vue/es/table'
+import type { TableProps } from 'ant-design-vue'
 import type {
   FilterValue,
   SorterResult,
   TableCurrentDataSource,
-} from 'ant-design-vue/lib/table/interface'
+  TablePaginationConfig,
+} from 'ant-design-vue/es/table/interface'
+import _ from 'lodash'
+import { computed, reactive, ref } from 'vue'
 
+// تعریف FetchParams و FetchResult
 interface FetchParams {
   page: number
   pageSize: number
@@ -32,12 +34,16 @@ export const useTable = <T>() => {
     total: 0,
     showSizeChanger: true,
   })
-  const filters = reactive<Record<string, FilterValue>>(defaultParams.filters || {})
+  const filters = reactive<Record<string, FilterValue>>({ ...(defaultParams.filters || {}) })
   const sorter = reactive<{ field: string | null; order: string | null }>({
     field: defaultParams.sortField || null,
     order: defaultParams.sortOrder || null,
   })
   const searchQuery = ref(defaultParams.search || '')
+
+  const size = ref<'default' | 'middle' | 'small'>('default')
+  const bordered = ref(false)
+  const scroll = ref<{ y?: number; x?: number }>({})
 
   const params = computed<FetchParams>(() => ({
     page: pagination.current || 1,
@@ -82,6 +88,27 @@ export const useTable = <T>() => {
 
   const handleSearch = useDebounceFn(() => reload(), 500)
 
+  // تابع برای اعمال فیلترهای جدید
+  const setFilters = (newFilters: Record<string, FilterValue>) => {
+    // ابتدا کل فیلترهای قبلی را حذف می‌کنیم
+    for (const key in filters) {
+      delete filters[key]
+    }
+    // سپس مقادیر جدید را اضافه می‌کنیم
+    Object.assign(filters, newFilters)
+    pagination.current = 1 // بازنشانی صفحه به 1
+    reload()
+  }
+
+  // تابع برای بازنشانی فیلترها
+  const resetFilters = () => {
+    for (const key in filters) {
+      delete filters[key]
+    }
+    pagination.current = 1
+    reload()
+  }
+
   return {
     tableData,
     loading,
@@ -89,9 +116,14 @@ export const useTable = <T>() => {
     filters,
     sorter,
     searchQuery,
+    size,
+    bordered,
+    scroll,
     reload,
     handleTableChange,
     handleSearch,
     fetchData,
+    setFilters,
+    resetFilters,
   }
 }
