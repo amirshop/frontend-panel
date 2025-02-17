@@ -1,6 +1,6 @@
 <template>
   <LayoutHeader
-    class="!bg-gradient-to-r !h-12 !leading-12 !p-inline-4 flex items-center"
+    class="!bg-gradient-to-r  !leading-12 !p-inline-4 flex items-center"
     :class="
       configProviderStore.language === LanguagesEnum.ENGLISH
         ? '!from-blue !to-primary'
