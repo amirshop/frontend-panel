@@ -23,7 +23,7 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
   const locale = useLocalStorage('locale', LocaleMapping[language.value])
   const token = useLocalStorage<Partial<AliasToken>>('token', {
     colorPrimary: '#3b82f6',
-    fontFamily: language.value == LanguagesEnum.ENGLISH ? 'fangsong' : 'Vazirmatn FD',
+    fontFamily: language.value == LanguagesEnum.ENGLISH ? 'Poppins' : 'Vazirmatn FD',
   })
   const color = useColorMode()
   const colorMode = useLocalStorage('colorMode', color.value)
