@@ -10,7 +10,7 @@
   </ConfigProvider>
 </template>
 <script lang="ts" setup>
-import { ConfigProvider } from 'ant-design-vue/es'
+import { ConfigProvider  } from 'ant-design-vue/es'
 import { RouterView } from 'vue-router'
 import { useConfigProviderStore } from '@/core/stores/configProvider.store'
 

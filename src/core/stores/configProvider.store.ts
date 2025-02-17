@@ -6,6 +6,7 @@ import {
   LanguagesEnum,
   LocaleMapping,
   ColorModeEnum,
+  ColorsEnum,
 } from '@/core/enums'
 import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
 import 'dayjs/locale/fa'
@@ -22,10 +23,16 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
   const language = useLocalStorage<LanguagesEnum>('language', LanguagesEnum.ENGLISH)
   const locale = useLocalStorage('locale', LocaleMapping[language.value])
   const fontFamily = computed(() => {
-    return LanguagesEnum.ENGLISH ? 'Poppins' : 'Vazirmatn FD'
+    return language.value === LanguagesEnum.ENGLISH ? 'Poppins' : 'FD Vazirmatn'
   })
+  console.log(fontFamily.value)
+  console.log(fontFamily.value)
+  console.log(fontFamily.value)
+  console.log(fontFamily.value)
+  console.log(fontFamily.value)
+  
   const token = useLocalStorage<Partial<AliasToken>>('token', {
-    colorPrimary: '#3b82f6',
+    colorPrimary: ColorsEnum.PRIMARY,
     fontFamily: fontFamily.value,
   })
 

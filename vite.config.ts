@@ -13,4 +13,15 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  css: {
+    preprocessorOptions: {
+      less: {
+        modifyVars: {
+          'primary-color': 'var(--primary-color)',
+          'link-color': 'var(--primary-color)',
+        },
+        javascriptEnabled: true,
+      },
+    },
+  },
 })
