@@ -6,9 +6,17 @@
     :class="windowSize.width.value > 640 ? undefined : '!absolute z-50 top-0 bottom-0 '"
     :collapsed-width="windowSize.width.value > 640 ? undefined : 0"
   >
-    <div class="h-12 bg-primary flex justify-center items-center gap-x-2">
-      <img class="h-10 w-10 object-contain" src="/logo.png" alt="" srcset="" />
-      <span v-if="!collapsed" class="text-white">سامانه نهال</span>
+    <div class="h-16 bg-primary flex justify-center items-center gap-x-2">
+      <a href="http://localhost:3000" target="_blank">
+        <Tooltip title="مشاهده فروشگاه">
+          <AzButton type="primary" v-if="collapsed">
+            <img class="h-10 w-10 object-contain" src="/logo.png" alt="" srcset="" />
+          </AzButton>
+          <AzButton type="primary" class="!gap-x-1" icon="tabler:eye" v-if="!collapsed">
+            مشاهده فروشگاه
+          </AzButton>
+        </Tooltip>
+      </a>
     </div>
 
     <Menu
@@ -24,19 +32,15 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue'
 import type { MenuProps } from 'ant-design-vue'
-import { Menu, LayoutSider } from 'ant-design-vue/es'
+import { Menu, LayoutSider, Button, Tooltip } from 'ant-design-vue/es'
 import { useRoute, useRouter } from 'vue-router'
-<<<<<<< Updated upstream
 import { useMenus } from '@/menus'
+import { AzButton } from '@/core/components'
 
 const menus = useMenus()
-=======
-import { useMenuStore } from '@/core/stores/menu.store'
 import { useWindowSize } from '@vueuse/core'
 
 const windowSize = useWindowSize()
-const menuStore = useMenuStore()
->>>>>>> Stashed changes
 
 const collapsed = ref<boolean>(false)
 
