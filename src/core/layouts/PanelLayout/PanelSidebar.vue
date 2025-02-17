@@ -77,8 +77,8 @@ const handleClick: MenuProps['onClick'] = (e) => {
     }
   }
 }
-:where(.css-dev-only-do-not-override-1602zqi).ant-layout .ant-layout-sider-zero-width-trigger{
-  background: var(--primary-color);
-  border-radius: 0 0 16px 0
+.ant-layout .ant-layout-sider-zero-width-trigger{
+  background: var(--primary-color) !important;
+  border-radius: 0 0 16px 0 !important;
 }
 </style>
