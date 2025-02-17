@@ -14,6 +14,7 @@ import jalali from '@zoomit/dayjs-jalali-plugin'
 import { ref, watch } from 'vue'
 import type { AliasToken } from 'ant-design-vue/es/theme/internal'
 import { useI18n } from 'vue-i18n'
+import { useFullscreen } from '@vueuse/core'
 
 export const useConfigProviderStore = defineStore('Config provider', () => {
   const token = useLocalStorage<Partial<AliasToken>>('token', {
@@ -27,6 +28,9 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
 
   const color = useColorMode()
   const colorMode = useLocalStorage('colorMode', color.value)
+
+  const appRef = ref()
+  const fullscreen = useFullscreen(appRef.value)
 
   dayjs.extend(jalali)
 
@@ -46,5 +50,13 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
     }
   })
 
-  return { token, language, direction, size, locale, colorMode }
+  return {
+    token,
+    language,
+    direction,
+    size,
+    locale,
+    colorMode,
+    fullscreen: { ...fullscreen, appRef },
+  }
 })
