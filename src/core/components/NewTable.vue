@@ -1,7 +1,7 @@
 <template>
   <Card>
     <div>
-      <div class="text-xl font-medium">title</div>
+      <div class="text-xl font-medium">Title</div>
       <div class="flex items-center justify-end">
         <Divider type="vertical" />
         <Tooltip title="افزودن رکورد">
@@ -19,7 +19,7 @@
 
         <Divider type="vertical" />
         <Tooltip title="فیلتر جدول" size="small">
-          <Badge :count="userTable.filters.length">
+          <Badge :count="activeFiltersCount">
             <AzButton type="link" size="small" @click="filterMode.toggle" icon="tabler:filter">
               فیلتر
             </AzButton>
@@ -148,9 +148,8 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { AzButton } from '@/core/components'
-
 import {
   Table,
   Card,
@@ -164,7 +163,7 @@ import {
   FormItem,
   Badge,
   Dropdown,
-} from 'ant-design-vue/es'
+} from 'ant-design-vue'
 import axios from 'axios'
 import type { ColumnsType } from 'ant-design-vue/es/table'
 import { useConfigProviderStore } from '@/core/stores/configProvider.store'
@@ -174,6 +173,8 @@ import type { FilterValue } from 'ant-design-vue/es/table/interface'
 import { FilterTypeEnum, DirectionsEnum } from '../enums'
 import { useI18n } from 'vue-i18n'
 import { useExportFile } from '@/core/composable/exportFile.composable'
+import { useLocalStorage } from '@vueuse/core'
+import _, { isArray, isNumber, isString } from 'lodash'
 
 const { t } = useI18n()
 const filterMode = useModal()
@@ -214,20 +215,50 @@ const columns = reactive<ColumnsType>([
     key: 'phone',
   },
 ])
-
-// اطلاعات فیلترها
-const filterList = reactive([
-  { title: 'Name', type: FilterTypeEnum.STRING, value: '' },
-  { title: 'Age', type: FilterTypeEnum.NUMBER, value: null },
-  { title: 'Is Active', type: FilterTypeEnum.BOOLEAN, value: false },
-  { title: 'Date Range', type: FilterTypeEnum.DATE, value: [] },
-])
+type ValueType = string | number | boolean | string[] | [string, string] | undefined
+// استفاده از useLocalStorage برای ذخیره فیلترها
+const filterList = useLocalStorage(
+  'filterList',
+  reactive([
+    { title: 'Name', type: FilterTypeEnum.STRING, value: undefined as ValueType },
+    { title: 'Age', type: FilterTypeEnum.NUMBER, value: undefined as ValueType },
+    { title: 'IsActive', type: FilterTypeEnum.BOOLEAN, value: undefined as ValueType },
+    { title: 'DateRange', type: FilterTypeEnum.DATE, value: undefined as ValueType },
+  ]),
+)
+const activeFiltersCount = computed(() => {
+  return filterList.value.filter((item) => {
+    // چک کردن هر فیلتر برای داشتن مقدار معتبر
+    if (
+      item.type === FilterTypeEnum.STRING &&
+      isString(item.value) &&
+      item.value.trim() !== undefined
+    ) {
+      return true
+    }
+    if (item.type === FilterTypeEnum.NUMBER && isNumber(item.value) && item.value !== undefined) {
+      return true
+    }
+    if (item.type === FilterTypeEnum.BOOLEAN && item.value !== undefined) {
+      return true
+    }
+    if (item.type === FilterTypeEnum.DATE && isArray(item.value)) {
+      return true
+    }
+    return false
+  }).length
+})
 
 type APIResult = {
   results: {
     gender: 'female' | 'male'
-    name: string
+    name: {
+      first: string
+      last: string
+      title: string
+    }
     email: string
+    phone: string
   }[]
 }
 
@@ -241,8 +272,8 @@ interface FetchParams {
 }
 
 const queryData = async (params: FetchParams) => {
-  const { data } = await axios.get<APIResult>('https://randomuser.me/api/?page=3&results=1000', {
-    params,
+  const { data } = await axios.get<APIResult>('https://randomuser.me/api/', {
+    params: { ...params, results: 1000, page: params.page },
   })
   return {
     data: data.results,
@@ -250,15 +281,40 @@ const queryData = async (params: FetchParams) => {
   }
 }
 
-// توابع برای اعمال و بازنشانی فیلترها
-const resetFilter = () => {
+// توابع فیلترها
 
-  userTable.reload()
+const resetFilter = () => {
+  filterList.value.forEach((item) => {
+    if (item.type === FilterTypeEnum.STRING) {
+      item.value = ''
+    } else if (item.type === FilterTypeEnum.NUMBER) {
+      item.value = undefined
+    } else if (item.type === FilterTypeEnum.BOOLEAN) {
+      item.value = false
+    } else if (item.type === FilterTypeEnum.DATE) {
+      item.value = undefined
+    }
+  })
+  userTable.resetFilters?.()
 }
 
 const applyFilters = () => {
-
-  userTable.reload()
+  const newFilters: Record<string, FilterValue> = {}
+  filterList.value.forEach((item) => {
+    if (
+      item.value !== '' &&
+      item.value !== null &&
+      item.value !== undefined &&
+      !(Array.isArray(item.value) && item.value.length === 0)
+    ) {
+      if (item.type === FilterTypeEnum.DATE && Array.isArray(item.value)) {
+        newFilters[item.title.toLowerCase()] = item.value.join(',') as unknown as FilterValue
+      } else {
+        newFilters[item.title.toLowerCase()] = item.value as unknown as FilterValue
+      }
+    }
+  })
+  userTable.setFilters?.(newFilters)
 }
 
 onMounted(async () => {
