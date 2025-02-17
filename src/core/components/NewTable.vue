@@ -173,9 +173,8 @@ import type { FilterValue } from 'ant-design-vue/es/table/interface'
 import { FilterTypeEnum, DirectionsEnum } from '../enums'
 import { useI18n } from 'vue-i18n'
 import { useExportFile } from '@/core/composable/exportFile.composable'
-import { useLocalStorage } from '@vueuse/core'
 import _, { isArray, isNumber, isString } from 'lodash'
-import { isDayjs, type Dayjs } from 'dayjs'
+import { type Dayjs } from 'dayjs'
 
 const { t } = useI18n()
 const filterMode = useModal()
