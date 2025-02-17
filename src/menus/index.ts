@@ -90,6 +90,11 @@ export const useMenus = () => {
 
     { type: 'divider' },
     {
+      key: 'TheUsers',
+      label: t('users'),
+      icon: () => h(Icon, { icon: 'tabler:users', height: 18 }),
+    },
+    {
       key: 'TheSettings',
       label: t('settings'),
       icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
