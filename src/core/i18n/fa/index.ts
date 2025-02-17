@@ -62,4 +62,5 @@ export default {
   dashboard: 'داشبورد',
   users: 'کاربران',
   user: 'کاربر',
+  resetTable: 'ریست جدول',
 }
