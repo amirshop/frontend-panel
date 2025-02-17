@@ -131,7 +131,6 @@
     </div>
     <Table
       :columns="columns"
-    
       :data-source="userTable.tableData.value"
       :pagination="{
         ...userTable.pagination,
@@ -150,7 +149,7 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { AzButton, AzFullScreen, AzStatus } from '@/core/components'
+import { AzButton } from '@/core/components'
 
 import {
   Table,
@@ -177,7 +176,11 @@ import { useI18n } from 'vue-i18n'
 import { useExportFile } from '@/core/composable/exportFile.composable'
 
 const { t } = useI18n()
+const filterMode = useModal()
+const configProviderStore = useConfigProviderStore()
 const exportFile = useExportFile()
+const userTable = useTable()
+
 const emits = defineEmits(['addRecord'])
 const columns = reactive<ColumnsType>([
   {
@@ -212,22 +215,14 @@ const columns = reactive<ColumnsType>([
   },
 ])
 
-interface FilterList {
-  title: string
-  key: string
-  type: FilterTypeEnum
-  value: unknown
-}
+// اطلاعات فیلترها
+const filterList = reactive([
+  { title: 'Name', type: FilterTypeEnum.STRING, value: '' },
+  { title: 'Age', type: FilterTypeEnum.NUMBER, value: null },
+  { title: 'Is Active', type: FilterTypeEnum.BOOLEAN, value: false },
+  { title: 'Date Range', type: FilterTypeEnum.DATE, value: [] },
+])
 
-const filterList = ref<FilterList[]>([])
-
-type APIParams = {
-  results: number
-  page?: number
-  sortField?: string
-  sortOrder?: number
-  [key: string]: unknown
-}
 type APIResult = {
   results: {
     gender: 'female' | 'male'
@@ -245,10 +240,6 @@ interface FetchParams {
   search?: string
 }
 
-interface FetchResult<T> {
-  data: T[]
-  total: number
-}
 const queryData = async (params: FetchParams) => {
   const { data } = await axios.get<APIResult>('https://randomuser.me/api/?page=3&results=1000', {
     params,
@@ -258,34 +249,20 @@ const queryData = async (params: FetchParams) => {
     total: 1000,
   }
 }
-const userTable = useTable()
 
-onMounted(async () => {
-  userTable.fetchData.value = await queryData
-  await userTable.reload()
-})
+// توابع برای اعمال و بازنشانی فیلترها
+const resetFilter = () => {
 
-const applyFilters = () => {
-  const filters: Record<string, unknown> = {}
-  filterList.value.forEach((item) => {
-    if (item.value) {
-      filters[item.key] = item.value
-    }
-  })
   userTable.reload()
 }
 
-const resetTable = async () => {
+const applyFilters = () => {
+
+  userTable.reload()
+}
+
+onMounted(async () => {
+  userTable.fetchData.value = queryData
   await userTable.reload()
-}
-
-const resetFilter = () => {
-  filterList.value.forEach((item) => {
-    item.value = null
-  })
-  applyFilters()
-}
-const filterMode = useModal()
-
-const configProviderStore = useConfigProviderStore()
+})
 </script>
