@@ -175,6 +175,7 @@ import { useI18n } from 'vue-i18n'
 import { useExportFile } from '@/core/composable/exportFile.composable'
 import { useLocalStorage } from '@vueuse/core'
 import _, { isArray, isNumber, isString } from 'lodash'
+import { isDayjs, type Dayjs } from 'dayjs'
 
 const { t } = useI18n()
 const filterMode = useModal()
@@ -215,20 +216,21 @@ const columns = reactive<ColumnsType>([
     key: 'phone',
   },
 ])
-type ValueType = string | number | boolean | string[] | [string, string] | undefined
+
 // استفاده از useLocalStorage برای ذخیره فیلترها
-const filterList = useLocalStorage(
-  'filterList',
-  reactive([
-    { title: 'Name', type: FilterTypeEnum.STRING, value: undefined as ValueType },
-    { title: 'Age', type: FilterTypeEnum.NUMBER, value: undefined as ValueType },
-    { title: 'IsActive', type: FilterTypeEnum.BOOLEAN, value: undefined as ValueType },
-    { title: 'DateRange', type: FilterTypeEnum.DATE, value: undefined as ValueType },
-  ]),
-)
+const filterList = reactive([
+  { title: 'Name', type: FilterTypeEnum.STRING, value: undefined as string | undefined },
+  { title: 'Age', type: FilterTypeEnum.NUMBER, value: undefined as number | undefined },
+  { title: 'IsActive', type: FilterTypeEnum.BOOLEAN, value: undefined as boolean | undefined },
+  {
+    title: 'DateRange',
+    type: FilterTypeEnum.DATE,
+    value: undefined as [Dayjs, Dayjs] | [string, string] | undefined,
+  },
+])
+
 const activeFiltersCount = computed(() => {
-  return filterList.value.filter((item) => {
-    // چک کردن هر فیلتر برای داشتن مقدار معتبر
+  return filterList.filter((item) => {
     if (
       item.type === FilterTypeEnum.STRING &&
       isString(item.value) &&
@@ -284,13 +286,13 @@ const queryData = async (params: FetchParams) => {
 // توابع فیلترها
 
 const resetFilter = () => {
-  filterList.value.forEach((item) => {
+  filterList.forEach((item) => {
     if (item.type === FilterTypeEnum.STRING) {
-      item.value = ''
+      item.value = undefined
     } else if (item.type === FilterTypeEnum.NUMBER) {
       item.value = undefined
     } else if (item.type === FilterTypeEnum.BOOLEAN) {
-      item.value = false
+      item.value = undefined
     } else if (item.type === FilterTypeEnum.DATE) {
       item.value = undefined
     }
@@ -300,7 +302,7 @@ const resetFilter = () => {
 
 const applyFilters = () => {
   const newFilters: Record<string, FilterValue> = {}
-  filterList.value.forEach((item) => {
+  filterList.forEach((item) => {
     if (
       item.value !== '' &&
       item.value !== null &&
