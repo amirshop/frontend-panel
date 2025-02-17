@@ -11,7 +11,7 @@ import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
 import 'dayjs/locale/fa'
 import dayjs from 'dayjs'
 import jalali from '@zoomit/dayjs-jalali-plugin'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { AliasToken } from 'ant-design-vue/es/theme/internal'
 import { useI18n } from 'vue-i18n'
 import { useFullscreen } from '@vueuse/core'
@@ -21,10 +21,14 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
   const size = useLocalStorage<ComponentsSizesEnum>('size', ComponentsSizesEnum.LARGE)
   const language = useLocalStorage<LanguagesEnum>('language', LanguagesEnum.ENGLISH)
   const locale = useLocalStorage('locale', LocaleMapping[language.value])
+  const fontFamily = computed(() => {
+    return LanguagesEnum.ENGLISH ? 'Poppins' : 'Vazirmatn FD'
+  })
   const token = useLocalStorage<Partial<AliasToken>>('token', {
     colorPrimary: '#3b82f6',
-    fontFamily: language.value == LanguagesEnum.ENGLISH ? 'Poppins' : 'Vazirmatn FD',
+    fontFamily: fontFamily.value,
   })
+
   const color = useColorMode()
   const colorMode = useLocalStorage('colorMode', color.value)
 
