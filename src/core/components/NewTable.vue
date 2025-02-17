@@ -94,7 +94,7 @@
             <AzButton type="text" danger icon="tabler:x" @click="filterMode.toggle" />
           </template>
           <Form layout="vertical">
-            <div class="grid grid-cols-4 gap-x-4">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-4">
               <FormItem :label="item.title" v-for="(item, index) in filterList" :key="index">
                 <div>
                   <Input
