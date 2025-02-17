@@ -4,3 +4,4 @@ export { default as AzStatus } from "./AzStatus.vue";
 export { default as AzTable } from "./AzTable.vue";
 export { default as AzFullScreen } from "./AzFullScreen.vue";
 export { default as AzButton } from "./AzButton.vue";
+export { default as NewTable } from './NewTable.vue'

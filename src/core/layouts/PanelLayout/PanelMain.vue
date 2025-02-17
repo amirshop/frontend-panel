@@ -1,10 +1,10 @@
 <template>
   <LayoutContent class="p-4 overflow-y-auto overflow-x-hidden">
-    <Transition :name="randomAnimation">
-      <RouterView v-slot="{ Component }">
+    <RouterView v-slot="{ Component }">
+      <Transition :name="randomAnimation">
         <component :is="Component" />
-      </RouterView>
-    </Transition>
+      </Transition>
+    </RouterView>
   </LayoutContent>
 </template>
 
