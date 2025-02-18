@@ -19,6 +19,12 @@ export default [
   {
     path: '/orders',
     name: 'TheOrders',
-    component: () => import('../views/orders/Index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'TheOrdersList',
+        component: () => import('../views/orders/Index.vue'),
+      },
+    ],
   },
 ] as RouteRecordRaw[]
