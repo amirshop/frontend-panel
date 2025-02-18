@@ -7,7 +7,7 @@
 
       <FormItem label="Theme color">
         <RadioGroupColor
-          v-model:value="configProviderStore.token.colorPrimary"
+          v-model:value="configProviderStore.primaryColor"
           :colorList="colorList"
         />
       </FormItem>

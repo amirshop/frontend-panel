@@ -79,6 +79,7 @@ const handleClick: MenuProps['onClick'] = (e) => {
 }
 .ant-layout .ant-layout-sider-zero-width-trigger{
   background: var(--primary-color) !important;
-  border-radius: 0 0 16px 0 !important;
+  border-inline-end: 0 !important;
+
 }
 </style>

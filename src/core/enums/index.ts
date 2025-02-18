@@ -42,6 +42,7 @@ export const enum ComponentsSizesEnum {
 export const enum ColorModeEnum  {
   DARK = 'dark',
   LIGHT = 'light',
+  AUTO = "auto",
 }
 export type LocaleType = keyof typeof LocaleMapping
 export const LocaleMapping = {

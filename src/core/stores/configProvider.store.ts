@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
-import { useColorMode, useLocalStorage, type BasicColorMode } from '@vueuse/core'
+import { useColorMode, useCssVar, useLocalStorage, type BasicColorMode } from '@vueuse/core'
 import {
   ComponentsSizesEnum,
   DirectionsEnum,
   LanguagesEnum,
   LocaleMapping,
   ColorModeEnum,
+  ColorsEnum,
 } from '@/core/enums'
 import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
 import 'dayjs/locale/fa'
@@ -15,6 +16,7 @@ import { computed, ref, watch } from 'vue'
 import type { AliasToken } from 'ant-design-vue/es/theme/internal'
 import { useI18n } from 'vue-i18n'
 import { useFullscreen } from '@vueuse/core'
+import { theme } from 'ant-design-vue'
 
 export const useConfigProviderStore = defineStore('Config provider', () => {
   const direction = useLocalStorage<DirectionsEnum>('direction', DirectionsEnum.LTR)
@@ -22,13 +24,15 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
   const language = useLocalStorage<LanguagesEnum>('language', LanguagesEnum.ENGLISH)
   const locale = useLocalStorage('locale', LocaleMapping[language.value])
   const fontFamily = computed(() => {
-    return LanguagesEnum.ENGLISH ? 'Poppins' : 'Vazirmatn FD'
-  })
-  const token = useLocalStorage<Partial<AliasToken>>('token', {
-    colorPrimary: '#3b82f6',
-    fontFamily: fontFamily.value,
+    return language.value === LanguagesEnum.ENGLISH ? 'Poppins' : 'FD Vazirmatn'
   })
 
+  const primaryColor = useCssVar('--primary-color')
+  const primaryFontFamily = useCssVar('--primary-font-family')
+  const token = useLocalStorage<Partial<AliasToken>>('token', {
+    colorPrimary: primaryColor.value,
+    fontFamily: primaryFontFamily.value,
+  })
   const color = useColorMode()
   const colorMode = useLocalStorage('colorMode', color.value)
 
@@ -45,11 +49,13 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
     if (language.value === LanguagesEnum.ENGLISH) {
       dayjs.calendar('gregory')
       locale.value = LocaleMapping[language.value]
+      primaryFontFamily.value = 'Poppins'
     }
 
     if (language.value === LanguagesEnum.FARSI) {
       dayjs.calendar('jalali')
       locale.value = LocaleMapping[language.value]
+      primaryFontFamily.value = 'FD Vazirmatn'
     }
   })
 
@@ -61,5 +67,7 @@ export const useConfigProviderStore = defineStore('Config provider', () => {
     locale,
     colorMode,
     fullscreen: { ...fullscreen, appRef },
+    primaryColor,
+    primaryFontFamily,
   }
 })

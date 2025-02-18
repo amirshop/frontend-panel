@@ -1,6 +1,8 @@
 <template>
   <ConfigProvider
-    :theme="{ token: configProviderStore.token }"
+    :theme="{
+      token: configProviderStore.token,
+    }"
     :locale="configProviderStore.locale"
     :component-size="configProviderStore.size"
     :direction="configProviderStore.direction"

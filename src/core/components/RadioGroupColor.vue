@@ -65,7 +65,7 @@ const props = withDefaults(defineProps<Props>(), {
   colorList: () => [],
   selectedColor: 'red',
 })
-const primaryColor = useCssVar('--color-primary')
+const primaryColor = useCssVar('--primary-color')
 </script>
 <style lang="less">
 .radio-group-color {
