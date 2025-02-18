@@ -86,6 +86,13 @@ export const useMenus = () => {
       key: 'TheOrders',
       label: t('orders'),
       icon: () => h(Icon, { icon: 'tabler:git-pull-request', height: 18 }),
+      children: [
+        {
+          key: 'TheOrdersList',
+          label: t('orders'),
+          icon: () => h(Icon, { icon: 'tabler:git-pull-request', height: 18 }),
+        },
+      ],
     },
 
     { type: 'divider' },
