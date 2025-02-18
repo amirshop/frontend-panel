@@ -9,7 +9,10 @@ export const useModal = () => {
   const invokeCallbacks = async (...callbacks: (Callback | Promise<void>)[]) => {
     for (const callback of callbacks) {
       if (isFunction(callback)) {
-        callback()
+        const result = callback()
+        if (result instanceof Promise) {
+          await result // اینجا باید `await` کنیم تا اجرای toggle معطل بماند
+        }
       } else if (callback instanceof Promise) {
         await callback
       }
@@ -30,8 +33,12 @@ export const useModal = () => {
   }
 
   const invokeToggle = async (...callbacks: (Callback | Promise<void>)[]) => {
-    await invokeCallbacks(...callbacks)
-    isOpen.value = !isOpen.value
+    try {
+      await invokeCallbacks(...callbacks)
+      isOpen.value = !isOpen.value
+    } catch (error) {
+      console.error('Error in invokeToggle:', error)
+    }
   }
 
   const toggleInvoke = async (...callbacks: (Callback | Promise<void>)[]) => {
