@@ -9,7 +9,6 @@ import type {
 import _ from 'lodash'
 import { computed, reactive, ref } from 'vue'
 
-// تعریف FetchParams و FetchResult
 interface FetchParams {
   page: number
   pageSize: number
@@ -24,6 +23,13 @@ interface FetchResult<T> {
   total: number
 }
 
+/**
+ * یک هوک ترکیبی (Composable) برای مدیریت وضعیت جدول، شامل صفحه‌بندی، مرتب‌سازی، فیلترها و جستجو.
+ * این هوک برای کار با داده‌های ناهمزمان طراحی شده و امکاناتی برای مدیریت تغییرات جدول فراهم می‌کند.
+ *
+ * @template T - نوع داده‌هایی که جدول نمایش می‌دهد.
+ * @returns یک شیء شامل وضعیت جدول و متدهای کمکی.
+ */
 export const useTable = <T>() => {
   const fetchData = ref<((params: FetchParams) => Promise<FetchResult<T>>) | null>(null)
   const defaultParams: Partial<FetchParams> = {}
