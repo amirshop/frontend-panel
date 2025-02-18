@@ -1,6 +1,6 @@
 <template>
   <Card>
-    <div>
+    <div class="mb-4">
       <div class="text-xl font-medium">Title</div>
       <div class="flex items-center justify-end">
         <Divider type="vertical" />
@@ -318,7 +318,7 @@ const applyFilters = () => {
 }
 
 onMounted(async () => {
-  userTable.fetchData.value = queryData
+  userTable.fetchData.value = await queryData
   await userTable.reload()
 })
 </script>
