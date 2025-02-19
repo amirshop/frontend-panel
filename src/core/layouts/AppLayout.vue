@@ -59,30 +59,33 @@ const algorithm = ref<DerivativeFunc<SeedToken, MapToken>[]>([])
 
 watch(
   () => configStore.settings.isCompact,
-  () => {
-    if (configStore.settings.isCompact)) {
-
-
-algorithm.value.push(theme.compactAlgorithm)
-
- 
-    } if(!configStore.settings.isCompact) {
-
-     algorithm.value = algorithm.value.filter((item) => item !== theme.compactAlgorithm)
-      
+  (newVal) => {
+    if (newVal) {
+      // اضافه کردن فقط اگر وجود نداشته باشد
+      if (!algorithm.value.includes(theme.compactAlgorithm)) {
+        algorithm.value.push(theme.compactAlgorithm)
+      }
+    } else {
+      algorithm.value = algorithm.value.filter((item) => item !== theme.compactAlgorithm)
     }
   },
+  { immediate: true } // برای اعمال تغییرات اولیه
 )
+
+
 
 watch(
   () => configStore.settings.isDark,
-  () => {
-    if (configStore.settings.isDark) {
-      algorithm.value.push(theme.darkAlgorithm)
-    }
-    if (!configStore.settings.isDark) {
+  (newVal) => {
+    if (newVal) {
+      if (!algorithm.value.includes(theme.darkAlgorithm)) {
+        algorithm.value.push(theme.darkAlgorithm)
+      }
+    } else {
       algorithm.value = algorithm.value.filter((item) => item !== theme.darkAlgorithm)
     }
   },
+  { immediate: true }
 )
+
 </script>
