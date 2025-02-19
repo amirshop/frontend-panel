@@ -28,12 +28,19 @@ import type { MapToken } from 'ant-design-vue/es/theme/interface'
 const { primaryColor, fontFamily, updateColors } = useCssVariables()
 
 const configStore = useConfigStore()
+
+const token = ref(theme.useToken().token)
+watch(token, (newVal) => {
+  console.log(newVal)
+})
+
 watch(
   () => configStore.settings.primaryColor,
   (newColor) => {
     primaryColor.value = newColor
     updateColors()
   },
+  { immediate: true },
 )
 
 watch(
@@ -41,6 +48,7 @@ watch(
   (newColor) => {
     fontFamily.value = newColor
   },
+  { immediate: true },
 )
 
 watch(
@@ -61,7 +69,6 @@ watch(
   () => configStore.settings.isCompact,
   (newVal) => {
     if (newVal) {
-      // اضافه کردن فقط اگر وجود نداشته باشد
       if (!algorithm.value.includes(theme.compactAlgorithm)) {
         algorithm.value.push(theme.compactAlgorithm)
       }
@@ -69,10 +76,8 @@ watch(
       algorithm.value = algorithm.value.filter((item) => item !== theme.compactAlgorithm)
     }
   },
-  { immediate: true } // برای اعمال تغییرات اولیه
+  { immediate: true },
 )
-
-
 
 watch(
   () => configStore.settings.isDark,
@@ -85,7 +90,6 @@ watch(
       algorithm.value = algorithm.value.filter((item) => item !== theme.darkAlgorithm)
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
-
 </script>
