@@ -10,7 +10,7 @@ import { useI18n } from 'vue-i18n'
 import { useFullscreen } from '@vueuse/core'
 import { useCssVariables } from '../composable/cssVariables.composable'
 import type { Settings } from '../types'
-
+      
 export const useConfigStore = defineStore('Config provider', () => {
   const settings = ref<Settings>({
     header: 'Your Website Header',
@@ -21,7 +21,7 @@ export const useConfigStore = defineStore('Config provider', () => {
     description: 'This is an awesome website built with TypeORM and NestJS.',
     favicon: 'path_to_favicon.ico',
     currency: 'TOMAN',
-    primaryColor: '#1677ff',
+    primaryColor: '#2B7FFFFF',
     fontFamily: 'Vazirmatn',
     language: 'fa',
     componentsSize: 'small',
