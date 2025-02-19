@@ -51,17 +51,18 @@ watch(
   { immediate: true },
 )
 
-watch(
-  () => configStore.settings.isDark,
-  (newMode) => {
-    if (newMode === true) {
-      document.body.classList.add('dark')
-    } else {
-      document.body.classList.remove('dark')
-    }
-  },
-  { immediate: true },
-)
+// watch(
+//   () => configStore.settings.isDark,
+//   (newMode) => {
+//     console.log('🚀 ~ newMode:', newMode)
+//     if (newMode === true) {
+//       document.body.classList.add('dark')
+//     } else {
+//       document.body.classList.remove('dark')
+//     }
+//   },
+//   { immediate: true },
+// )
 
 const algorithm = ref<DerivativeFunc<SeedToken, MapToken>[]>([])
 
@@ -82,12 +83,15 @@ watch(
 watch(
   () => configStore.settings.isDark,
   (newVal) => {
+    console.log('🚀 ~ newVal:', newVal)
     if (newVal) {
       if (!algorithm.value.includes(theme.darkAlgorithm)) {
         algorithm.value.push(theme.darkAlgorithm)
+        document.body.classList.add('bg-dark dark')
       }
     } else {
       algorithm.value = algorithm.value.filter((item) => item !== theme.darkAlgorithm)
+      document.body.classList.remove('bg-dark dark')
     }
   },
   { immediate: true },

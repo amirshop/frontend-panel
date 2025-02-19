@@ -1,6 +1,6 @@
 <template>
   <RadioGroup class="radio-group-image">
-    <Tooltip :title="t(`${item.label}`)" v-for="item in props.items" :key="item.value">
+    <Tooltip :title="t(`${item.label}`)" v-for="(item, index) in props.items" :key="index">
       <Radio :value="item.value">
         <img :class="props.imageClass" :src="item.src" :alt="t(`${item.label}`)" />
       </Radio>
@@ -14,7 +14,7 @@ import { useI18n } from 'vue-i18n'
 interface Item {
   label: string
   src: string
-  value: string | number
+  value: string | number | boolean
 }
 interface Props {
   items: Item[]

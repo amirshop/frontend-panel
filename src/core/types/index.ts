@@ -1,4 +1,4 @@
-import type { ComponentsSizesEnum, CurrenciesEnum, FontFamilyEnum, LanguagesEnum } from '@/enum'
+import type { ComponentsSizesEnum, CurrenciesEnum, FontFamilyEnum, LanguagesEnum } from '@/core/enums'
 import type { Dayjs } from 'dayjs'
 
 export interface Settings {

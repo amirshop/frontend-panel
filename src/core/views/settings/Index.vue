@@ -2,7 +2,16 @@
   <Card>
     <Form layout="vertical" class="flex flex-col h-full">
       <FormItem :label="t('colorMode')">
+        {{ configStore.settings.isDark }}
         <RadioGroupImage v-model:value="configStore.settings.isDark" :items="items" />
+        <Switch v-model:checked="configStore.settings.isDark">
+          <template #checkedChildren>
+            روشن
+          </template>
+          <template #unCheckedChildren>
+            خاموش
+          </template>
+        </Switch>
       </FormItem>
 
       <FormItem :label="t('themeColor')">
@@ -13,7 +22,7 @@
         <RadioGroup v-model:value="configStore.language">
           <RadioButton :value="LanguagesEnum.FARSI">
             <div class="flex items-center gap-4">
-              <Icon icon="twemoji:flag-iran" class="text-2xl" />
+              <Icon icon="twemoji:flag-iran" />
               <span>فارسی</span>
             </div>
           </RadioButton>
@@ -28,16 +37,16 @@
 
       <FormItem :label="t('direction')">
         <RadioGroup v-model:value="configStore.direction">
-          <RadioButton :value="DirectionsEnum.LTR">
-            <div class="inline-flex items-center gap-2">
-              <Icon icon="ooui:outdent-ltr" />
-              <span>{{ t('left') }}</span>
-            </div>
-          </RadioButton>
           <RadioButton :value="DirectionsEnum.RTL">
             <div class="inline-flex items-center gap-2">
               <Icon icon="ooui:outdent-rtl" />
               <span>{{ t('right') }}</span>
+            </div>
+          </RadioButton>
+          <RadioButton :value="DirectionsEnum.LTR">
+            <div class="inline-flex items-center gap-2">
+              <Icon icon="ooui:outdent-ltr" />
+              <span>{{ t('left') }}</span>
             </div>
           </RadioButton>
         </RadioGroup>
@@ -51,30 +60,19 @@
         </RadioGroup>
       </FormItem>
 
-      <FormItem label="websiteName" name="websiteName">
+      <!-- <FormItem label="websiteName" name="websiteName">
         <Input v-model:value="configStore.settings.websiteName" />
-      </FormItem>
+      </FormItem> -->
 
-      <FormItem label="primaryColor" name="primaryColor">
-        <Input v-model:value="configStore.settings.primaryColor" type="color" />
-      </FormItem>
-
-      <FormItem label="fontFamily" name="fontFamily">
+      <!-- <FormItem label="fontFamily" name="fontFamily">
         <Select v-model:value="configStore.settings.fontFamily">
           <SelectOption value="'Poppins', 'Vazirmatn'">Poppins</SelectOption>
           <SelectOption value="'Vazirmatn', 'Poppins'">Vazirmatn</SelectOption>
         </Select>
-      </FormItem>
-    
+      </FormItem> -->
 
       <FormItem label="isCompact" name="isCompact">
         <Switch v-model:checked="configStore.settings.isCompact" />
-      </FormItem>
-
-      
-
-      <FormItem label="isDark" name="isDark">
-        <Switch v-model:checked="configStore.settings.isDark" />
       </FormItem>
 
       <Divider />
@@ -100,6 +98,8 @@ import {
   Select,
   SelectOption,
   Switch,
+  Radio,
+  Tooltip,
 } from 'ant-design-vue/es'
 
 import { DirectionsEnum, ComponentsSizesEnum, LanguagesEnum } from '@/core/enums'
@@ -144,7 +144,6 @@ const colorList = reactive([
 ])
 
 const items = reactive([
-  
   {
     label: 'light',
     src: 'https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg',
