@@ -2,7 +2,7 @@
   <Card>
     <Form layout="vertical" class="flex flex-col h-full">
       <FormItem :label="t('colorMode')">
-        <RadioGroupImage v-model:value="configStore.colorMode" :items="items" />
+        <RadioGroupImage v-model:value="configStore.settings.isDark" :items="items" />
       </FormItem>
 
       <FormItem :label="t('themeColor')">
@@ -144,20 +144,16 @@ const colorList = reactive([
 ])
 
 const items = reactive([
-  {
-    label: 'auto',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg',
-    value: 'auto',
-  },
+  
   {
     label: 'light',
     src: 'https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg',
-    value: 'light',
+    value: false,
   },
   {
     label: 'dark',
     src: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
-    value: 'dark',
+    value: true,
   },
 ])
 </script>
