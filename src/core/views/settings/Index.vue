@@ -65,19 +65,7 @@
           <SelectOption value="'Vazirmatn', 'Poppins'">Vazirmatn</SelectOption>
         </Select>
       </FormItem>
-      <FormItem label="componentsSize" name="componentsSize">
-        <Select v-model:value="configStore.settings.componentsSize">
-          <SelectOption :value="ComponentsSizesEnum.LARGE">
-            {{ ComponentsSizesEnum.LARGE }}
-          </SelectOption>
-          <SelectOption :value="ComponentsSizesEnum.MIDDLE">
-            {{ ComponentsSizesEnum.MIDDLE }}
-          </SelectOption>
-          <SelectOption :value="ComponentsSizesEnum.SMALL">
-            {{ ComponentsSizesEnum.SMALL }}
-          </SelectOption>
-        </Select>
-      </FormItem>
+    
 
       <FormItem label="isCompact" name="isCompact">
         <Switch v-model:checked="configStore.settings.isCompact" />
