@@ -17,6 +17,7 @@
     </div>
   </ConfigProvider>
 </template>
+
 <script lang="ts" setup>
 import { ConfigProvider, type DerivativeFunc, theme } from 'ant-design-vue/es'
 import { RouterView } from 'vue-router'
@@ -25,8 +26,8 @@ import { ref, watch } from 'vue'
 import { useCssVariables } from '../composable/cssVariables.composable'
 import type { SeedToken } from 'ant-design-vue/es/theme/internal'
 import type { MapToken } from 'ant-design-vue/es/theme/interface'
-const { primaryColor, fontFamily, updateColors } = useCssVariables()
 
+const { primaryColor, fontFamily, updateColors } = useCssVariables()
 const configStore = useConfigStore()
 
 const token = ref(theme.useToken().token)
@@ -51,49 +52,33 @@ watch(
   { immediate: true },
 )
 
-// watch(
-//   () => configStore.settings.isDark,
-//   (newMode) => {
-//     console.log('🚀 ~ newMode:', newMode)
-//     if (newMode === true) {
-//       document.body.classList.add('dark')
-//     } else {
-//       document.body.classList.remove('dark')
-//     }
-//   },
-//   { immediate: true },
-// )
-
 const algorithm = ref<DerivativeFunc<SeedToken, MapToken>[]>([])
 
 watch(
   () => configStore.settings.isCompact,
   (newVal) => {
-    if (newVal) {
-      if (!algorithm.value.includes(theme.compactAlgorithm)) {
-        algorithm.value.push(theme.compactAlgorithm)
-      }
-    } else {
-      algorithm.value = algorithm.value.filter((item) => item !== theme.compactAlgorithm)
-    }
+    algorithm.value = [
+      ...(configStore.settings.isDark ? [theme.darkAlgorithm] : []),
+      ...(newVal ? [theme.compactAlgorithm] : [])
+    ]
   },
-  { immediate: true },
+  { immediate: true }
 )
 
 watch(
   () => configStore.settings.isDark,
   (newVal) => {
-    console.log('🚀 ~ newVal:', newVal)
+    algorithm.value = [
+      ...(newVal ? [theme.darkAlgorithm] : []),
+      ...(configStore.settings.isCompact ? [theme.compactAlgorithm] : [])
+    ]
+    
     if (newVal) {
-      if (!algorithm.value.includes(theme.darkAlgorithm)) {
-        algorithm.value.push(theme.darkAlgorithm)
-        document.body.classList.add('bg-dark dark')
-      }
+      document.body.classList.add('dark', 'bg-dark')
     } else {
-      algorithm.value = algorithm.value.filter((item) => item !== theme.darkAlgorithm)
-      document.body.classList.remove('bg-dark dark')
+      document.body.classList.remove('dark', 'bg-dark')
     }
   },
-  { immediate: true },
+  { immediate: true }
 )
 </script>
