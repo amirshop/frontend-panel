@@ -19,12 +19,11 @@ const columns = reactive<ColumnsType>([
     dataIndex: 'name.last',
     key: 'name.last',
   },
-responsive: ['md'],
   {
     title: 'name.first',
     dataIndex: 'name.first',
     key: 'name.first',
-responsive: ['md'],
+    responsive: ['md'],
   },
   {
     title: 'name.title',
@@ -35,12 +34,13 @@ responsive: ['md'],
     title: 'Gender',
     dataIndex: 'gender',
     key: 'gender',
+    responsive: ['md'],
   },
   {
     title: 'Email',
     dataIndex: 'email',
     key: 'email',
-responsive: ['md'],
+    responsive: ['md'],
   },
   {
     title: 'phone',
