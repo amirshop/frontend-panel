@@ -2,7 +2,7 @@
   <Card>
     <Form layout="vertical" class="flex flex-col h-full">
       <FormItem :label="t('colorMode')">
-        {{ configStore.settings.isDark }}
+       
         <RadioGroupImage v-model:value="configStore.settings.isDark" :items="items" />
     
       </FormItem>
