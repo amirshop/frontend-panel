@@ -61,9 +61,15 @@ watch(
   () => configStore.settings.isCompact,
   () => {
     if (algorithm.value.includes(theme.compactAlgorithm)) {
-      algorithm.value = algorithm.value.filter((item) => item !== theme.compactAlgorithm)
+
+
+algorithm.value.push(theme.compactAlgorithm)
+
+ 
     } else {
-      algorithm.value.push(theme.compactAlgorithm)
+
+     algorithm.value = algorithm.value.filter((item) => item !== theme.compactAlgorithm)
+      
     }
   },
 )
