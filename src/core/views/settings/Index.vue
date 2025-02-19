@@ -4,14 +4,7 @@
       <FormItem :label="t('colorMode')">
         {{ configStore.settings.isDark }}
         <RadioGroupImage v-model:value="configStore.settings.isDark" :items="items" />
-        <Switch v-model:checked="configStore.settings.isDark">
-          <template #checkedChildren>
-            روشن
-          </template>
-          <template #unCheckedChildren>
-            خاموش
-          </template>
-        </Switch>
+    
       </FormItem>
 
       <FormItem :label="t('themeColor')">
