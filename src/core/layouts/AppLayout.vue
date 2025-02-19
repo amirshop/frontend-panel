@@ -60,13 +60,13 @@ const algorithm = ref<DerivativeFunc<SeedToken, MapToken>[]>([])
 watch(
   () => configStore.settings.isCompact,
   () => {
-    if (algorithm.value.includes(theme.compactAlgorithm)) {
+    if (configStore.settings.isCompact)) {
 
 
 algorithm.value.push(theme.compactAlgorithm)
 
  
-    } else {
+    } if(!configStore.settings.isCompact) {
 
      algorithm.value = algorithm.value.filter((item) => item !== theme.compactAlgorithm)
       
