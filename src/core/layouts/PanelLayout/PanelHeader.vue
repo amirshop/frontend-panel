@@ -1,6 +1,6 @@
 <template>
   <LayoutHeader
-    class="!leading-12 !p-inline-4 flex items-center  !from-primary !to-primary-300"
+    class="!leading-12 !p-inline-4 flex items-center !from-primary !to-primary-300"
     :class="headerClass"
   >
     <div class="flex items-center ms-auto">
@@ -30,7 +30,7 @@
           icon="lets-icons:full"
           type="text"
           class="text-white"
-          @click="configProviderStore.fullscreen.toggle"
+          @click="configStore.fullscreen.toggle"
         />
       </Tooltip>
       <Divider type="vertical" class="bg-white" />
@@ -41,11 +41,11 @@
   </LayoutHeader>
 </template>
 <script lang="ts" setup>
-import { Dropdown, LayoutHeader, Menu, MenuItem, Divider,Tooltip } from 'ant-design-vue/es'
+import { Dropdown, LayoutHeader, Menu, MenuItem, Divider, Tooltip } from 'ant-design-vue/es'
 import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/core/stores/auth.store'
-import { useConfigProviderStore } from '@/core/stores/configProvider.store'
+import { useConfigStore } from '@/core/stores/config.store'
 import LockScreen from '@/core/components/LockScreen.vue'
 import { AzButton } from '@/core/components'
 import { useI18n } from 'vue-i18n'
@@ -53,7 +53,7 @@ import { DirectionsEnum, LanguagesEnum } from '@/core/enums'
 import AzFullScreen from '@/core/components/AzFullScreen.vue'
 import { computed } from 'vue'
 
-const configProviderStore = useConfigProviderStore()
+const configStore = useConfigStore()
 const authStore = useAuthStore()
 const router = useRouter()
 
@@ -64,7 +64,7 @@ const logout = () => {
 }
 
 const headerClass = computed(() => {
-  if (configProviderStore.direction === DirectionsEnum.RTL) {
+  if (configStore.direction === DirectionsEnum.RTL) {
     return '!bg-gradient-to-l'
   } else {
     return '!bg-gradient-to-r '

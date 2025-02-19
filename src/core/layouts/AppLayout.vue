@@ -1,20 +1,82 @@
 <template>
   <ConfigProvider
     :theme="{
-      token: configProviderStore.token,
+      algorithm: algorithm,
+      token: {
+        colorPrimary: configStore.settings.primaryColor ?? 'red',
+        fontFamily: configStore.settings.fontFamily ?? '',
+      },
     }"
-    :locale="configProviderStore.locale"
-    :component-size="configProviderStore.size"
-    :direction="configProviderStore.direction"
-    :ref="configProviderStore.fullscreen.appRef"
+    :locale="configStore.locale"
+    :component-size="configStore.size"
+    :direction="configStore.direction"
+    :ref="configStore.fullscreen.appRef"
   >
-    <RouterView />
+    <div class="dark:bg-dark">
+      <RouterView />
+    </div>
   </ConfigProvider>
 </template>
 <script lang="ts" setup>
-import { ConfigProvider } from 'ant-design-vue/es'
+import { ConfigProvider, type DerivativeFunc, theme } from 'ant-design-vue/es'
 import { RouterView } from 'vue-router'
-import { useConfigProviderStore } from '@/core/stores/configProvider.store'
+import { useConfigStore } from '@/core/stores/config.store'
+import { ref, watch } from 'vue'
+import { useCssVariables } from '../composable/cssVariables.composable'
+import type { SeedToken } from 'ant-design-vue/es/theme/internal'
+import type { MapToken } from 'ant-design-vue/es/theme/interface'
+const { primaryColor, fontFamily, updateColors } = useCssVariables()
 
-const configProviderStore = useConfigProviderStore()
+const configStore = useConfigStore()
+watch(
+  () => configStore.settings.primaryColor,
+  (newColor) => {
+    primaryColor.value = newColor
+    updateColors()
+  },
+)
+
+watch(
+  () => configStore.settings.fontFamily,
+  (newColor) => {
+    fontFamily.value = newColor
+  },
+)
+
+watch(
+  () => configStore.settings.isDark,
+  (newMode) => {
+    if (newMode === true) {
+      document.body.classList.add('dark')
+    } else {
+      document.body.classList.remove('dark')
+    }
+  },
+  { immediate: true },
+)
+
+const algorithm = ref<DerivativeFunc<SeedToken, MapToken>[]>([])
+
+watch(
+  () => configStore.settings.isCompact,
+  () => {
+    if (algorithm.value.includes(theme.compactAlgorithm)) {
+      algorithm.value = algorithm.value.filter((item) => item !== theme.compactAlgorithm)
+    } else {
+      algorithm.value.push(theme.compactAlgorithm)
+    }
+  },
+)
+
+watch(
+  () => configStore.settings.isDark,
+  () => {
+    if (configStore.settings.isDark) {
+      algorithm.value.push(theme.darkAlgorithm)
+    }
+    if (!configStore.settings.isDark) {
+      algorithm.value = algorithm.value.filter((item) => item !== theme.darkAlgorithm)
+    }
+  },
+)
 </script>

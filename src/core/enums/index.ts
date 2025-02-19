@@ -39,14 +39,24 @@ export const enum ComponentsSizesEnum {
   MIDDLE = 'middle',
   LARGE = 'large',
 }
-export const enum ColorModeEnum  {
+export const enum ColorModeEnum {
   DARK = 'dark',
   LIGHT = 'light',
-  AUTO = "auto",
+  AUTO = 'auto',
 }
 export type LocaleType = keyof typeof LocaleMapping
 export const LocaleMapping = {
   en: enUS,
   fa: faIR,
   az: azAZ,
+}
+
+export const enum FontFamilyEnum {
+  FARSI = 'Poppins',
+  ENGLISH = 'Vazirmatn',
+}
+export const enum CurrenciesEnum {
+  DOLLAR = 'dollar',
+  RIAL = 'dolSlar',
+  TOMAN = 'dollarS',
 }

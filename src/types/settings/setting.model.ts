@@ -15,7 +15,7 @@ export interface SettingModel {
   primaryColor: ColorsEnum
   primaryFontFamily: ColorsEnum
   direction: DirectionsEnum
-  // currency: string;
+  currency: string;
   language: LanguagesEnum
   componentsSize: ComponentsSizesEnum
   createdAt: Date

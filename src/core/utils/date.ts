@@ -1,15 +1,15 @@
-import { useConfigProviderStore } from '@/core/stores/configProvider.store'
+import { useConfigStore } from '@/core/stores/config.store'
 import dayjs from 'dayjs'
 import { isDate } from 'lodash'
 
 export const formatDate = (_input: any, format?: string) => {
-  const configProviderStore = useConfigProviderStore()
+  const configStore = useConfigStore()
   const dateObject = new Date(_input)
 
   if (isDate(dateObject) && _input) {
-    if (configProviderStore.locale.locale === 'en') {
+    if (configStore.locale.locale === 'en') {
       return dayjs(_input).format(format ?? 'YYYY/MM/DD - HH:mm')
-    } else if (configProviderStore.locale.locale === 'fa') {
+    } else if (configStore.locale.locale === 'fa') {
       dayjs.calendar('jalali')
       return dayjs(_input).format(format ?? 'HH:mm - YYYY/MM/DD')
     }

@@ -134,12 +134,10 @@
       :data-source="userTable.tableData.value"
       :pagination="{
         ...userTable.pagination,
-        position: [
-          configProviderStore.direction === DirectionsEnum.RTL ? 'bottomLeft' : 'bottomRight',
-        ],
+        position: [configStore.direction === DirectionsEnum.RTL ? 'bottomLeft' : 'bottomRight'],
         locale: { items_per_page: '' },
       }"
-      :direction="configProviderStore.direction"
+      :direction="configStore.direction"
       :loading="userTable.loading.value"
       @change="userTable.handleTableChange"
       id="az-table"
@@ -166,7 +164,7 @@ import {
 } from 'ant-design-vue'
 import axios from 'axios'
 import type { ColumnsType } from 'ant-design-vue/es/table'
-import { useConfigProviderStore } from '@/core/stores/configProvider.store'
+import { useConfigStore } from '@/core/stores/config.store'
 import { useModal, useTable } from '../composable'
 import { Icon } from '@iconify/vue/dist/iconify.js'
 import type { FilterValue } from 'ant-design-vue/es/table/interface'
@@ -178,7 +176,7 @@ import { type Dayjs } from 'dayjs'
 
 const { t } = useI18n()
 const filterMode = useModal()
-const configProviderStore = useConfigProviderStore()
+const configStore = useConfigStore()
 const exportFile = useExportFile()
 const userTable = useTable()
 

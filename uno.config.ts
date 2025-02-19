@@ -1,17 +1,23 @@
-import { defineConfig, presetAttributify, presetUno } from 'unocss'
+import { defineConfig } from 'unocss'
 import transformerDirectives from '@unocss/transformer-directives'
-import { ColorsEnum, FontFamilyEnum } from './src/core/enums'
 
 export default defineConfig({
   transformers: [transformerDirectives()],
-  presets: [presetUno(), presetAttributify()],
   theme: {
-    fontFamily: {
-      body: [FontFamilyEnum.PRIMARY],
-    },
     colors: {
-      primary: ColorsEnum.PRIMARY,
+      primary: {
+        DEFAULT: 'var(--primary-color)',
+        '50': 'var(--primary-color-50)',
+        '100': 'var(--primary-color-100)',
+        '200': 'var(--primary-color-200)',
+        '300': 'var(--primary-color-300)',
+        '400': 'var(--primary-color-400)',
+        '500': 'var(--primary-color-500)',
+        '600': 'var(--primary-color-600)',
+        '700': 'var(--primary-color-700)',
+        '800': 'var(--primary-color-800)',
+        '900': 'var(--primary-color-900)',
+      },
     },
-    extend: {},
   },
 })

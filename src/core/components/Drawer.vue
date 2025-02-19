@@ -6,29 +6,26 @@
       </FormItem>
 
       <FormItem label="Theme color">
-        <RadioGroupColor
-          v-model:value="configProviderStore.primaryColor"
-          :colorList="colorList"
-        />
+        <RadioGroupColor v-model:value="configStore.primaryColor" :colorList="colorList" />
       </FormItem>
 
       <Divider />
       <FormItem label="Language">
-        <Select v-model:value="configProviderStore.language">
+        <Select v-model:value="configStore.language">
           <SelectOption :value="LanguagesEnum.FARSI">FARSI</SelectOption>
           <SelectOption :value="LanguagesEnum.ENGLISH">English</SelectOption>
         </Select>
       </FormItem>
 
       <FormItem label="Direction">
-        <RadioGroup v-model:value="configProviderStore.direction">
+        <RadioGroup v-model:value="configStore.direction">
           <RadioButton :value="DirectionsEnum.LTR">ltr</RadioButton>
           <RadioButton :value="DirectionsEnum.RTL">rtl</RadioButton>
         </RadioGroup>
       </FormItem>
 
       <FormItem label="Components size">
-        <RadioGroup v-model:value="configProviderStore.size">
+        <RadioGroup v-model:value="configStore.size">
           <RadioButton :value="ComponentsSizesEnum.Large">Large</RadioButton>
           <RadioButton :value="ComponentsSizesEnum.Middle">Middle</RadioButton>
           <RadioButton :value="ComponentsSizesEnum.Small">Small</RadioButton>
@@ -47,7 +44,7 @@
 </template>
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue'
-import { useConfigProviderStore } from '@/core/stores/configProvider.store'
+import { useConfigStore } from '@/core/stores/config.store'
 import {
   Button,
   Select,
@@ -63,10 +60,10 @@ import {
 import { DirectionsEnum, ComponentsSizesEnum, LanguagesEnum } from '@/core/enums'
 import RadioGroupColor from '@/core/components/RadioGroupColor.vue'
 import RadioGroupImage from '@/core/components/RadioGroupImage.vue'
-const configProviderStore = useConfigProviderStore()
+const configStore = useConfigStore()
 
 const placement = computed(() => {
-  return configProviderStore.direction === DirectionsEnum.LTR ? 'right' : 'left'
+  return configStore.direction === DirectionsEnum.LTR ? 'right' : 'left'
 })
 const emits = defineEmits(['close', 'ok'])
 const colorList = reactive([
