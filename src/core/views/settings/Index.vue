@@ -83,9 +83,7 @@
         <Switch v-model:checked="configStore.settings.isCompact" />
       </FormItem>
 
-      <FormItem label="isRtl" name="isRtl">
-        <Switch v-model:checked="configStore.settings.isRtl" />
-      </FormItem>
+      
 
       <FormItem label="isDark" name="isDark">
         <Switch v-model:checked="configStore.settings.isDark" />
