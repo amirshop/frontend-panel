@@ -2,15 +2,45 @@
   <Card>
     <Form layout="vertical" class="flex flex-col h-full">
       <FormItem :label="t('shopName')" name="shopName">
-        <Input v-model:value="shopSettingsStore.settingList.shopName" />
+        <Input v-model:value="shopSettingsStore.settingList.name" />
+      </FormItem>
+      <FormItem :label="t('shopDescription')" name="shopDescription">
+        <Input v-model:value="shopSettingsStore.settingList.description" />
+      </FormItem>
+      <FormItem :label="t('shopSlug')" name="shopSlug">
+        <Input v-model:value="shopSettingsStore.settingList.slug" />
       </FormItem>
 
       <FormItem :label="t('shopLogo')" name="shopLogo">
-        <Input v-model:value="shopSettingsStore.settingList.shopLogo" />
+        <PictureCropper
+        v-model="shopSettingsStore.settingList.logo"
+          :aspect-ratio="1 / 1"
+          :image-preview-width="300"
+          modal-title="Custom Crop Title"
+          @crop="handleCrop"
+          @remove="handleRemove"
+          @error="handleError"
+          :crop-options="{
+            viewMode: 2,
+            dragMode: 'move',
+          }"
+        />
       </FormItem>
 
       <FormItem :label="t('shopFavicon')" name="shopFavicon">
-        <PictureCropper />
+        <PictureCropper
+        v-model="shopSettingsStore.settingList.favicon"
+          :aspect-ratio="1 / 1"
+          :image-preview-width="300"
+          modal-title="Custom Crop Title"
+          @crop="handleCrop"
+          @remove="handleRemove"
+          @error="handleError"
+          :crop-options="{
+            viewMode: 2,
+            dragMode: 'move',
+          }"
+        />
       </FormItem>
 
       <Divider />
@@ -32,42 +62,20 @@ import PictureCropper from '@/core/components/PictureCropper.vue'
 const shopSettingsStore = useShopSettingsStore()
 const { t } = useI18n()
 
-const handleFileChange = (event: Event) => {
-  const file = (event.target as HTMLInputElement).files?.[0]
-  if (file) {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      if (e.target?.result) {
-        shopSettingsStore.settingList.shopFavicon = e.target.result as string
-      }
-    }
-    reader.readAsDataURL(file)
-  }
-}
-
-const handleCropperReady = () => {
-  console.log('Cropper is ready')
-}
-const localFavicon = ref<string | null>(null)
-
-const handleCroppedImage = async () => {
-  const croppedBlob = await cropper?.getBlob()
-  if (croppedBlob) {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      if (e.target?.result) {
-        localFavicon.value = e.target.result as string
-      }
-    }
-    reader.readAsDataURL(croppedBlob)
-  }
+const handleCrop = (result: any) => {
+  console.log('Cropped result:', result)
+  // آپلود blob به سرور یا ذخیره محلی
 }
 
 const saveSettings = () => {
-  if (localFavicon.value) {
-    shopSettingsStore.settingList.shopFavicon = localFavicon.value
-  }
-  console.log('Saving settings:', shopSettingsStore.settingList)
-  // Call an API to save the settings
+  console.log('Image removed')
+}
+
+const handleRemove = () => {
+  console.log('Image removed')
+}
+
+const handleError = (error) => {
+  console.error('Error occurred:', error)
 }
 </script>
