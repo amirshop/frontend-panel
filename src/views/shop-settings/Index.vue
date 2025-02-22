@@ -10,88 +10,64 @@
       </FormItem>
 
       <FormItem :label="t('shopFavicon')" name="shopFavicon">
-        <Input v-model:value="shopSettingsStore.settingList.shopFavicon" />
+        <PictureCropper />
       </FormItem>
 
       <Divider />
       <div class="flex gap-x-4">
-        <Button type="primary" @click="emits('ok', false)"> {{ t('save') }} </Button>
-        <Button type="ghost" @click="emits('close', false)"> {{ t('cancel') }} </Button>
+        <Button type="primary" @click="saveSettings"> {{ t('save') }} </Button>
+        <Button type="ghost"> {{ t('cancel') }} </Button>
       </div>
     </Form>
   </Card>
 </template>
+
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-import { usePanelSettingsStore } from '@/core/stores/panelConfig.store'
-import {
-  Button,
-  Card,
-  Form,
-  FormItem,
-  RadioButton,
-  RadioGroup,
-  Divider,
-  Input,
-  Select,
-  SelectOption,
-  Switch,
-  Radio,
-  Tooltip,
-} from 'ant-design-vue/es'
-
-import { DirectionsEnum, ComponentsSizesEnum, LanguagesEnum } from '@/core/enums'
-import RadioGroupColor from '@/core/components/RadioGroupColor.vue'
-import RadioGroupImage from '@/core/components/RadioGroupImage.vue'
+import { ref } from 'vue'
+import { Button, Card, Form, FormItem, Divider, Input } from 'ant-design-vue/es'
+import VuePictureCropper, { cropper } from 'vue-picture-cropper'
 import { useI18n } from 'vue-i18n'
-import { Icon } from '@iconify/vue/dist/iconify.js'
 import { useShopSettingsStore } from '@/stores/shopSettings.store'
-
+import PictureCropper from '@/core/components/PictureCropper.vue'
 const shopSettingsStore = useShopSettingsStore()
 const { t } = useI18n()
-const emits = defineEmits(['close', 'ok'])
-const colorList = reactive([
-  {
-    label: 'Blue',
-    value: 'blue',
-  },
 
-  {
-    label: 'Green',
-    value: 'green',
-  },
+const handleFileChange = (event: Event) => {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      if (e.target?.result) {
+        shopSettingsStore.settingList.shopFavicon = e.target.result as string
+      }
+    }
+    reader.readAsDataURL(file)
+  }
+}
 
-  {
-    label: 'Purple',
-    value: 'purple',
-  },
+const handleCropperReady = () => {
+  console.log('Cropper is ready')
+}
+const localFavicon = ref<string | null>(null)
 
-  {
-    label: 'sky',
-    value: 'sky',
-  },
+const handleCroppedImage = async () => {
+  const croppedBlob = await cropper?.getBlob()
+  if (croppedBlob) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      if (e.target?.result) {
+        localFavicon.value = e.target.result as string
+      }
+    }
+    reader.readAsDataURL(croppedBlob)
+  }
+}
 
-  {
-    label: 'slate',
-    value: 'slate',
-  },
-
-  {
-    label: 'primary',
-    value: 'primary',
-  },
-])
-
-const items = reactive([
-  {
-    label: 'light',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg',
-    value: false,
-  },
-  {
-    label: 'dark',
-    src: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
-    value: true,
-  },
-])
+const saveSettings = () => {
+  if (localFavicon.value) {
+    shopSettingsStore.settingList.shopFavicon = localFavicon.value
+  }
+  console.log('Saving settings:', shopSettingsStore.settingList)
+  // Call an API to save the settings
+}
 </script>

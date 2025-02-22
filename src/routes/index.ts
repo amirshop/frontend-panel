@@ -7,6 +7,11 @@ export default [
     component: () => import('../views/dashboard/Index.vue'),
   },
   {
+    path: 'media',
+    name: 'TheMedia',
+    component: () => import('../views/media/Index.vue'),
+  },
+  {
     path: '/users',
     name: 'TheUsers',
     component: () => import('../views/users/Index.vue'),

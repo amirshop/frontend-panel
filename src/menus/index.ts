@@ -12,6 +12,21 @@ export const useMenus = () => {
       icon: () => h(Icon, { icon: 'tabler:layout-dashboard', height: 18 }),
     },
     { type: 'divider' },
+
+    {
+      key: 'TheMedia',
+      label: t('media'),
+      icon: () => h(Icon, { icon: 'tabler:layout-dashboard', height: 18 }),
+      children: [
+        {
+          key: 'TheMedia',
+          label: t('media'),
+          icon: () => h(Icon, { icon: 'tabler:layout-dashboard', height: 18 }),
+        },
+      ],
+    },
+    { type: 'divider' },
+
     {
       key: 'TheCustomers',
       label: t('customers'),
