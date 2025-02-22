@@ -18,6 +18,8 @@ export default {
   left: 'چپ',
   light: 'روشن',
   middle: 'متوسط',
+  media: 'رسانه',
+  mediaList: 'رسانه‌ها',
   reset: 'بازنشانی',
   resetTable: 'ریست جدول',
   right: 'راست',
