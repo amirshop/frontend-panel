@@ -38,7 +38,7 @@ export default [
     children: [
       {
         path: '',
-        name: 'TheShopSettingsPublic',
+        name: 'TheShopSettingsGeneral',
         component: () => import('@/views/shop-settings/Index.vue'),
       },
       {
