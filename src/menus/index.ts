@@ -136,19 +136,19 @@ export const useMenus = () => {
       icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
       children: [
         {
-          key: 'TheShopSettingsPublic',
-          label: t('shopPublicSettings'),
-          icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
+          key: 'TheShopSettingsGeneral',
+          label: t('general'),
+          icon: () => h(Icon, { icon: 'material-symbols:public', height: 18 }),
         },
         {
           key: 'TheShopSettingsHeader',
-          label: t('shopHeaderSettings'),
-          icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
+          label: t('header'),
+          icon: () => h(Icon, { icon: 'fluent-mdl2:header', height: 18 }),
         },
         {
           key: 'TheShopSettingsFooter',
-          label: t('shopFooterSettings'),
-          icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
+          label: t('footer'),
+          icon: () => h(Icon, { icon: 'fluent-mdl2:footer', height: 18 }),
         },
       ],
     },
