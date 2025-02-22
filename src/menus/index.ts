@@ -14,13 +14,13 @@ export const useMenus = () => {
     { type: 'divider' },
 
     {
-      key: 'TheMedia',
-      label: t('media'),
+      key: 'TheFiles',
+      label: t('files'),
       icon: () => h(Icon, { icon: 'tabler:layout-dashboard', height: 18 }),
       children: [
         {
-          key: 'TheMedia',
-          label: t('media'),
+          key: 'TheFiles',
+          label: t('files'),
           icon: () => h(Icon, { icon: 'tabler:layout-dashboard', height: 18 }),
         },
       ],
