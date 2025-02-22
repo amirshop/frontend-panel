@@ -1,17 +1,17 @@
 <template>
   <Card>
     <Form layout="vertical" class="flex flex-col h-full">
-      <FormItem :label="t('shopName')" name="shopName">
+      <FormItem :label="t('name')" name="name">
         <Input v-model:value="shopSettingsStore.settingList.name" />
       </FormItem>
-      <FormItem :label="t('shopDescription')" name="shopDescription">
+      <FormItem :label="t('description')" name="description">
         <Input v-model:value="shopSettingsStore.settingList.description" />
       </FormItem>
-      <FormItem :label="t('shopSlug')" name="shopSlug">
+      <FormItem :label="t('slug')" name="slug">
         <Input v-model:value="shopSettingsStore.settingList.slug" />
       </FormItem>
 
-      <FormItem :label="t('shopLogo')" name="shopLogo">
+      <FormItem :label="t('logo')" name="logo">
         <PictureCropper
         v-model="shopSettingsStore.settingList.logo"
           :aspect-ratio="1 / 1"
@@ -27,7 +27,7 @@
         />
       </FormItem>
 
-      <FormItem :label="t('shopFavicon')" name="shopFavicon">
+      <FormItem :label="t('favicon')" name="favicon">
         <PictureCropper
         v-model="shopSettingsStore.settingList.favicon"
           :aspect-ratio="1 / 1"
