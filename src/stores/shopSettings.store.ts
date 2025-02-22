@@ -3,9 +3,11 @@ import { defineStore } from 'pinia'
 
 export const useShopSettingsStore = defineStore('Shop settings', () => {
   const settingList = ref({
-    shopName: '',
-    shopLogo: '',
-    shopFavicon: '',
+    name: '',
+    logo: '',
+    favicon: '',
+    description: '',
+    slug: '',
   })
 
   return { settingList }
