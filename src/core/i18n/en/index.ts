@@ -11,6 +11,8 @@ export default {
   endDate: 'End date',
   file: 'file',
   files: 'Files',
+  media: 'Media',
+  mediaList: 'Media',
   filter: 'Filter',
   fullScreen: 'Full screen',
   language: 'language',
