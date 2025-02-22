@@ -25,5 +25,15 @@ export default {
   option: 'Option',
   reviews: 'Reviews',
   review: 'Review',
-  shopSettings: 'Shop settings'
+  shopSettings: 'Shop settings',
+  header: 'Header',
+  footer: 'Footer',
+  social: 'Social',
+  general: 'General',
+  name: 'Name',
+  description: 'Description',
+  slug: 'Slug',
+  logo: 'Logo',
+  favicon: 'Favicon',
+  selectImage: 'Select image',
 }
