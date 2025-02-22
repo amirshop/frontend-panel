@@ -16,7 +16,7 @@
         <template #overlay>
           <Menu>
             <MenuItem key="0" class="!text-red" @click="logout">
-              {{ t('panel.exit') }}
+              {{ t('exit') }}
               <template #icon>
                 <Icon icon="uil:signout" />
               </template>
@@ -25,17 +25,27 @@
         </template>
       </Dropdown>
       <Divider type="vertical" class="bg-white" />
-      <Tooltip title="بزرگنمایی" size="small">
+      <Tooltip :title="t('fullScreen')" size="small">
         <AzButton
           icon="lets-icons:full"
           type="text"
           class="text-white"
-          @click="configStore.fullscreen.toggle"
+          @click="panelSettingsStore.fullscreen.toggle"
         />
       </Tooltip>
       <Divider type="vertical" class="bg-white" />
-      <Tooltip title="قفل صفحه" size="small">
+      <Tooltip :title="t('lockScreen')" size="small">
         <LockScreen />
+      </Tooltip>
+      <Divider type="vertical" class="bg-white" />
+      <Tooltip :title="t('panelSettings')" size="small">
+        <AzButton
+          icon="tabler:settings"
+          type="text"
+          class="text-white"
+          @click="panelSettingModal.open"
+        />
+        <Drawer v-model:open="panelSettingModal.isOpen.value" @save="panelSettingModal.close" />
       </Tooltip>
     </div>
   </LayoutHeader>
@@ -45,15 +55,17 @@ import { Dropdown, LayoutHeader, Menu, MenuItem, Divider, Tooltip } from 'ant-de
 import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/core/stores/auth.store'
-import { useConfigStore } from '@/core/stores/config.store'
+import { usePanelSettingsStore } from '@/core/stores/panelConfig.store'
 import LockScreen from '@/core/components/LockScreen.vue'
 import { AzButton } from '@/core/components'
 import { useI18n } from 'vue-i18n'
 import { DirectionsEnum, LanguagesEnum } from '@/core/enums'
 import AzFullScreen from '@/core/components/AzFullScreen.vue'
 import { computed } from 'vue'
+import Drawer from '@/core/components/Drawer.vue'
+import { useModal } from '@/core/composable'
 
-const configStore = useConfigStore()
+const panelSettingsStore = usePanelSettingsStore()
 const authStore = useAuthStore()
 const router = useRouter()
 
@@ -64,10 +76,11 @@ const logout = () => {
 }
 
 const headerClass = computed(() => {
-  if (configStore.direction === DirectionsEnum.RTL) {
+  if (panelSettingsStore.settings.direction === DirectionsEnum.RTL) {
     return '!bg-gradient-to-l'
   } else {
     return '!bg-gradient-to-r '
   }
 })
+const panelSettingModal = useModal()
 </script>

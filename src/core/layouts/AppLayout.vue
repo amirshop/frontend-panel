@@ -3,32 +3,30 @@
     :theme="{
       algorithm: algorithm,
       token: {
-        colorPrimary: configStore.settings.primaryColor ?? 'red',
-        fontFamily: configStore.settings.fontFamily ?? '',
+        colorPrimary: panelSettingsStore.settings.primaryColor,
+        fontFamily: panelSettingsStore.settings.fontFamily,
       },
     }"
-    :locale="configStore.locale"
-    :component-size="configStore.size"
-    :direction="configStore.direction"
-    :ref="configStore.fullscreen.appRef"
+    :locale="panelSettingsStore.locale"
+    :component-size="panelSettingsStore.settings.componentsSize"
+    :direction="panelSettingsStore.settings.direction"
+    :ref="panelSettingsStore.fullscreen.appRef"
   >
-    <div class="dark:bg-dark">
-      <RouterView />
-    </div>
+    <RouterView />
   </ConfigProvider>
 </template>
 
 <script lang="ts" setup>
 import { ConfigProvider, type DerivativeFunc, theme } from 'ant-design-vue/es'
 import { RouterView } from 'vue-router'
-import { useConfigStore } from '@/core/stores/config.store'
+import { usePanelSettingsStore } from '@/core/stores/panelConfig.store'
 import { ref, watch } from 'vue'
 import { useCssVariables } from '../composable/cssVariables.composable'
 import type { SeedToken } from 'ant-design-vue/es/theme/internal'
 import type { MapToken } from 'ant-design-vue/es/theme/interface'
 
 const { primaryColor, fontFamily, updateColors } = useCssVariables()
-const configStore = useConfigStore()
+const panelSettingsStore = usePanelSettingsStore()
 
 const token = ref(theme.useToken().token)
 watch(token, (newVal) => {
@@ -36,7 +34,7 @@ watch(token, (newVal) => {
 })
 
 watch(
-  () => configStore.settings.primaryColor,
+  () => panelSettingsStore.settings.primaryColor,
   (newColor) => {
     primaryColor.value = newColor
     updateColors()
@@ -45,7 +43,7 @@ watch(
 )
 
 watch(
-  () => configStore.settings.fontFamily,
+  () => panelSettingsStore.settings.fontFamily,
   (newColor) => {
     fontFamily.value = newColor
   },
@@ -55,30 +53,30 @@ watch(
 const algorithm = ref<DerivativeFunc<SeedToken, MapToken>[]>([])
 
 watch(
-  () => configStore.settings.isCompact,
+  () => panelSettingsStore.settings.isCompact,
   (newVal) => {
     algorithm.value = [
-      ...(configStore.settings.isDark ? [theme.darkAlgorithm] : []),
-      ...(newVal ? [theme.compactAlgorithm] : [])
+      ...(panelSettingsStore.settings.isDark ? [theme.darkAlgorithm] : []),
+      ...(newVal ? [theme.compactAlgorithm] : []),
     ]
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 watch(
-  () => configStore.settings.isDark,
+  () => panelSettingsStore.settings.isDark,
   (newVal) => {
     algorithm.value = [
       ...(newVal ? [theme.darkAlgorithm] : []),
-      ...(configStore.settings.isCompact ? [theme.compactAlgorithm] : [])
+      ...(panelSettingsStore.settings.isCompact ? [theme.compactAlgorithm] : []),
     ]
-    
+
     if (newVal) {
-      document.body.classList.add('dark', 'bg-dark')
+      document.body.classList.add('bg-dark')
     } else {
-      document.body.classList.remove('dark', 'bg-dark')
+      document.body.classList.remove('bg-dark')
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 </script>

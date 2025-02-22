@@ -16,6 +16,13 @@ export const useMenus = () => {
       key: 'TheCustomers',
       label: t('customers'),
       icon: () => h(Icon, { icon: 'tabler:users', height: 18 }),
+      children: [
+        {
+          key: 'TheCustomers',
+          label: t('customers'),
+          icon: () => h(Icon, { icon: 'tabler:users', height: 18 }),
+        },
+      ],
     },
 
     {
@@ -102,8 +109,8 @@ export const useMenus = () => {
       icon: () => h(Icon, { icon: 'tabler:users', height: 18 }),
     },
     {
-      key: 'TheSettings',
-      label: t('settings'),
+      key: 'TheShopSettings',
+      label: t('shopSettings'),
       icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
     },
   ])

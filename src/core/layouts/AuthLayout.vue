@@ -14,7 +14,7 @@
       class="p-4 bg-gray-50 grid grid-cols-3 gap-x-4 items-center justify-between border-t border-t-dashed border-t-gray-300"
     >
       <div>
-        <Select v-model:value="configStore.direction" size="small">
+        <Select v-model:value="panelSettingsStore.direction" size="small">
           <SelectOption value="ltr">
             <div class="flex items-center gap-x-2">
               <Icon icon="twemoji:flag-england" />
@@ -45,13 +45,13 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import { Select, SelectOption } from 'ant-design-vue/es'
-import { useConfigStore } from '@/core/stores/config.store'
+import { usePanelSettingsStore } from '@/core/stores/panelConfig.store'
 import { AzCard } from '@/core/components'
 import { Icon } from '@iconify/vue/dist/iconify.js'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const configStore = useConfigStore()
+const panelSettingsStore = usePanelSettingsStore()
 </script>
 <style>
 .bg-auth-pattern {

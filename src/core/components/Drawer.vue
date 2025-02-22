@@ -1,50 +1,94 @@
 <template>
-  <Drawer title="Panel setting" :placement="placement">
+  <Drawer title="Panel setting" :placement="placement" :closable="false">
     <Form layout="vertical" class="flex flex-col h-full">
-      <FormItem label="Overall style settings">
-        <RadioGroupImage v-model:value="checkedRadio" :items="items" />
+      <FormItem :label="t('colorMode')">
+        <RadioGroupImage v-model:value="panelSettingsStore.settings.isDark" :items="items" />
       </FormItem>
 
-      <FormItem label="Theme color">
-        <RadioGroupColor v-model:value="configStore.primaryColor" :colorList="colorList" />
+      <FormItem :label="t('themeColor')">
+        <RadioGroupColor
+          v-model:value="panelSettingsStore.settings.primaryColor"
+          :colorList="colorList"
+        />
       </FormItem>
 
       <Divider />
-      <FormItem label="Language">
-        <Select v-model:value="configStore.language">
-          <SelectOption :value="LanguagesEnum.FARSI">FARSI</SelectOption>
-          <SelectOption :value="LanguagesEnum.ENGLISH">English</SelectOption>
-        </Select>
-      </FormItem>
 
-      <FormItem label="Direction">
-        <RadioGroup v-model:value="configStore.direction">
-          <RadioButton :value="DirectionsEnum.LTR">ltr</RadioButton>
-          <RadioButton :value="DirectionsEnum.RTL">rtl</RadioButton>
+      <FormItem :label="t('language')">
+        <RadioGroup v-model:value="panelSettingsStore.settings.language">
+          <RadioButton :value="LanguagesEnum.FARSI">
+            <div class="flex items-center gap-4">
+              <Icon icon="twemoji:flag-iran" />
+              <span>فارسی</span>
+            </div>
+          </RadioButton>
+          <RadioButton :value="LanguagesEnum.ENGLISH">
+            <div class="flex items-center gap-4">
+              <Icon icon="twemoji:flag-united-kingdom" />
+              <span>English</span>
+            </div>
+          </RadioButton>
         </RadioGroup>
       </FormItem>
 
-      <FormItem label="Components size">
-        <RadioGroup v-model:value="configStore.size">
-          <RadioButton :value="ComponentsSizesEnum.Large">Large</RadioButton>
-          <RadioButton :value="ComponentsSizesEnum.Middle">Middle</RadioButton>
-          <RadioButton :value="ComponentsSizesEnum.Small">Small</RadioButton>
+      <FormItem :label="t('direction')">
+        <RadioGroup v-model:value="panelSettingsStore.settings.direction">
+          <RadioButton :value="DirectionsEnum.RTL">
+            <div class="inline-flex items-center gap-2">
+              <Icon icon="ooui:outdent-rtl" />
+              <span>{{ t('right') }}</span>
+            </div>
+          </RadioButton>
+          <RadioButton :value="DirectionsEnum.LTR">
+            <div class="inline-flex items-center gap-2">
+              <Icon icon="ooui:outdent-ltr" />
+              <span>{{ t('left') }}</span>
+            </div>
+          </RadioButton>
         </RadioGroup>
       </FormItem>
 
-      <Divider class="flex-1" />
+      <FormItem :label="t('componentsSize')">
+        <RadioGroup v-model:value="panelSettingsStore.settings.componentsSize">
+          <RadioButton :value="ComponentsSizesEnum.LARGE">{{ t('large') }}</RadioButton>
+          <RadioButton :value="ComponentsSizesEnum.MIDDLE">{{ t('middle') }}</RadioButton>
+          <RadioButton :value="ComponentsSizesEnum.SMALL">{{ t('small') }}</RadioButton>
+        </RadioGroup>
+      </FormItem>
 
-      <Divider />
+      <FormItem :label="t('compactMode')" name="isCompact">
+        <Switch v-model:checked="panelSettingsStore.settings.isCompact" />
+      </FormItem>
+
+      <!-- <Divider class="flex-1" /> -->
+
+      <!-- <Divider />
       <div class="flex gap-x-4">
         <Button type="primary" @click="emits('ok', false)"> Save </Button>
         <Button type="ghost" @click="emits('close', false)"> Reset </Button>
+      </div> -->
+
+      <!-- <FormItem label="websiteName" name="websiteName">
+        <Input v-model:value="panelSettingsStore.settings.websiteName" />
+      </FormItem> -->
+
+      <!-- <FormItem label="fontFamily" name="fontFamily">
+        <Select v-model:value="panelSettingsStore.settings.fontFamily">
+          <SelectOption value="'Poppins', 'Vazirmatn'">Poppins</SelectOption>
+          <SelectOption value="'Vazirmatn', 'Poppins'">Vazirmatn</SelectOption>
+        </Select>
+      </FormItem> -->
+
+      <Divider />
+      <div class="flex gap-x-4">
+        <Button type="primary" @click="emits('save', false)"> {{ t('save') }} </Button>
       </div>
     </Form>
   </Drawer>
 </template>
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue'
-import { useConfigStore } from '@/core/stores/config.store'
+import { usePanelSettingsStore } from '@/core/stores/panelConfig.store'
 import {
   Button,
   Select,
@@ -55,65 +99,74 @@ import {
   RadioButton,
   RadioGroup,
   Divider,
+  Switch,
 } from 'ant-design-vue/es'
+import { Icon } from '@iconify/vue/dist/iconify.js'
 
 import { DirectionsEnum, ComponentsSizesEnum, LanguagesEnum } from '@/core/enums'
 import RadioGroupColor from '@/core/components/RadioGroupColor.vue'
 import RadioGroupImage from '@/core/components/RadioGroupImage.vue'
-const configStore = useConfigStore()
+import { useI18n } from 'vue-i18n'
+const panelSettingsStore = usePanelSettingsStore()
+const { t } = useI18n()
 
 const placement = computed(() => {
-  return configStore.direction === DirectionsEnum.LTR ? 'right' : 'left'
+  return panelSettingsStore.settings.direction === DirectionsEnum.LTR ? 'right' : 'left'
 })
-const emits = defineEmits(['close', 'ok'])
+const emits = defineEmits(['save'])
 const colorList = reactive([
   {
-    label: 'Blue',
-    value: 'blue',
+    label: 'teal',
+    value: '#2dd4bf',
+    class: 'bg-teal',
   },
-
   {
-    label: 'Green',
-    value: 'green',
+    label: 'cyan',
+    value: '#00B8DBFF',
+    class: 'bg-cyan',
   },
-
-  {
-    label: 'Purple',
-    value: 'purple',
-  },
-
   {
     label: 'sky',
-    value: 'sky',
+    value: '#00A6F4FF',
+    class: 'bg-cyan',
   },
-
   {
-    label: 'slate',
-    value: 'slate',
+    label: 'indigo',
+    value: '#818cf8',
+    class: 'bg-indigo',
   },
-
   {
-    label: 'primary',
-    value: 'primary',
+    label: 'violet',
+    value: '#a78bfa',
+    class: 'bg-violet',
+  },
+  {
+    label: 'fuchsia',
+    value: '#e879f9',
+    class: 'bg-fuchsia',
+  },
+  {
+    label: 'Rose',
+    value: '#fb7185',
+    class: 'bg-rose',
+  },
+  {
+    label: 'Slate',
+    value: '#94a3b8',
+    class: 'bg-slate',
   },
 ])
 
-const checkedRadio = ref()
 const items = reactive([
   {
-    label: 'Dark',
-    src: 'https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg',
-    value: 'dark',
-  },
-  {
-    label: 'Light',
+    label: 'light',
     src: 'https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg',
-    value: 'light',
+    value: false,
   },
   {
-    label: 'Night',
+    label: 'dark',
     src: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
-    value: 'night',
+    value: true,
   },
 ])
 </script>

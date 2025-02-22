@@ -1,23 +1,12 @@
-import type { ComponentsSizesEnum, CurrenciesEnum, FontFamilyEnum, LanguagesEnum } from '@/core/enums'
+import type { ComponentsSizesEnum, CurrenciesEnum, DirectionsEnum, FontFamilyEnum, LanguagesEnum } from '@/core/enums'
 import type { Dayjs } from 'dayjs'
 
 export interface Settings {
   isDark: boolean
   isCompact: boolean
   componentsSize: ComponentsSizesEnum
-  createdAt: Dayjs
-  currency: CurrenciesEnum
-  description: string
-  isRtl: boolean
-  favicon: string
+  direction: DirectionsEnum
   fontFamily: FontFamilyEnum
-  footer: string
-  header: string
-  id: string
   language: LanguagesEnum
-  logo: string
   primaryColor: string
-  slug: string
-  updatedAt: Dayjs
-  websiteName: string
 }

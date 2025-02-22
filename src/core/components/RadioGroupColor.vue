@@ -1,6 +1,12 @@
 <template>
   <RadioGroup class="radio-group-color" @change="(e) => (primaryColor = e.target.value)">
-    <Tooltip title="blue">
+    <Tooltip :title="color.label" v-for="color in props.colorList" :key="color.value">
+      <Radio :value="color.value">
+        <div class="w-8 h-8 rounded" :class="color.class" />
+      </Radio>
+    </Tooltip>
+
+    <!-- <Tooltip title="blue">
       <Radio value="#2B7FFFFF">
         <div class="w-8 h-8 rounded bg-blue" />
       </Radio>
@@ -45,7 +51,7 @@
       <Radio value="#8E51FFFF">
         <div class="w-8 h-8 rounded bg-violet" />
       </Radio>
-    </Tooltip>
+    </Tooltip> -->
   </RadioGroup>
 </template>
 <script setup lang="ts">

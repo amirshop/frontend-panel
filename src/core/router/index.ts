@@ -14,14 +14,7 @@ const router = createRouter({
           path: '',
           name: 'ThePanel',
           component: () => import('@/core/layouts/PanelLayout/PanelLayout.vue'),
-          children: [
-            ...routes,
-            {
-              path: '/settings',
-              name: 'TheSettings',
-              component: () => import('@/core/views/settings/Index.vue'),
-            },
-          ],
+          children: [...routes],
         },
         {
           path: 'auth',

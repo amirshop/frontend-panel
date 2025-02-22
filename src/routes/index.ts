@@ -27,4 +27,9 @@ export default [
       },
     ],
   },
+  {
+    path: '/shop-settings',
+    name: 'TheShopSettings',
+    component: () => import('@/views/shop-settings/Index.vue'),
+  },
 ] as RouteRecordRaw[]

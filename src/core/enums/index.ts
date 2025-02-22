@@ -8,11 +8,6 @@ export const enum ColorsEnum {
 export const enum FontFamilyEnum {
   PRIMARY = 'var(--primary-font-family)',
 }
-export const enum SizesEnum {
-  Small = 'small',
-  Middle = 'middle',
-  Large = 'large',
-}
 
 export const enum DirectionsEnum {
   RTL = 'rtl',

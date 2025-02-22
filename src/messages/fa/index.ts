@@ -25,4 +25,5 @@ export default {
   option: 'گزینه',
   reviews: 'نقد و بررسی ها',
   review: 'نقد و بررسی',
+  shopSettings: 'تنظیمات فروشگاه',
 }

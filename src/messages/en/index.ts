@@ -25,5 +25,5 @@ export default {
   option: 'Option',
   reviews: 'Reviews',
   review: 'Review',
-  
+  shopSettings: 'Shop settings'
 }
