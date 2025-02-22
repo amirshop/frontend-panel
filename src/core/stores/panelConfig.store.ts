@@ -12,7 +12,7 @@ import { useCssVariables } from '../composable/cssVariables.composable'
 import type { Settings } from '../types'
 
 export const usePanelSettingsStore = defineStore('Panel config provider', () => {
-  const settings = useLocalStorage<Settings>('panelSettings', {
+  const settingList = useLocalStorage<Settings>('panelSettings', {
     primaryColor: '#2B7FFFFF',
     fontFamily: 'Vazirmatn',
     language: LanguagesEnum.ENGLISH,
@@ -22,7 +22,7 @@ export const usePanelSettingsStore = defineStore('Panel config provider', () => 
     isDark: false,
   } as Settings)
 
-  const locale = ref(LocaleMapping[settings.value.language])
+  const locale = ref(LocaleMapping[settingList.value.language])
 
   const appRef = ref()
   const fullscreen = useFullscreen(appRef.value)
@@ -32,30 +32,30 @@ export const usePanelSettingsStore = defineStore('Panel config provider', () => 
   const i18n = useI18n()
 
   onMounted(() => {
-    if (settings.value.language === LanguagesEnum.ENGLISH) {
+    if (settingList.value.language === LanguagesEnum.ENGLISH) {
       dayjs.calendar('gregory')
-      locale.value = LocaleMapping[settings.value.language]
+      locale.value = LocaleMapping[settingList.value.language]
     }
 
-    if (settings.value.language === LanguagesEnum.FARSI) {
+    if (settingList.value.language === LanguagesEnum.FARSI) {
       dayjs.calendar('jalali')
-      locale.value = LocaleMapping[settings.value.language]
+      locale.value = LocaleMapping[settingList.value.language]
     }
   })
 
   watch(
-    () => settings.value.language,
+    () => settingList.value.language,
     () => {
-      i18n.locale.value = settings.value.language
+      i18n.locale.value = settingList.value.language
 
-      if (settings.value.language === LanguagesEnum.ENGLISH) {
+      if (settingList.value.language === LanguagesEnum.ENGLISH) {
         dayjs.calendar('gregory')
-        locale.value = LocaleMapping[settings.value.language]
+        locale.value = LocaleMapping[settingList.value.language]
       }
 
-      if (settings.value.language === LanguagesEnum.FARSI) {
+      if (settingList.value.language === LanguagesEnum.FARSI) {
         dayjs.calendar('jalali')
-        locale.value = LocaleMapping[settings.value.language]
+        locale.value = LocaleMapping[settingList.value.language]
       }
     },
   )
@@ -63,6 +63,6 @@ export const usePanelSettingsStore = defineStore('Panel config provider', () => 
   return {
     locale,
     fullscreen: { ...fullscreen, appRef },
-    settings,
+    settingList,
   }
 })
