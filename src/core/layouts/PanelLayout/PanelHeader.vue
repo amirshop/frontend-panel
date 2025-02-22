@@ -76,7 +76,7 @@ const logout = () => {
 }
 
 const headerClass = computed(() => {
-  if (panelSettingsStore.settings.direction === DirectionsEnum.RTL) {
+  if (panelSettingsStore.settingList.direction === DirectionsEnum.RTL) {
     return '!bg-gradient-to-l'
   } else {
     return '!bg-gradient-to-r '

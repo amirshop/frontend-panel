@@ -2,12 +2,12 @@
   <Drawer title="Panel setting" :placement="placement" :closable="false">
     <Form layout="vertical" class="flex flex-col h-full">
       <FormItem :label="t('colorMode')">
-        <RadioGroupImage v-model:value="panelSettingsStore.settings.isDark" :items="items" />
+        <RadioGroupImage v-model:value="panelSettingsStore.settingList.isDark" :items="items" />
       </FormItem>
 
       <FormItem :label="t('themeColor')">
         <RadioGroupColor
-          v-model:value="panelSettingsStore.settings.primaryColor"
+          v-model:value="panelSettingsStore.settingList.primaryColor"
           :colorList="colorList"
         />
       </FormItem>
@@ -15,7 +15,7 @@
       <Divider />
 
       <FormItem :label="t('language')">
-        <RadioGroup v-model:value="panelSettingsStore.settings.language">
+        <RadioGroup v-model:value="panelSettingsStore.settingList.language">
           <RadioButton :value="LanguagesEnum.FARSI">
             <div class="flex items-center gap-4">
               <Icon icon="twemoji:flag-iran" />
@@ -32,7 +32,7 @@
       </FormItem>
 
       <FormItem :label="t('direction')">
-        <RadioGroup v-model:value="panelSettingsStore.settings.direction">
+        <RadioGroup v-model:value="panelSettingsStore.settingList.direction">
           <RadioButton :value="DirectionsEnum.RTL">
             <div class="inline-flex items-center gap-2">
               <Icon icon="ooui:outdent-rtl" />
@@ -49,7 +49,7 @@
       </FormItem>
 
       <FormItem :label="t('componentsSize')">
-        <RadioGroup v-model:value="panelSettingsStore.settings.componentsSize">
+        <RadioGroup v-model:value="panelSettingsStore.settingList.componentsSize">
           <RadioButton :value="ComponentsSizesEnum.LARGE">{{ t('large') }}</RadioButton>
           <RadioButton :value="ComponentsSizesEnum.MIDDLE">{{ t('middle') }}</RadioButton>
           <RadioButton :value="ComponentsSizesEnum.SMALL">{{ t('small') }}</RadioButton>
@@ -57,7 +57,7 @@
       </FormItem>
 
       <FormItem :label="t('compactMode')" name="isCompact">
-        <Switch v-model:checked="panelSettingsStore.settings.isCompact" />
+        <Switch v-model:checked="panelSettingsStore.settingList.isCompact" />
       </FormItem>
 
       <!-- <Divider class="flex-1" /> -->
@@ -69,11 +69,11 @@
       </div> -->
 
       <!-- <FormItem label="websiteName" name="websiteName">
-        <Input v-model:value="panelSettingsStore.settings.websiteName" />
+        <Input v-model:value="panelSettingsStore.settingList.websiteName" />
       </FormItem> -->
 
       <!-- <FormItem label="fontFamily" name="fontFamily">
-        <Select v-model:value="panelSettingsStore.settings.fontFamily">
+        <Select v-model:value="panelSettingsStore.settingList.fontFamily">
           <SelectOption value="'Poppins', 'Vazirmatn'">Poppins</SelectOption>
           <SelectOption value="'Vazirmatn', 'Poppins'">Vazirmatn</SelectOption>
         </Select>
@@ -111,7 +111,7 @@ const panelSettingsStore = usePanelSettingsStore()
 const { t } = useI18n()
 
 const placement = computed(() => {
-  return panelSettingsStore.settings.direction === DirectionsEnum.LTR ? 'right' : 'left'
+  return panelSettingsStore.settingList.direction === DirectionsEnum.LTR ? 'right' : 'left'
 })
 const emits = defineEmits(['save'])
 const colorList = reactive([

@@ -135,11 +135,13 @@
       :pagination="{
         ...userTable.pagination,
         position: [
-          panelSettingsStore.direction === DirectionsEnum.RTL ? 'bottomLeft' : 'bottomRight',
+          panelSettingsStore.settingList.direction === DirectionsEnum.RTL
+            ? 'bottomLeft'
+            : 'bottomRight',
         ],
         locale: { items_per_page: '' },
       }"
-      :direction="panelSettingsStore.direction"
+      :direction="panelSettingsStore.settingList.direction"
       :loading="userTable.loading.value"
       @change="userTable.handleTableChange"
       id="az-table"

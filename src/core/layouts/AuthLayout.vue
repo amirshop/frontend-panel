@@ -14,7 +14,7 @@
       class="p-4 bg-gray-50 grid grid-cols-3 gap-x-4 items-center justify-between border-t border-t-dashed border-t-gray-300"
     >
       <div>
-        <Select v-model:value="panelSettingsStore.direction" size="small">
+        <Select v-model:value="panelSettingsStore.settingList.direction" size="small">
           <SelectOption value="ltr">
             <div class="flex items-center gap-x-2">
               <Icon icon="twemoji:flag-england" />

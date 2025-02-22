@@ -3,13 +3,13 @@
     :theme="{
       algorithm: algorithm,
       token: {
-        colorPrimary: panelSettingsStore.settings.primaryColor,
-        fontFamily: panelSettingsStore.settings.fontFamily,
+        colorPrimary: panelSettingsStore.settingList.primaryColor,
+        fontFamily: panelSettingsStore.settingList.fontFamily,
       },
     }"
     :locale="panelSettingsStore.locale"
-    :component-size="panelSettingsStore.settings.componentsSize"
-    :direction="panelSettingsStore.settings.direction"
+    :component-size="panelSettingsStore.settingList.componentsSize"
+    :direction="panelSettingsStore.settingList.direction"
     :ref="panelSettingsStore.fullscreen.appRef"
   >
     <RouterView />
@@ -34,7 +34,7 @@ watch(token, (newVal) => {
 })
 
 watch(
-  () => panelSettingsStore.settings.primaryColor,
+  () => panelSettingsStore.settingList.primaryColor,
   (newColor) => {
     primaryColor.value = newColor
     updateColors()
@@ -43,7 +43,7 @@ watch(
 )
 
 watch(
-  () => panelSettingsStore.settings.fontFamily,
+  () => panelSettingsStore.settingList.fontFamily,
   (newColor) => {
     fontFamily.value = newColor
   },
@@ -53,10 +53,10 @@ watch(
 const algorithm = ref<DerivativeFunc<SeedToken, MapToken>[]>([])
 
 watch(
-  () => panelSettingsStore.settings.isCompact,
+  () => panelSettingsStore.settingList.isCompact,
   (newVal) => {
     algorithm.value = [
-      ...(panelSettingsStore.settings.isDark ? [theme.darkAlgorithm] : []),
+      ...(panelSettingsStore.settingList.isDark ? [theme.darkAlgorithm] : []),
       ...(newVal ? [theme.compactAlgorithm] : []),
     ]
   },
@@ -64,11 +64,11 @@ watch(
 )
 
 watch(
-  () => panelSettingsStore.settings.isDark,
+  () => panelSettingsStore.settingList.isDark,
   (newVal) => {
     algorithm.value = [
       ...(newVal ? [theme.darkAlgorithm] : []),
-      ...(panelSettingsStore.settings.isCompact ? [theme.compactAlgorithm] : []),
+      ...(panelSettingsStore.settingList.isCompact ? [theme.compactAlgorithm] : []),
     ]
 
     if (newVal) {
