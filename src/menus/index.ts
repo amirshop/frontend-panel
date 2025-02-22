@@ -14,14 +14,14 @@ export const useMenus = () => {
     { type: 'divider' },
 
     {
-      key: 'TheFiles',
-      label: t('files'),
-      icon: () => h(Icon, { icon: 'tabler:layout-dashboard', height: 18 }),
+      key: 'TheMedia',
+      label: t('mediaList'),
+      icon: () => h(Icon, { icon: 'fluent-mdl2:photo-video-media', height: 18 }),
       children: [
         {
-          key: 'TheFiles',
-          label: t('files'),
-          icon: () => h(Icon, { icon: 'tabler:layout-dashboard', height: 18 }),
+          key: 'TheMedia',
+          label: t('media'),
+          icon: () => h(Icon, { icon: 'fluent-mdl2:photo-video-media', height: 18 }),
         },
       ],
     },
@@ -65,12 +65,12 @@ export const useMenus = () => {
     {
       key: 'TheProducts',
       label: t('products'),
-      icon: () => h(Icon, { icon: 'fluent-mdl2:product', height: 18 }),
+      icon: () => h(Icon, { icon: 'fluent-mdl2:product-variant', height: 18 }),
       children: [
         {
           key: 'TheProducts',
           label: t('products'),
-          icon: () => h(Icon, { icon: 'fluent-mdl2:product', height: 18 }),
+          icon: () => h(Icon, { icon: 'fluent-mdl2:product-variant', height: 18 }),
         },
         {
           key: 'TheCategories',
@@ -107,7 +107,7 @@ export const useMenus = () => {
     {
       key: 'TheOrders',
       label: t('orders'),
-      icon: () => h(Icon, { icon: 'tabler:git-pull-request', height: 18 }),
+      icon: () => h(Icon, { icon: 'material-symbols:orders-outline-rounded', height: 18 }),
       children: [
         {
           key: 'TheOrdersList',
@@ -133,12 +133,12 @@ export const useMenus = () => {
     {
       key: 'TheShopSettings',
       label: t('shopSettings'),
-      icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
+      icon: () => h(Icon, { icon: 'mdi:shop-settings-outline', height: 18 }),
       children: [
         {
           key: 'TheShopSettingsGeneral',
           label: t('general'),
-          icon: () => h(Icon, { icon: 'material-symbols:public', height: 18 }),
+          icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
         },
         {
           key: 'TheShopSettingsHeader',
