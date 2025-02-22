@@ -1,14 +1,14 @@
-import { Product } from '../product/product.model'
-import { CartModel } from './cart.Model'
-import { Order } from '../order/order.model'
+import type { ProductModel } from '../product/product.model'
+import type { CartModel } from './cart.model'
+import type { OrderModel } from '../order/order.model'
 
 export interface ItemModel {
   id: string
   quantity: number
   price: number
-  product: Product
+  product: ProductModel
   cart: CartModel
-  order: Order
+  order: OrderModel
   createdAt: Date
   updatedAt: Date
 }

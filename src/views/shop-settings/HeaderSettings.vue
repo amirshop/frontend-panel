@@ -55,23 +55,26 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Button, Card, Form, FormItem, Divider, Input } from 'ant-design-vue/es'
-import VuePictureCropper, { cropper } from 'vue-picture-cropper'
 import { useI18n } from 'vue-i18n'
 import { useShopSettingsStore } from '@/stores/shopSettings.store'
 import PictureCropper from '@/core/components/PictureCropper.vue'
 const shopSettingsStore = useShopSettingsStore()
 const { t } = useI18n()
 
-const handleCrop = (result: any) => {
+const handleCrop = (result: string) => {
   console.log('Cropped result:', result)
   // آپلود blob به سرور یا ذخیره محلی
+}
+
+const saveSettings = () => {
+  console.log('Image removed')
 }
 
 const handleRemove = () => {
   console.log('Image removed')
 }
 
-const handleError = (error) => {
+const handleError = (error: string) => {
   console.error('Error occurred:', error)
 }
 </script>

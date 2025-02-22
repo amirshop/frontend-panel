@@ -2,7 +2,7 @@ import { ref, computed, watchEffect, onUnmounted } from 'vue'
 import axios from 'axios'
 import { AxiosError } from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios'
-import type { AuthDTO } from '@/types/auth.model'
+import type { AuthDTO } from '@/core/types/auth.model'
 import { useLocalStorage } from '@vueuse/core'
 import { message } from 'ant-design-vue'
 

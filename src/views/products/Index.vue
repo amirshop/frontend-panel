@@ -7,9 +7,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { STable } from '@surely-vue/table'
-import z from '@surely-vue/table/dist/index.esm'
 
-console.log(z)
 const columns = ref([
   {
     title: 'Full Name',
