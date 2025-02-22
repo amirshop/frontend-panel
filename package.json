@@ -26,6 +26,7 @@
     "ag-grid-vue3": "^33.1.0",
     "ant-design-vue": "^4.2.6",
     "axios": "^1.7.9",
+    "console-log-advanced": "^1.5.0",
     "dayjs": "^1.11.13",
     "echarts": "^5.6.0",
     "jspdf": "^2.5.2",
