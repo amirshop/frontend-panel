@@ -122,11 +122,35 @@ export const useMenus = () => {
       key: 'TheUsers',
       label: t('users'),
       icon: () => h(Icon, { icon: 'tabler:users', height: 18 }),
+      children: [
+        {
+          key: 'TheUsers',
+          label: t('users'),
+          icon: () => h(Icon, { icon: 'tabler:users', height: 18 }),
+        },
+      ],
     },
     {
       key: 'TheShopSettings',
       label: t('shopSettings'),
       icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
+      children: [
+        {
+          key: 'TheShopSettingsPublic',
+          label: t('shopPublicSettings'),
+          icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
+        },
+        {
+          key: 'TheShopSettingsHeader',
+          label: t('shopHeaderSettings'),
+          icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
+        },
+        {
+          key: 'TheShopSettingsFooter',
+          label: t('shopFooterSettings'),
+          icon: () => h(Icon, { icon: 'tabler:settings', height: 18 }),
+        },
+      ],
     },
   ])
   return { menuItems }
