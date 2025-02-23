@@ -19,7 +19,43 @@ export default [
   {
     path: '/products',
     name: 'TheProducts',
-    component: () => import('../views/products/Index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'TheProductsList',
+        component: () => import('../views/products/products/Index.vue'),
+      },
+      {
+        path: 'categories',
+        name: 'TheCategories',
+        component: () => import('../views/products/categories/Index.vue'),
+      },
+      {
+        path: 'brands',
+        name: 'TheBrands',
+        component: () => import('../views/products/brands/Index.vue'),
+      },
+      {
+        path: 'attributes',
+        name: 'TheAttributes',
+        component: () => import('../views/products/attributes/Index.vue'),
+      },
+      {
+        path: 'options',
+        name: 'TheOptions',
+        component: () => import('../views/products/options/Index.vue'),
+      },
+      {
+        path: 'tags',
+        name: 'TheTags',
+        component: () => import('../views/products/tags/Index.vue'),
+      },
+      {
+        path: 'reviews',
+        name: 'TheReviews',
+        component: () => import('../views/products/reviews/Index.vue'),
+      }
+    ],
   },
   {
     path: '/orders',
