@@ -9,7 +9,7 @@ export default [
   {
     path: 'media',
     name: 'TheMedia',
-    component: () => import('../views/files/Index.vue'),
+    component: () => import('../views/media/Index.vue'),
   },
   {
     path: '/users',
