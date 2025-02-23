@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import { Select, SelectOption } from 'ant-design-vue/es'
-import { usePanelSettingsStore } from '@/core/stores/panelConfig.store'
+import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 import { AzCard } from '@/core/components'
 import { Icon } from '@iconify/vue/dist/iconify.js'
 import { useI18n } from 'vue-i18n'

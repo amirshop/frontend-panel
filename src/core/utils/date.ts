@@ -1,4 +1,4 @@
-import { usePanelSettingsStore } from '@/core/stores/panelConfig.store'
+import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 import dayjs from 'dayjs'
 import { isDate } from 'lodash'
 

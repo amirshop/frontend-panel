@@ -55,7 +55,7 @@ import { Dropdown, LayoutHeader, Menu, MenuItem, Divider, Tooltip } from 'ant-de
 import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/core/stores/auth.store'
-import { usePanelSettingsStore } from '@/core/stores/panelConfig.store'
+import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 import LockScreen from '@/core/components/LockScreen.vue'
 import { AzButton } from '@/core/components'
 import { useI18n } from 'vue-i18n'

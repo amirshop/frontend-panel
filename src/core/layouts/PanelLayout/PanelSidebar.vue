@@ -6,7 +6,7 @@
     :class="windowSize.width.value > 640 ? undefined : '!absolute z-50 top-0 bottom-0 '"
     :collapsed-width="windowSize.width.value > 640 ? undefined : 0"
   >
-    <div class="h-16 bg-primary flex justify-center items-center gap-x-2">
+    <div class=" bg-primary flex justify-center items-center gap-x-2" :class="panelSettings.settingList.isCompact ? 'h-14': 'h-16'">
       <a href="http://localhost:3000" target="_blank">
         <Tooltip title="مشاهده فروشگاه">
           <AzButton type="primary" v-if="collapsed">
@@ -39,9 +39,10 @@ import { AzButton } from '@/core/components'
 
 const menus = useMenus()
 import { useWindowSize } from '@vueuse/core'
+import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 
 const windowSize = useWindowSize()
-
+const panelSettings = usePanelSettingsStore()
 const collapsed = ref<boolean>(false)
 
 const selectedKeys = ref<string[]>(['TheDashboard'])
@@ -61,8 +62,7 @@ const router = useRouter()
 
 const handleClick: MenuProps['onClick'] = (e) => {
   router.push({ name: `${e.key}` })
-  if(windowSize.width.value <= 640){
-
+  if (windowSize.width.value <= 640) {
     collapsed.value = !collapsed.value
   }
 }
@@ -77,9 +77,8 @@ const handleClick: MenuProps['onClick'] = (e) => {
     }
   }
 }
-.ant-layout .ant-layout-sider-zero-width-trigger{
+.ant-layout .ant-layout-sider-zero-width-trigger {
   background: var(--primary-color) !important;
   border-inline-end: 0 !important;
-
 }
 </style>

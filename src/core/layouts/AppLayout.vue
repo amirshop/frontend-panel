@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import { ConfigProvider, type DerivativeFunc, theme } from 'ant-design-vue/es'
 import { RouterView } from 'vue-router'
-import { usePanelSettingsStore } from '@/core/stores/panelConfig.store'
+import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 import { ref, watch } from 'vue'
 import { useCssVariables } from '../composable/cssVariables.composable'
 import type { SeedToken } from 'ant-design-vue/es/theme/internal'

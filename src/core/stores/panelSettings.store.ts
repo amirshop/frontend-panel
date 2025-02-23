@@ -1,19 +1,17 @@
 import { defineStore } from 'pinia'
-import { useColorMode, useCssVar, useLocalStorage } from '@vueuse/core'
+import { useCssVar, useLocalStorage } from '@vueuse/core'
 import { ComponentsSizesEnum, DirectionsEnum, LanguagesEnum, LocaleMapping } from '@/core/enums'
 import 'dayjs/locale/fa'
 import dayjs from 'dayjs'
 import jalali from '@zoomit/dayjs-jalali-plugin'
-import { computed, onMounted, ref, watch } from 'vue'
-import type { AliasToken } from 'ant-design-vue/es/theme/internal'
+import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useFullscreen } from '@vueuse/core'
-import { useCssVariables } from '../composable/cssVariables.composable'
 import type { Settings } from '../types'
 
-export const usePanelSettingsStore = defineStore('Panel config provider', () => {
+export const usePanelSettingsStore = defineStore('Panel settings', () => {
   const settingList = useLocalStorage<Settings>('panelSettings', {
-    primaryColor: '#2B7FFFFF',
+    primaryColor: '#2b7fff',
     fontFamily: 'Vazirmatn',
     language: LanguagesEnum.ENGLISH,
     direction: DirectionsEnum.LTR,

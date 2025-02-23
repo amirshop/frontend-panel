@@ -5,53 +5,6 @@
         <div class="w-8 h-8 rounded" :class="color.class" />
       </Radio>
     </Tooltip>
-
-    <!-- <Tooltip title="blue">
-      <Radio value="#2B7FFFFF">
-        <div class="w-8 h-8 rounded bg-blue" />
-      </Radio>
-    </Tooltip>
-    <Tooltip title="cyan">
-      <Radio value="#22d3ee">
-        <div class="w-8 h-8 rounded bg-cyan" />
-      </Radio>
-    </Tooltip>
-
-    <Tooltip title="teal">
-      <Radio value="#00BBA7FF">
-        <div class="w-8 h-8 rounded bg-teal" />
-      </Radio>
-    </Tooltip>
-
-    <Tooltip title="cyan">
-      <Radio value="#00B8DBFF">
-        <div class="w-8 h-8 rounded bg-cyan" />
-      </Radio>
-    </Tooltip>
-
-    <Tooltip title="sky">
-      <Radio value="#00A6F4FF">
-        <div class="w-8 h-8 rounded bg-sky" />
-      </Radio>
-    </Tooltip>
-
-    <Tooltip title="indigo">
-      <Radio value="#7C86FFFF">
-        <div class="w-8 h-8 rounded bg-indigo" />
-      </Radio>
-    </Tooltip>
-
-    <Tooltip title="slate">
-      <Radio value="#62748EFF">
-        <div class="w-8 h-8 rounded bg-slate" />
-      </Radio>
-    </Tooltip>
-
-    <Tooltip title="violet">
-      <Radio value="#8E51FFFF">
-        <div class="w-8 h-8 rounded bg-violet" />
-      </Radio>
-    </Tooltip> -->
   </RadioGroup>
 </template>
 <script setup lang="ts">
@@ -61,6 +14,7 @@ import { Radio, RadioGroup, Tooltip } from 'ant-design-vue/es'
 interface ColorItem {
   label: string
   value: string
+  class: string
 }
 interface Props {
   colorList: ColorItem[]

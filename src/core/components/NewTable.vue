@@ -168,7 +168,7 @@ import {
 } from 'ant-design-vue'
 import axios from 'axios'
 import type { ColumnsType } from 'ant-design-vue/es/table'
-import { usePanelSettingsStore } from '@/core/stores/panelConfig.store'
+import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 import { useModal, useTable } from '../composable'
 import { Icon } from '@iconify/vue/dist/iconify.js'
 import type { FilterValue } from 'ant-design-vue/es/table/interface'

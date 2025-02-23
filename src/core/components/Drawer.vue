@@ -48,6 +48,15 @@
         </RadioGroup>
       </FormItem>
 
+      <FormItem :label="t('fontFamily')" name="fontFamily">
+        <Select v-model:value="panelSettingsStore.settingList.fontFamily">
+          <SelectOption value="'Poppins', 'Vazirmatn'">Poppins</SelectOption>
+          <SelectOption value="'Vazirmatn', 'Poppins'">Vazirmatn</SelectOption>
+        </Select>
+      </FormItem>
+
+      <Divider />
+
       <FormItem :label="t('componentsSize')">
         <RadioGroup v-model:value="panelSettingsStore.settingList.componentsSize">
           <RadioButton :value="ComponentsSizesEnum.LARGE">{{ t('large') }}</RadioButton>
@@ -60,25 +69,6 @@
         <Switch v-model:checked="panelSettingsStore.settingList.isCompact" />
       </FormItem>
 
-      <!-- <Divider class="flex-1" /> -->
-
-      <!-- <Divider />
-      <div class="flex gap-x-4">
-        <Button type="primary" @click="emits('ok', false)"> Save </Button>
-        <Button type="ghost" @click="emits('close', false)"> Reset </Button>
-      </div> -->
-
-      <!-- <FormItem label="websiteName" name="websiteName">
-        <Input v-model:value="panelSettingsStore.settingList.websiteName" />
-      </FormItem> -->
-
-      <!-- <FormItem label="fontFamily" name="fontFamily">
-        <Select v-model:value="panelSettingsStore.settingList.fontFamily">
-          <SelectOption value="'Poppins', 'Vazirmatn'">Poppins</SelectOption>
-          <SelectOption value="'Vazirmatn', 'Poppins'">Vazirmatn</SelectOption>
-        </Select>
-      </FormItem> -->
-
       <Divider />
       <div class="flex gap-x-4">
         <Button type="primary" @click="emits('save', false)"> {{ t('save') }} </Button>
@@ -87,8 +77,8 @@
   </Drawer>
 </template>
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
-import { usePanelSettingsStore } from '@/core/stores/panelConfig.store'
+import { computed, reactive, watch } from 'vue'
+import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 import {
   Button,
   Select,
@@ -102,7 +92,6 @@ import {
   Switch,
 } from 'ant-design-vue/es'
 import { Icon } from '@iconify/vue/dist/iconify.js'
-
 import { DirectionsEnum, ComponentsSizesEnum, LanguagesEnum } from '@/core/enums'
 import RadioGroupColor from '@/core/components/RadioGroupColor.vue'
 import RadioGroupImage from '@/core/components/RadioGroupImage.vue'
@@ -116,18 +105,23 @@ const placement = computed(() => {
 const emits = defineEmits(['save'])
 const colorList = reactive([
   {
+    label: 'blue',
+    value: '#2b7fff',
+    class: 'bg-blue',
+  },
+  {
     label: 'teal',
     value: '#2dd4bf',
     class: 'bg-teal',
   },
   {
     label: 'cyan',
-    value: '#00B8DBFF',
+    value: '#00b8dbff',
     class: 'bg-cyan',
   },
   {
     label: 'sky',
-    value: '#00A6F4FF',
+    value: '#00a6f4ff',
     class: 'bg-cyan',
   },
   {
