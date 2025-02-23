@@ -8,7 +8,7 @@
         @click.prevent
         icon="tabler:table-export"
       >
-        {{ t('export') }}
+        <!-- {{ t('export') }} -->
       </AzButton>
     </Tooltip>
     <template #overlay>

@@ -32,4 +32,5 @@ export default {
   user: 'کاربر',
   users: 'کاربران',
   export: 'خروجی',
+  exportData: 'خروجی داده',
 }
