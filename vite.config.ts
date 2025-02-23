@@ -20,12 +20,12 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
       },
       manifest: {
-        name: 'My PWA App',
-        short_name: 'PWA App',
-        description: 'An example of a PWA app',
+        name: 'پنل مدیریت | فروشگاه امیر',
+        short_name: 'فروشگاه امیر',
+        description: 'مدیریت و فروش محصولات با امکانات کامل',
         theme_color: '#ffffff',
         background_color: '#000000',
-        display: 'fullscreen', // اینجا حالت Fullscreen تنظیم شده است
+        display: 'fullscreen',
         start_url: '/',
         icons: [
           {
