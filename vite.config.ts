@@ -8,7 +8,13 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import UnoCSS from 'unocss/vite'
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsx(), vueDevTools(), UnoCSS(), VitePWA({ registerType: 'autoUpdate' })],
+  plugins: [vue(), vueJsx(), vueDevTools(), UnoCSS(), VitePWA({ registerType: 'autoUpdate',
+injectRegister: 'auto',
+
+workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+      }
+ })],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
