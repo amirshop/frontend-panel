@@ -1,52 +1,57 @@
 <template>
   <div>
-    <!-- <AzTable class="mb-10" :columns="columns" :filterList="[]" :fetch="() => {}" /> -->
-
-    <NewTable />
+    <AzTable :columnList="columnList"> </AzTable>
   </div>
 </template>
 <script setup lang="ts">
-import { NewTable } from '@/core/components'
-import AzTable from '@/core/components/AzTable.vue'
-import { useTable } from '@/core/composable'
+import { AzTable } from '@/core/components'
 import type { ColumnsType } from 'ant-design-vue/es/table'
-import axios from 'axios'
 import { reactive } from 'vue'
 
-const columns = reactive<ColumnsType>([
-  {
-    title: 'name.last',
-    dataIndex: 'name.last',
-    key: 'name.last',
-  },
-  {
-    title: 'name.first',
-    dataIndex: 'name.first',
-    key: 'name.first',
-    responsive: ['md'],
-  },
-  {
-    title: 'name.title',
-    dataIndex: 'name.title',
-    key: 'name.title',
-  },
+type TableDataType = {
+  key: string
+  gender: string
+  email: string
+  address: string
+}
+
+const columnList = reactive<ColumnsType>([
   {
     title: 'Gender',
     dataIndex: 'gender',
     key: 'gender',
-    responsive: ['md'],
+    filterSearch: true,
+    filters: [
+      {
+        text: 'female',
+        value: 'female',
+      },
+      {
+        text: 'male',
+        value: 'male',
+      },
+    ],
+    onFilter: (value, record) => record.gender === value,
+    sorter: (a: TableDataType, b: TableDataType) => {
+      console.log(a.gender, b)
+
+      return a.gender.length - b.gender.length
+    },
+    sortDirections: ['ascend'],
   },
   {
     title: 'Email',
     dataIndex: 'email',
     key: 'email',
-    responsive: ['md'],
+    customFilterDropdown: true,
+
+    onFilter: (value, record) => record.email.includes(value),
   },
+
   {
     title: 'phone',
     dataIndex: 'phone',
     key: 'phone',
-responsive: ['md'],
   },
 ])
 </script>

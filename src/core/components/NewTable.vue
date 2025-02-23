@@ -17,14 +17,14 @@
           <slot name="addForm" />
         </Tooltip>
 
-        <Divider type="vertical" />
+        <!-- <Divider type="vertical" />
         <Tooltip :title="t('tableFilter')" size="small">
           <Badge :count="activeFiltersCount">
             <AzButton type="link" size="small" @click="filterMode.toggle" icon="tabler:filter">
               {{ t('filter') }}
             </AzButton>
           </Badge>
-        </Tooltip>
+        </Tooltip> -->
 
         <Divider type="vertical" />
         <Dropdown>
@@ -83,7 +83,7 @@
         </Tooltip>
       </div>
 
-      <Transition name="slide">
+      <!-- <Transition name="slide">
         <Card
           class="py-4 bg-gray-50 my-4"
           v-if="filterMode.isOpen.value"
@@ -127,10 +127,10 @@
             <AzButton type="primary" @click="applyFilters">جستجو</AzButton>
           </div>
         </Card>
-      </Transition>
+      </Transition> -->
     </div>
     <Table
-      :columns="columns"
+      :columns="props.columnList"
       :data-source="userTable.tableData.value"
       :pagination="{
         ...userTable.pagination,
@@ -145,7 +145,11 @@
       :loading="userTable.loading.value"
       @change="userTable.handleTableChange"
       id="az-table"
-    />
+    >
+  <template #customFilterDropdown>
+    <slot name="amir" />
+  </template>
+  </Table>
   </Card>
 </template>
 
@@ -176,80 +180,54 @@ import { FilterTypeEnum, DirectionsEnum } from '../enums'
 import { useI18n } from 'vue-i18n'
 import { useExportFile } from '@/core/composable/exportFile.composable'
 import _, { isArray, isNumber, isString } from 'lodash'
-import { type Dayjs } from 'dayjs'
+// import { type Dayjs } from 'dayjs'
 
 const { t } = useI18n()
-const filterMode = useModal()
+// const filterMode = useModal()
 const panelSettingsStore = usePanelSettingsStore()
 const exportFile = useExportFile()
 const userTable = useTable()
 
 const emits = defineEmits(['addRecord'])
-const columns = reactive<ColumnsType>([
-  {
-    title: 'name.last',
-    dataIndex: 'name.last',
-    key: 'name.last',
-  },
-  {
-    title: 'name.first',
-    dataIndex: 'name.first',
-    key: 'name.first',
-  },
-  {
-    title: 'name.title',
-    dataIndex: 'name.title',
-    key: 'name.title',
-  },
-  {
-    title: 'Gender',
-    dataIndex: 'gender',
-    key: 'gender',
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
-  },
-  {
-    title: 'phone',
-    dataIndex: 'phone',
-    key: 'phone',
-  },
-])
 
-const filterList = reactive([
-  { title: 'phone', type: FilterTypeEnum.STRING, value: undefined as string | undefined },
-  { title: 'Age', type: FilterTypeEnum.NUMBER, value: undefined as number | undefined },
-  { title: 'IsActive', type: FilterTypeEnum.BOOLEAN, value: undefined as boolean | undefined },
-  {
-    title: 'DateRange',
-    type: FilterTypeEnum.DATE,
-    value: undefined as [Dayjs, Dayjs] | [string, string] | undefined,
-  },
-])
+interface Props {
+  columnList: ColumnsType
+}
 
-const activeFiltersCount = computed(() => {
-  return filterList.filter((item) => {
-    if (
-      item.type === FilterTypeEnum.STRING &&
-      isString(item.value) &&
-      item.value.trim() !== undefined
-    ) {
-      return true
-    }
-    if (item.type === FilterTypeEnum.NUMBER && isNumber(item.value) && item.value !== undefined) {
-      return true
-    }
-    if (item.type === FilterTypeEnum.BOOLEAN && item.value !== undefined) {
-      return true
-    }
-    if (item.type === FilterTypeEnum.DATE && isArray(item.value)) {
-      return true
-    }
-    return false
-  }).length
-})
+const props = withDefaults(defineProps<Props>(), {})
+
+// const filterList = reactive([
+//   { title: 'phone', type: FilterTypeEnum.STRING, value: undefined as string | undefined },
+//   { title: 'Age', type: FilterTypeEnum.NUMBER, value: undefined as number | undefined },
+//   { title: 'IsActive', type: FilterTypeEnum.BOOLEAN, value: undefined as boolean | undefined },
+//   {
+//     title: 'DateRange',
+//     type: FilterTypeEnum.DATE,
+//     value: undefined as [Dayjs, Dayjs] | [string, string] | undefined,
+//   },
+// ])
+
+// const activeFiltersCount = computed(() => {
+//   return filterList.filter((item) => {
+//     if (
+//       item.type === FilterTypeEnum.STRING &&
+//       isString(item.value) &&
+//       item.value.trim() !== undefined
+//     ) {
+//       return true
+//     }
+//     if (item.type === FilterTypeEnum.NUMBER && isNumber(item.value) && item.value !== undefined) {
+//       return true
+//     }
+//     if (item.type === FilterTypeEnum.BOOLEAN && item.value !== undefined) {
+//       return true
+//     }
+//     if (item.type === FilterTypeEnum.DATE && isArray(item.value)) {
+//       return true
+//     }
+//     return false
+//   }).length
+// })
 
 type APIResult = {
   results: {
@@ -285,39 +263,39 @@ const queryData = async (params: FetchParams) => {
 
 // توابع فیلترها
 
-const resetFilter = () => {
-  filterList.forEach((item) => {
-    if (item.type === FilterTypeEnum.STRING) {
-      item.value = undefined
-    } else if (item.type === FilterTypeEnum.NUMBER) {
-      item.value = undefined
-    } else if (item.type === FilterTypeEnum.BOOLEAN) {
-      item.value = undefined
-    } else if (item.type === FilterTypeEnum.DATE) {
-      item.value = undefined
-    }
-  })
-  userTable.resetFilters?.()
-}
+// const resetFilter = () => {
+//   filterList.forEach((item) => {
+//     if (item.type === FilterTypeEnum.STRING) {
+//       item.value = undefined
+//     } else if (item.type === FilterTypeEnum.NUMBER) {
+//       item.value = undefined
+//     } else if (item.type === FilterTypeEnum.BOOLEAN) {
+//       item.value = undefined
+//     } else if (item.type === FilterTypeEnum.DATE) {
+//       item.value = undefined
+//     }
+//   })
+//   userTable.resetFilters?.()
+// }
 
-const applyFilters = () => {
-  const newFilters: Record<string, FilterValue> = {}
-  filterList.forEach((item) => {
-    if (
-      item.value !== '' &&
-      item.value !== null &&
-      item.value !== undefined &&
-      !(Array.isArray(item.value) && item.value.length === 0)
-    ) {
-      if (item.type === FilterTypeEnum.DATE && Array.isArray(item.value)) {
-        newFilters[item.title.toLowerCase()] = item.value.join(',') as unknown as FilterValue
-      } else {
-        newFilters[item.title.toLowerCase()] = item.value as unknown as FilterValue
-      }
-    }
-  })
-  userTable.setFilters?.(newFilters)
-}
+// const applyFilters = () => {
+//   const newFilters: Record<string, FilterValue> = {}
+//   filterList.forEach((item) => {
+//     if (
+//       item.value !== '' &&
+//       item.value !== null &&
+//       item.value !== undefined &&
+//       !(Array.isArray(item.value) && item.value.length === 0)
+//     ) {
+//       if (item.type === FilterTypeEnum.DATE && Array.isArray(item.value)) {
+//         newFilters[item.title.toLowerCase()] = item.value.join(',') as unknown as FilterValue
+//       } else {
+//         newFilters[item.title.toLowerCase()] = item.value as unknown as FilterValue
+//       }
+//     }
+//   })
+//   userTable.setFilters?.(newFilters)
+// }
 
 onMounted(async () => {
   userTable.fetchData.value = await queryData

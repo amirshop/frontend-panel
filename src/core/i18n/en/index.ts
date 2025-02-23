@@ -31,4 +31,5 @@ export default {
   themeColor: 'Theme color',
   user: 'User',
   users: 'Users',
+  export: 'Export'
 }

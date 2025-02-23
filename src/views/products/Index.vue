@@ -1,70 +1,62 @@
 <template>
   <div>
-    <STable :columns="columns" :scroll="{ y: 400 }" :pagination="true" :data-source="data" />
+    <MyTable title="amir" :column-list="columnList" :data-list="dataList" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { STable } from '@surely-vue/table'
+import MyTable from '@/core/components/MyTable.vue'
+import { reactive } from 'vue'
 
-const columns = ref([
+const columnList = reactive([
   {
-    title: 'Full Name',
+    name: 'Name',
     dataIndex: 'name',
-    width: 150,
-    resizable: true,
+    key: 'name',
   },
   {
     title: 'Age',
     dataIndex: 'age',
-    width: 100,
-    resizable: true,
+    key: 'age',
   },
   {
-    title: 'Column 1（minWidth： 100， maxWidth： 500）',
+    title: 'Address',
     dataIndex: 'address',
-    key: 'address1',
-    minWidth: 100,
-    maxWidth: 500,
-    resizable: true,
+    key: 'address',
   },
   {
-    title: 'Column 2',
-    key: 'address2',
-    dataIndex: 'address',
+    title: 'Tags',
+    key: 'tags',
+    dataIndex: 'tags',
   },
-  {
-    title: 'Column 3',
-    key: 'address3',
-    dataIndex: 'address',
-  },
-  {
-    title: 'Column 4',
-    key: 'address4',
-    dataIndex: 'address',
-  },
-  { title: 'Column 5', dataIndex: 'address', key: 'address5' },
   {
     title: 'Action',
-    key: 'operation',
-    width: 100,
-    resizable: true,
+    key: 'action',
   },
 ])
-interface DataItem {
-  key: number
-  name: string
-  age: number
-  address: string
-}
-const data = ref<DataItem[]>([])
-for (let i = 0; i < 1000; i++) {
-  data.value.push({
-    key: i,
-    name: `Edrward ${i}`,
-    age: i + 1,
-    address: `London Park no. ${i}`,
-  })
-}
+const dataList = reactive([
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+    tags: ['nice', 'developer'],
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+    tags: ['loser'],
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+    tags: ['cool', 'teacher'],
+  },
+])
+
+
 </script>

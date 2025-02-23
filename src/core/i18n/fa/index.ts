@@ -31,4 +31,5 @@ export default {
   themeColor: 'رنگ تم',
   user: 'کاربر',
   users: 'کاربران',
+  export: 'خروجی',
 }

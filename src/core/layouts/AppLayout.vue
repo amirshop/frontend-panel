@@ -73,8 +73,10 @@ watch(
 
     if (newVal) {
       document.body.classList.add('bg-dark')
+      document.body.classList.add('dark')
     } else {
       document.body.classList.remove('bg-dark')
+      document.body.classList.remove('dark')
     }
   },
   { immediate: true },
