@@ -80,6 +80,10 @@ export function useHttp<I = unknown, O = unknown>({
         ...config,
         ...overrideConfig,
       })
+      console.log('response')
+      console.log(response)
+      console.log('response')
+
       responseData.value = response.data
       return response.data
     } catch (err) {
