@@ -1,5 +1,5 @@
 <template>
-  <Drawer title="Panel setting" :placement="placement" :closable="false">
+  <Drawer :title="t('panelSetting')" :placement="placement" :closable="false">
     <Form layout="vertical" class="flex flex-col h-full">
       <FormItem :label="t('colorMode')">
         <RadioGroupImage v-model:value="panelSettingsStore.settingList.isDark" :items="items" />
@@ -164,3 +164,8 @@ const items = reactive([
   },
 ])
 </script>
+<style lang="less">
+.ant-drawer-header{
+  @apply bg-primary;
+}
+</style>
