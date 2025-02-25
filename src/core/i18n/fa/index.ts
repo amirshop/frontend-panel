@@ -33,4 +33,6 @@ export default {
   users: 'کاربران',
   export: 'خروجی',
   exportData: 'خروجی داده',
+  panelSetting: 'تنظیمات پنل',
+  lockScreen: 'قفل صفحه',
 }
