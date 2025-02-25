@@ -33,4 +33,6 @@ export default {
   users: 'Users',
   export: 'Export',
   exportData: 'Export data',
+  panelSetting: 'Panel setting',
+  lockScreen: 'Lock screen',
 }
