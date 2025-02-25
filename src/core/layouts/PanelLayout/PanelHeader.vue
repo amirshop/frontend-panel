@@ -38,7 +38,7 @@
         <LockScreen />
       </Tooltip>
       <Divider type="vertical" class="bg-white" />
-      <Tooltip :title="t('panelSettings')" size="small">
+      <Tooltip :title="t('panelSetting')" size="small">
         <AzButton
           icon="tabler:settings"
           type="text"
