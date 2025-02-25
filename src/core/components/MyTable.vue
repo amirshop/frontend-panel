@@ -25,6 +25,7 @@ import { useTable } from '@/core/composable'
 import { AzButton } from '@/core/components'
 import ExportData from '@/core/components/ExportData.vue'
 import { computed, ref } from 'vue'
+import { isUndefined } from 'lodash'
 
 interface Props {
   columnList: ColumnsType
@@ -35,10 +36,10 @@ const props = withDefaults(defineProps<Props>(), {})
 const { t } = useI18n()
 const userTable = useTable()
 
-
 const filters = ref<{ [key: string]: string | null }>({})
 
 const filteredData = computed(() => {
+  if (isUndefined(props.dataList)) return
   return props.dataList.filter((item) =>
     Object.keys(filters.value).every((key) =>
       filters.value[key]
