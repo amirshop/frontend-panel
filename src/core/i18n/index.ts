@@ -1,7 +1,6 @@
 import { createI18n } from 'vue-i18n'
 import messages from './messages'
-import { LanguagesEnum } from '@/core/enums'
-
+import { LanguagesEnum } from '@/enums'
 export default createI18n({
   legacy: false,
   globalInjection: true,
