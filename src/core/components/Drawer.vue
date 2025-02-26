@@ -96,8 +96,8 @@ import { DirectionEnum, ComponentSizeEnum, LanguageEnum, FontFamilyEnum } from '
 import RadioGroupColor from '@/core/components/RadioGroupColor.vue'
 import RadioGroupImage from '@/core/components/RadioGroupImage.vue'
 import { useI18n } from 'vue-i18n'
-import darkModePicture from "@/core/assets/images/dark-mode.svg";
-import lightModePicture from "@/core/assets/images/light-mode.svg";
+import darkModePicture from "@/assets/images/dark-mode.svg";
+import lightModePicture from "@/assets/images/light-mode.svg";
 const panelSettingsStore = usePanelSettingsStore()
 const { t } = useI18n()
 
