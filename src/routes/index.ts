@@ -2,19 +2,19 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export default [
   {
-    path: '',
+    path: '/',
     name: 'TheDashboard',
-    component: () => import('../views/dashboard/Index.vue'),
+    component: () => import('@/views/dashboard/Index.vue'),
   },
   {
-    path: 'media',
+    path: '/media',
     name: 'TheMedia',
-    component: () => import('../views/media/Index.vue'),
+    component: () => import('@/views/media/Index.vue'),
   },
   {
     path: '/users',
     name: 'TheUsers',
-    component: () => import('../views/users/Index.vue'),
+    component: () => import('@/views/users/Index.vue'),
   },
   {
     path: '/products',
@@ -23,37 +23,37 @@ export default [
       {
         path: '',
         name: 'TheProductsList',
-        component: () => import('../views/products/products/Index.vue'),
+        component: () => import('@/views/products/products/Index.vue'),
       },
       {
         path: 'categories',
         name: 'TheCategories',
-        component: () => import('../views/products/categories/Index.vue'),
+        component: () => import('@/views/products/categories/Index.vue'),
       },
       {
         path: 'brands',
         name: 'TheBrands',
-        component: () => import('../views/products/brands/Index.vue'),
+        component: () => import('@/views/products/brands/Index.vue'),
       },
       {
         path: 'attributes',
         name: 'TheAttributes',
-        component: () => import('../views/products/attributes/Index.vue'),
+        component: () => import('@/views/products/attributes/Index.vue'),
       },
       {
         path: 'options',
         name: 'TheOptions',
-        component: () => import('../views/products/options/Index.vue'),
+        component: () => import('@/views/products/options/Index.vue'),
       },
       {
         path: 'tags',
         name: 'TheTags',
-        component: () => import('../views/products/tags/Index.vue'),
+        component: () => import('@/views/products/tags/Index.vue'),
       },
       {
         path: 'reviews',
         name: 'TheReviews',
-        component: () => import('../views/products/reviews/Index.vue'),
+        component: () => import('@/views/products/reviews/Index.vue'),
       }
     ],
   },
@@ -64,7 +64,7 @@ export default [
       {
         path: '',
         name: 'TheOrdersList',
-        component: () => import('../views/orders/Index.vue'),
+        component: () => import('@/views/orders/Index.vue'),
       },
     ],
   },
