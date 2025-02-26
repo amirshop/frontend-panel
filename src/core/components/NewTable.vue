@@ -135,13 +135,13 @@
       :pagination="{
         ...userTable.pagination,
         position: [
-          panelSettingsStore.settingList.direction === DirectionsEnum.RTL
+          panelSettingsStore.settings.direction === DirectionEnum.RTL
             ? 'bottomLeft'
             : 'bottomRight',
         ],
         locale: { items_per_page: '' },
       }"
-      :direction="panelSettingsStore.settingList.direction"
+      :direction="panelSettingsStore.settings.direction"
       :loading="userTable.loading.value"
       @change="userTable.handleTableChange"
       id="az-table"
@@ -176,7 +176,7 @@ import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 import { useModal, useTable } from '../composable'
 import { Icon } from '@iconify/vue/dist/iconify.js'
 import type { FilterValue } from 'ant-design-vue/es/table/interface'
-import { FilterTypeEnum, DirectionsEnum } from '../enums'
+import { FilterTypeEnum, DirectionEnum } from '../enums'
 import { useI18n } from 'vue-i18n'
 import { useExportFile } from '@/core/composable/exportFile.composable'
 import _, { isArray, isNumber, isString } from 'lodash'
