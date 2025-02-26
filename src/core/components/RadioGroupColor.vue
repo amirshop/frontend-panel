@@ -1,5 +1,5 @@
 <template>
-  <RadioGroup class="radio-group-color" @change="(e) => (primaryColor = e.target.value)">
+  <RadioGroup class="radio-group-color" @change="(e) => emits('update:modelValue', e.target.value)">
     <Tooltip :title="color.label" v-for="color in props.colorList" :key="color.value">
       <Radio :value="color.value">
         <div class="w-8 h-8 rounded" :class="color.class" />
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
   colorList: () => [],
   selectedColor: 'red',
 })
-const primaryColor = useCssVar('--primary-color')
+const emits = defineEmits(['update:modelValue'])
 </script>
 <style lang="less">
 .radio-group-color {
