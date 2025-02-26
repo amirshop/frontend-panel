@@ -6,7 +6,7 @@
     :class="windowSize.width.value > 640 ? undefined : '!absolute z-50 top-0 bottom-0 '"
     :collapsed-width="windowSize.width.value > 640 ? undefined : 0"
   >
-    <div class=" bg-primary flex justify-center items-center gap-x-2" :class="panelSettings.settingList.isCompact ? 'h-14': 'h-16'">
+    <div class=" bg-primary flex justify-center items-center gap-x-2" :class="panelSettings.settings.isCompact ? 'h-14': 'h-16'">
       <a href="http://localhost:3000" target="_blank">
         <Tooltip title="مشاهده فروشگاه">
           <AzButton type="primary" v-if="collapsed">
