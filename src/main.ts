@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './core/router'
 import { initI18n } from './core/i18n'
-import '@/assets/styles/main.less'
+import './assets/styles/main.less'
 import 'ant-design-vue/dist/reset.css'
 import 'virtual:uno.css'
 const app = createApp(App)
