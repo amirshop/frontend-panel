@@ -1,7 +1,7 @@
 <template>
   <Card>
     <AgGridVue
-      style="width: 100%; height: 80vh"
+      class="h-170 !border-none"
       :paginationPageSizeSelector="[5, 10, 20, 50, 100]"
       :enableRtl="true"
       :rowDragManaged="true"
