@@ -1,7 +1,7 @@
 import faIR from 'ant-design-vue/es/locale/fa_IR'
 import enUS from 'ant-design-vue/es/locale/en_US'
 import azAZ from 'ant-design-vue/es/locale/az_AZ'
-import { ComponentSizeEnum, DirectionEnum, LanguageEnum } from '@/enums'
+import { ComponentSizeEnum, DirectionEnum, LanguageEnum } from '@/core/enums'
 
 export const LocaleMapping = {
   en: enUS,
