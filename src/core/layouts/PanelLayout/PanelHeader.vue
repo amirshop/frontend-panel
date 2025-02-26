@@ -3,6 +3,7 @@
     class="!leading-12 !p-inline-4 flex items-center !from-primary !to-primary-300"
     :class="headerClass"
   >
+
     <div class="flex items-center ms-auto">
       <Dropdown :trigger="['click']" class="!ms-auto">
         <AzButton
@@ -25,7 +26,10 @@
         </template>
       </Dropdown>
       <Divider type="vertical" class="bg-white" />
-      <Tooltip :title="panelSettingsStore.fullscreen.isFullscreen ? t('exitFullScreen') : t('fullScreen')" size="small">
+      <Tooltip
+        :title="panelSettingsStore.fullscreen.isFullscreen ? t('exitFullScreen') : t('fullScreen')"
+        size="small"
+      >
         <AzButton
           :icon="
             panelSettingsStore.fullscreen.isFullscreen ? 'subway:close-2' : 'subway:fullscreen'
