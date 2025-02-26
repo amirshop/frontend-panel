@@ -9,8 +9,8 @@
     <div class=" bg-primary flex justify-center items-center gap-x-2" :class="panelSettings.settings.isCompact ? 'h-14': 'h-16'">
       <a href="http://localhost:3000" target="_blank">
         <Tooltip title="مشاهده فروشگاه">
-          <AzButton type="primary" v-if="collapsed">
-            <img class="h-10 w-10 object-contain" src="/logo.png" alt="" srcset="" />
+          <AzButton type="primary" v-if="collapsed" class="!w-10 !h-10 !p-1">
+            <img class="h-full w-full object-contain" src="/logo.png" alt="" srcset="" />
           </AzButton>
           <AzButton type="primary" class="!gap-x-1" icon="tabler:eye" v-if="!collapsed">
             مشاهده فروشگاه
@@ -80,5 +80,6 @@ const handleClick: MenuProps['onClick'] = (e) => {
 .ant-layout .ant-layout-sider-zero-width-trigger {
   background: var(--primary-color) !important;
   border-inline-end: 0 !important;
+  top: 8px
 }
 </style>
