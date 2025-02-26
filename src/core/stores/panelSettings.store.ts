@@ -16,13 +16,13 @@ import jalali from '@zoomit/dayjs-jalali-plugin'
 import { useI18n } from 'vue-i18n'
 import { initI18n } from '@/core/i18n'
 
-export const usePanelSettingStore = defineStore('Panel setting', () => {
+export const usePanelSettingsStore = defineStore('Panel setting', () => {
   const settings = useLocalStorage('settings', {
     direction: DirectionEnum.LTR,
     language: LanguageEnum.FARSI,
     componentSize: ComponentSizeEnum.MIDDLE,
     fontFamily: FontFamilyEnum.ENGLISH,
-    colorPrimary: '#fff000',
+    colorPrimary: '#2893ff',
     isDark: false,
     isCompact: false,
   })
