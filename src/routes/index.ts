@@ -2,22 +2,22 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export default [
   {
-    path: '/',
+    path: '',
     name: 'TheDashboard',
     component: () => import('@/views/dashboard/Index.vue'),
   },
   {
-    path: '/media',
+    path: 'media',
     name: 'TheMedia',
     component: () => import('@/views/media/Index.vue'),
   },
   {
-    path: '/users',
+    path: 'users',
     name: 'TheUsers',
     component: () => import('@/views/users/Index.vue'),
   },
   {
-    path: '/products',
+    path: 'products',
     name: 'TheProducts',
     children: [
       {
@@ -58,7 +58,7 @@ export default [
     ],
   },
   {
-    path: '/orders',
+    path: 'orders',
     name: 'TheOrders',
     children: [
       {
@@ -69,7 +69,7 @@ export default [
     ],
   },
   {
-    path: '/shop-settings',
+    path: 'shop-settings',
     name: 'TheShopSettings',
     children: [
       {
