@@ -59,7 +59,7 @@ import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 import LockScreen from '@/core/components/LockScreen.vue'
 import { AzButton } from '@/core/components'
 import { useI18n } from 'vue-i18n'
-import { DirectionsEnum, LanguagesEnum } from '@/core/enums'
+import { DirectionEnum, LanguageEnum } from '@/core/enums'
 import AzFullScreen from '@/core/components/AzFullScreen.vue'
 import { computed } from 'vue'
 import Drawer from '@/core/components/Drawer.vue'
@@ -76,7 +76,7 @@ const logout = () => {
 }
 
 const headerClass = computed(() => {
-  if (panelSettingsStore.settingList.direction === DirectionsEnum.RTL) {
+  if (panelSettingsStore.settings.direction === DirectionEnum.RTL) {
     return '!bg-gradient-to-l'
   } else {
     return '!bg-gradient-to-r '
