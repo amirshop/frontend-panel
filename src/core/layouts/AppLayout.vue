@@ -1,14 +1,12 @@
 <template>
   <ConfigProvider
-    :componentSize="panelSettingStore.settings.componentSize"
-    :direction="panelSettingStore.settings.direction"
-    :locale="panelSettingStore.locale"
-    :theme="panelSettingStore.theme"
+    :componentSize="panelSettingsStore.settings.componentSize"
+    :direction="panelSettingsStore.settings.direction"
+    :locale="panelSettingsStore.locale"
+    :theme="panelSettingsStore.theme"
     :ref="panelSettingsStore.fullscreen.appRef"
   >
-    <div :class="classList">
-      <RouterView />
-    </div>
+    <RouterView />
   </ConfigProvider>
 </template>
 
@@ -16,51 +14,46 @@
 import { ConfigProvider } from 'ant-design-vue/es'
 import { RouterView } from 'vue-router'
 import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
-import { onMounted, ref, watch } from 'vue'
-import type { SeedToken } from 'ant-design-vue/es/theme/internal'
-import type { MapToken } from 'ant-design-vue/es/theme/interface'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { usePanelSettingStore } from '@/stores/panelSetting.store'
 import { theme } from 'ant-design-vue'
-import { useCssVariables } from '@/composable/cssVariables.composable'
+import { useCssVariables } from '@/core/composable/cssVariables.composable'
+import { findIndex } from 'lodash'
 const { useToken } = theme
 const { token } = useToken()
+const { t } = useI18n()
 const { updateColors } = useCssVariables()
 
-const panelSettingStore = usePanelSettingStore()
-const { t } = useI18n()
+const panelSettingsStore = usePanelSettingsStore()
 
-onMounted(() => updateColors(panelSettingStore.settings.colorPrimary))
+onMounted(() => updateColors(panelSettingsStore.settings.colorPrimary))
 watch(
-  () => panelSettingStore.settings.colorPrimary,
+  () => panelSettingsStore.settings.colorPrimary,
   (newColor) => {
+    console.log(newColor)
+
     updateColors(newColor)
   },
 )
 
-onMounted(panelSettingStore.setLanguageConfig)
-watch(() => panelSettingStore.settings.language, panelSettingStore.setLanguageConfig, {
+onMounted(panelSettingsStore.setLanguageConfig)
+watch(() => panelSettingsStore.settings.language, panelSettingsStore.setLanguageConfig, {
   immediate: true,
 })
 
-const classList = ref('')
-onMounted(() => {
-  if (classList.value == 'dark bg-dark' && panelSettingStore.settings.isDark === false) {
-    classList.value = ''
-  }
-  if (classList.value === '' && panelSettingStore.settings.isDark === true) {
-    classList.value = 'dark bg-dark'
-  }
-})
-watch(
-  () => panelSettingStore.settings.isDark,
-  (newValue) => {
-    if (newValue === false) {
-      classList.value = ''
-    }
-    if (newValue === true) {
-      classList.value = 'dark bg-dark'
-    }
-  },
+const appElement = computed<HTMLElement>(
+  () => document.getElementById('app') ?? ({} as HTMLElement),
 )
+
+const setDarkMode = () => {
+  if (panelSettingsStore.settings.isDark) {
+    appElement.value.classList.add('dark')
+    appElement.value.classList.add('bg-dark')
+  } else {
+    appElement.value.classList.remove('dark')
+    appElement.value.classList.remove('bg-dark')
+  }
+}
+onMounted(setDarkMode)
+watch(() => panelSettingsStore.settings.isDark, setDarkMode)
 </script>
