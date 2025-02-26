@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 import type { ComputedRef } from 'vue'
-import { ComponentsSizesEnum } from '@/core/enums'
+import { ComponentSizeEnum } from '@/core/enums'
 import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 export const useComputedClass = () => {
   const panelSettingsStore = usePanelSettingsStore()
@@ -21,22 +21,22 @@ export const useComputedClass = () => {
     lC?: string
   }): ComputedRef<string> => {
     return computed(() => {
-      const { isCompact, componentsSize } = panelSettingsStore.settingList
+      const { isCompact, componentSize } = panelSettingsStore.settings
 
-      const classesMapping: Record<string, Record<ComponentsSizesEnum, string>> = {
+      const classesMapping: Record<string, Record<ComponentSizeEnum, string>> = {
         true: {
-          [ComponentsSizesEnum.LARGE]: lC,
-          [ComponentsSizesEnum.MIDDLE]: mC,
-          [ComponentsSizesEnum.SMALL]: sC,
+          [ComponentSizeEnum.LARGE]: lC,
+          [ComponentSizeEnum.MIDDLE]: mC,
+          [ComponentSizeEnum.SMALL]: sC,
         },
         false: {
-          [ComponentsSizesEnum.LARGE]: l,
-          [ComponentsSizesEnum.MIDDLE]: m,
-          [ComponentsSizesEnum.SMALL]: s,
+          [ComponentSizeEnum.LARGE]: l,
+          [ComponentSizeEnum.MIDDLE]: m,
+          [ComponentSizeEnum.SMALL]: s,
         },
       }
 
-      return classesMapping[isCompact ? 'true' : 'false'][componentsSize] || m
+      return classesMapping[isCompact ? 'true' : 'false'][componentSize] || m
     })
   }
 
