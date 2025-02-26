@@ -7,14 +7,14 @@
             <RouterView />
           </AzCard>
         </div>
-        <img class="w-170" src="@/core/assets/images/panel/signup.svg" alt="" />
+        <img class="w-170" src="@/assets/images/panel/signup.svg" alt="" />
       </div>
     </div>
     <div
       class="p-4 bg-gray-50 grid grid-cols-3 gap-x-4 items-center justify-between border-t border-t-dashed border-t-gray-300"
     >
       <div>
-        <Select v-model:value="panelSettingsStore.settingList.direction" size="small">
+        <Select v-model:value="panelSettingsStore.settings.direction" size="small">
           <SelectOption value="ltr">
             <div class="flex items-center gap-x-2">
               <Icon icon="twemoji:flag-england" />
@@ -55,7 +55,7 @@ const panelSettingsStore = usePanelSettingsStore()
 </script>
 <style>
 .bg-auth-pattern {
-  background-image: url('../assets/images/panel/auth-pattern.webp');
+  background-image: url('../../assets/images/panel/auth-pattern.webp');
   background-position: center center;
   background-size: cover;
 }
