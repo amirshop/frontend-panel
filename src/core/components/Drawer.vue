@@ -2,12 +2,12 @@
   <Drawer :title="t('panelSetting')" :placement="placement" :closable="false">
     <Form layout="vertical" class="flex flex-col h-full">
       <FormItem :label="t('colorMode')">
-        <RadioGroupImage v-model:value="panelSettingsStore.settingList.isDark" :items="items" />
+        <RadioGroupImage v-model:value="panelSettingsStore.settings.isDark" :items="items" />
       </FormItem>
 
       <FormItem :label="t('themeColor')">
         <RadioGroupColor
-          v-model:value="panelSettingsStore.settingList.primaryColor"
+          v-model:value="panelSettingsStore.settings.colorPrimary"
           :colorList="colorList"
         />
       </FormItem>
@@ -15,14 +15,14 @@
       <Divider />
 
       <FormItem :label="t('language')">
-        <RadioGroup v-model:value="panelSettingsStore.settingList.language">
-          <RadioButton :value="LanguagesEnum.FARSI">
+        <RadioGroup v-model:value="panelSettingsStore.settings.language">
+          <RadioButton :value="LanguageEnum.FARSI">
             <div class="flex items-center gap-4">
               <Icon icon="twemoji:flag-iran" />
               <span>فارسی</span>
             </div>
           </RadioButton>
-          <RadioButton :value="LanguagesEnum.ENGLISH">
+          <RadioButton :value="LanguageEnum.ENGLISH">
             <div class="flex items-center gap-4">
               <Icon icon="twemoji:flag-united-kingdom" />
               <span>English</span>
@@ -32,14 +32,14 @@
       </FormItem>
 
       <FormItem :label="t('direction')">
-        <RadioGroup v-model:value="panelSettingsStore.settingList.direction">
-          <RadioButton :value="DirectionsEnum.RTL">
+        <RadioGroup v-model:value="panelSettingsStore.settings.direction">
+          <RadioButton :value="DirectionEnum.RTL">
             <div class="inline-flex items-center gap-2">
               <Icon icon="ooui:outdent-rtl" />
               <span>{{ t('right') }}</span>
             </div>
           </RadioButton>
-          <RadioButton :value="DirectionsEnum.LTR">
+          <RadioButton :value="DirectionEnum.LTR">
             <div class="inline-flex items-center gap-2">
               <Icon icon="ooui:outdent-ltr" />
               <span>{{ t('left') }}</span>
@@ -49,24 +49,24 @@
       </FormItem>
 
       <FormItem :label="t('fontFamily')" name="fontFamily">
-        <Select v-model:value="panelSettingsStore.settingList.fontFamily">
-          <SelectOption value="'Poppins', 'Vazirmatn'">Poppins</SelectOption>
-          <SelectOption value="'Vazirmatn', 'Poppins'">Vazirmatn</SelectOption>
+        <Select v-model:value="panelSettingsStore.settings.fontFamily">
+          <SelectOption :value="FontFamilyEnum.ENGLISH">Poppins</SelectOption>
+          <SelectOption :value="FontFamilyEnum.FARSI">Vazirmatn</SelectOption>
         </Select>
       </FormItem>
 
       <Divider />
 
       <FormItem :label="t('componentsSize')">
-        <RadioGroup v-model:value="panelSettingsStore.settingList.componentsSize">
-          <RadioButton :value="ComponentsSizesEnum.LARGE">{{ t('large') }}</RadioButton>
-          <RadioButton :value="ComponentsSizesEnum.MIDDLE">{{ t('middle') }}</RadioButton>
-          <RadioButton :value="ComponentsSizesEnum.SMALL">{{ t('small') }}</RadioButton>
+        <RadioGroup v-model:value="panelSettingsStore.settings.componentSize">
+          <RadioButton :value="ComponentSizeEnum.LARGE">{{ t('large') }}</RadioButton>
+          <RadioButton :value="ComponentSizeEnum.MIDDLE">{{ t('middle') }}</RadioButton>
+          <RadioButton :value="ComponentSizeEnum.SMALL">{{ t('small') }}</RadioButton>
         </RadioGroup>
       </FormItem>
 
       <FormItem :label="t('compactMode')" name="isCompact">
-        <Switch v-model:checked="panelSettingsStore.settingList.isCompact" />
+        <Switch v-model:checked="panelSettingsStore.settings.isCompact" />
       </FormItem>
 
       <Divider />
@@ -92,7 +92,7 @@ import {
   Switch,
 } from 'ant-design-vue/es'
 import { Icon } from '@iconify/vue/dist/iconify.js'
-import { DirectionsEnum, ComponentsSizesEnum, LanguagesEnum } from '@/core/enums'
+import { DirectionEnum, ComponentSizeEnum, LanguageEnum, FontFamilyEnum } from '@/core/enums'
 import RadioGroupColor from '@/core/components/RadioGroupColor.vue'
 import RadioGroupImage from '@/core/components/RadioGroupImage.vue'
 import { useI18n } from 'vue-i18n'
@@ -100,13 +100,13 @@ const panelSettingsStore = usePanelSettingsStore()
 const { t } = useI18n()
 
 const placement = computed(() => {
-  return panelSettingsStore.settingList.direction === DirectionsEnum.LTR ? 'right' : 'left'
+  return panelSettingsStore.settings.direction === DirectionEnum.LTR ? 'right' : 'left'
 })
 const emits = defineEmits(['save'])
 const colorList = reactive([
   {
     label: 'blue',
-    value: '#2b7fff',
+    value: '#2893ff',
     class: 'bg-blue',
   },
   {
@@ -165,7 +165,7 @@ const items = reactive([
 ])
 </script>
 <style lang="less">
-.ant-drawer-header{
+.ant-drawer-header {
   @apply bg-primary;
 }
 </style>
