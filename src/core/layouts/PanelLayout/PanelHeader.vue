@@ -1,9 +1,8 @@
 <template>
   <LayoutHeader
-    class="!leading-12 !p-inline-4 flex items-center !from-primary !to-primary-300"
+    class="!leading-12 !p-inline-4 flex items-center !from-primary !to-primary-200"
     :class="headerClass"
   >
-
     <div class="flex items-center ms-auto">
       <Dropdown :trigger="['click']" class="!ms-auto">
         <AzButton
