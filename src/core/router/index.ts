@@ -13,7 +13,7 @@ const router = createRouter({
         {
           path: '',
           name: 'ThePanel',
-          component: () => import('@/core/layouts/PanelLayout/PanelLayout.vue'),
+          component: () => import('@/core/layouts/PanelLayout.vue'),
           children: [...routes],
         },
         {
