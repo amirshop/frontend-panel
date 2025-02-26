@@ -25,9 +25,11 @@
         </template>
       </Dropdown>
       <Divider type="vertical" class="bg-white" />
-      <Tooltip :title="t('fullScreen')" size="small">
+      <Tooltip :title="panelSettingsStore.fullscreen.isFullscreen ? t('exitFullScreen') : t('fullScreen')" size="small">
         <AzButton
-          icon="lets-icons:full"
+          :icon="
+            panelSettingsStore.fullscreen.isFullscreen ? 'subway:close-2' : 'subway:fullscreen'
+          "
           type="text"
           class="text-white"
           @click="panelSettingsStore.fullscreen.toggle"
