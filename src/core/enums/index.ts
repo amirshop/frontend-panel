@@ -1,7 +1,3 @@
-import faIR from 'ant-design-vue/es/locale/fa_IR'
-import enUS from 'ant-design-vue/es/locale/en_US'
-import azAZ from 'ant-design-vue/es/locale/az_AZ'
-
 export const enum ColorsEnum {
   PRIMARY = 'var(--primary-color)',
 }
@@ -9,14 +5,9 @@ export const enum FontFamilyEnum {
   PRIMARY = 'var(--primary-font-family)',
 }
 
-export const enum DirectionsEnum {
+export const enum DirectionEnum {
   RTL = 'rtl',
   LTR = 'ltr',
-}
-export const enum LanguagesEnum {
-  FARSI = 'fa',
-  ENGLISH = 'en',
-  AZERBAIJANI = 'az',
 }
 
 export const enum SortDirEnum {
@@ -29,7 +20,12 @@ export const enum FilterTypeEnum {
   BOOLEAN = 'boolean',
   DATE = 'date',
 }
-export const enum ComponentsSizesEnum {
+export const enum LanguageEnum {
+  FARSI = 'fa',
+  ENGLISH = 'en',
+  AZERBAIJANI = 'az',
+}
+export const enum ComponentSizeEnum {
   SMALL = 'small',
   MIDDLE = 'middle',
   LARGE = 'large',
@@ -39,19 +35,17 @@ export const enum ColorModeEnum {
   LIGHT = 'light',
   AUTO = 'auto',
 }
-export type LocaleType = keyof typeof LocaleMapping
-export const LocaleMapping = {
-  en: enUS,
-  fa: faIR,
-  az: azAZ,
-}
 
 export const enum FontFamilyEnum {
   FARSI = 'Poppins',
   ENGLISH = 'Vazirmatn',
 }
-export const enum CurrenciesEnum {
+export const enum CurrencyEnum {
   DOLLAR = 'dollar',
   RIAL = 'dolSlar',
   TOMAN = 'dollarS',
+}
+export const enum DateFormatsEnum {
+  PERSIAN = 'jalali',
+  ENGLISH = 'gogy',
 }

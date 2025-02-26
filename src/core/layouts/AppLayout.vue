@@ -1,84 +1,66 @@
 <template>
   <ConfigProvider
-    :theme="{
-      algorithm: algorithm,
-      token: {
-        colorPrimary: panelSettingsStore.settingList.primaryColor,
-        fontFamily: panelSettingsStore.settingList.fontFamily,
-      },
-    }"
-    :locale="panelSettingsStore.locale"
-    :component-size="panelSettingsStore.settingList.componentsSize"
-    :direction="panelSettingsStore.settingList.direction"
+    :componentSize="panelSettingStore.settings.componentSize"
+    :direction="panelSettingStore.settings.direction"
+    :locale="panelSettingStore.locale"
+    :theme="panelSettingStore.theme"
     :ref="panelSettingsStore.fullscreen.appRef"
   >
-    <RouterView />
+    <div :class="classList">
+      <RouterView />
+    </div>
   </ConfigProvider>
 </template>
 
 <script lang="ts" setup>
-import { ConfigProvider, type DerivativeFunc, theme } from 'ant-design-vue/es'
+import { ConfigProvider } from 'ant-design-vue/es'
 import { RouterView } from 'vue-router'
 import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
-import { ref, watch } from 'vue'
-import { useCssVariables } from '../composable/cssVariables.composable'
+import { onMounted, ref, watch } from 'vue'
 import type { SeedToken } from 'ant-design-vue/es/theme/internal'
 import type { MapToken } from 'ant-design-vue/es/theme/interface'
+import { useI18n } from 'vue-i18n'
+import { usePanelSettingStore } from '@/stores/panelSetting.store'
+import { theme } from 'ant-design-vue'
+import { useCssVariables } from '@/composable/cssVariables.composable'
+const { useToken } = theme
+const { token } = useToken()
+const { updateColors } = useCssVariables()
 
-const { primaryColor, fontFamily, updateColors } = useCssVariables()
-const panelSettingsStore = usePanelSettingsStore()
+const panelSettingStore = usePanelSettingStore()
+const { t } = useI18n()
 
-const token = ref(theme.useToken().token)
-watch(token, (newVal) => {
-  console.log(newVal)
+onMounted(() => updateColors(panelSettingStore.settings.colorPrimary))
+watch(
+  () => panelSettingStore.settings.colorPrimary,
+  (newColor) => {
+    updateColors(newColor)
+  },
+)
+
+onMounted(panelSettingStore.setLanguageConfig)
+watch(() => panelSettingStore.settings.language, panelSettingStore.setLanguageConfig, {
+  immediate: true,
 })
 
+const classList = ref('')
+onMounted(() => {
+  if (classList.value == 'dark bg-dark' && panelSettingStore.settings.isDark === false) {
+    classList.value = ''
+  }
+  if (classList.value === '' && panelSettingStore.settings.isDark === true) {
+    classList.value = 'dark bg-dark'
+  }
+})
 watch(
-  () => panelSettingsStore.settingList.primaryColor,
-  (newColor) => {
-    primaryColor.value = newColor
-    updateColors()
-  },
-  { immediate: true },
-)
-
-watch(
-  () => panelSettingsStore.settingList.fontFamily,
-  (newColor) => {
-    fontFamily.value = newColor
-  },
-  { immediate: true },
-)
-
-const algorithm = ref<DerivativeFunc<SeedToken, MapToken>[]>([])
-
-watch(
-  () => panelSettingsStore.settingList.isCompact,
-  (newVal) => {
-    algorithm.value = [
-      ...(panelSettingsStore.settingList.isDark ? [theme.darkAlgorithm] : []),
-      ...(newVal ? [theme.compactAlgorithm] : []),
-    ]
-  },
-  { immediate: true },
-)
-
-watch(
-  () => panelSettingsStore.settingList.isDark,
-  (newVal) => {
-    algorithm.value = [
-      ...(newVal ? [theme.darkAlgorithm] : []),
-      ...(panelSettingsStore.settingList.isCompact ? [theme.compactAlgorithm] : []),
-    ]
-
-    if (newVal) {
-      document.body.classList.add('bg-dark')
-      document.body.classList.add('dark')
-    } else {
-      document.body.classList.remove('bg-dark')
-      document.body.classList.remove('dark')
+  () => panelSettingStore.settings.isDark,
+  (newValue) => {
+    if (newValue === false) {
+      classList.value = ''
+    }
+    if (newValue === true) {
+      classList.value = 'dark bg-dark'
     }
   },
-  { immediate: true },
 )
 </script>

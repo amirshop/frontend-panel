@@ -1,66 +1,83 @@
 import { defineStore } from 'pinia'
-import { useCssVar, useLocalStorage } from '@vueuse/core'
-import { ComponentsSizesEnum, DirectionsEnum, LanguagesEnum, LocaleMapping } from '@/core/enums'
 import 'dayjs/locale/fa'
+import { useFullscreen } from '@vueuse/core'
+
+import { ref, computed } from 'vue'
+import { ComponentSizeEnum, DirectionEnum, FontFamilyEnum, LanguageEnum } from '@/core/enums'
+import { LocaleMapping } from '@/core/constant'
+import type { MappingAlgorithm, ThemeConfig } from 'ant-design-vue/es/config-provider/context'
+
+import { theme as antTheme } from 'ant-design-vue/es'
+import { remove } from 'lodash'
+import { useLocalStorage } from '@vueuse/core'
+
 import dayjs from 'dayjs'
 import jalali from '@zoomit/dayjs-jalali-plugin'
-import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useFullscreen } from '@vueuse/core'
-import type { Settings } from '../types'
+import { initI18n } from '@/core/i18n'
 
-export const usePanelSettingsStore = defineStore('Panel settings', () => {
-  const settingList = useLocalStorage<Settings>('panelSettings', {
-    primaryColor: '#2b7fff',
-    fontFamily: 'Vazirmatn',
-    language: LanguagesEnum.ENGLISH,
-    direction: DirectionsEnum.LTR,
-    componentsSize: ComponentsSizesEnum.MIDDLE,
-    isCompact: false,
+export const usePanelSettingStore = defineStore('Panel setting', () => {
+  const settings = useLocalStorage('settings', {
+    direction: DirectionEnum.LTR,
+    language: LanguageEnum.FARSI,
+    componentSize: ComponentSizeEnum.MIDDLE,
+    fontFamily: FontFamilyEnum.ENGLISH,
+    colorPrimary: '#fff000',
     isDark: false,
-  } as Settings)
-
-  const locale = ref(LocaleMapping[settingList.value.language])
-
+    isCompact: false,
+  })
   const appRef = ref()
   const fullscreen = useFullscreen(appRef.value)
+  const locale = ref(LocaleMapping[settings.value.language])
+  const algorithm = computed<MappingAlgorithm | MappingAlgorithm[]>(() => {
+    const list: any = []
 
-  dayjs.extend(jalali)
-
-  const i18n = useI18n()
-
-  onMounted(() => {
-    if (settingList.value.language === LanguagesEnum.ENGLISH) {
-      dayjs.calendar('gregory')
-      locale.value = LocaleMapping[settingList.value.language]
+    if (settings.value.isDark) {
+      list.push(antTheme.darkAlgorithm)
+    } else {
+      remove(list, (item) => item === antTheme.darkAlgorithm)
     }
 
-    if (settingList.value.language === LanguagesEnum.FARSI) {
-      dayjs.calendar('jalali')
-      locale.value = LocaleMapping[settingList.value.language]
+    if (settings.value.isCompact) {
+      list.push(antTheme.compactAlgorithm)
+    } else {
+      remove(list, (item) => item === antTheme.compactAlgorithm)
+    }
+
+    return list
+  })
+
+  const theme = computed<ThemeConfig>(() => {
+    return {
+      token: {
+        colorPrimary: settings.value.colorPrimary,
+        fontFamily: settings.value.fontFamily,
+      },
+      algorithm: algorithm.value,
     }
   })
 
-  watch(
-    () => settingList.value.language,
-    () => {
-      i18n.locale.value = settingList.value.language
+  const i18n = useI18n()
+  dayjs.extend(jalali)
+  const setLanguageConfig = () => {
+    i18n.locale.value = settings.value.language
+    dayjs.calendar(i18n.locale.value === 'fa' ? 'jalali' : 'gregory')
+    initI18n.global.locale.value = settings.value.language as 'en' | 'fa'
+    locale.value = LocaleMapping[settings.value.language]
 
-      if (settingList.value.language === LanguagesEnum.ENGLISH) {
-        dayjs.calendar('gregory')
-        locale.value = LocaleMapping[settingList.value.language]
-      }
-
-      if (settingList.value.language === LanguagesEnum.FARSI) {
-        dayjs.calendar('jalali')
-        locale.value = LocaleMapping[settingList.value.language]
-      }
-    },
-  )
+    if (settings.value.language === LanguageEnum.FARSI) {
+      settings.value.fontFamily = FontFamilyEnum.FARSI
+    }
+    if (settings.value.language === LanguageEnum.ENGLISH) {
+      settings.value.fontFamily = FontFamilyEnum.ENGLISH
+    }
+  }
 
   return {
+    settings,
     locale,
+    theme,
+    setLanguageConfig,
     fullscreen: { ...fullscreen, appRef },
-    settingList,
   }
 })
