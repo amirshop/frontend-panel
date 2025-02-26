@@ -37,8 +37,8 @@ export const enum ColorModeEnum {
 }
 
 export const enum FontFamilyEnum {
-  FARSI = 'Poppins',
-  ENGLISH = 'Vazirmatn',
+  FARSI = '"Vazirmatn", "Poppins"',
+  ENGLISH = '"Poppins", "Vazirmatn"',
 }
 export const enum CurrencyEnum {
   DOLLAR = 'dollar',
