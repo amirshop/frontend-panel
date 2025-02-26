@@ -1,4 +1,5 @@
 <template>
+  <!-- {{ data }} -->
   <AppLayout />
 </template>
 <script setup lang="ts">

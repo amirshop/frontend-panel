@@ -131,7 +131,7 @@
     </div>
     <Table
       :columns="props.columnList"
-      :data-source="userTable.tableData.value"
+      :data-source="userTable.dataList.value"
       :pagination="{
         ...userTable.pagination,
         position: [

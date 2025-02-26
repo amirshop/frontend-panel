@@ -61,7 +61,7 @@ export const useTable = <T>() => {
   }))
 
   const {
-    state: tableData,
+    state: dataList,
     isLoading: loading,
     execute: reload,
   } = useAsyncState(
@@ -116,7 +116,7 @@ export const useTable = <T>() => {
   }
 
   return {
-    tableData,
+    dataList,
     loading,
     pagination,
     filters,

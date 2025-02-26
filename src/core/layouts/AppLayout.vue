@@ -14,11 +14,11 @@
 import { ConfigProvider } from 'ant-design-vue/es'
 import { RouterView } from 'vue-router'
 import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { theme } from 'ant-design-vue'
 import { useCssVariables } from '@/core/composable/cssVariables.composable'
-import { findIndex } from 'lodash'
+
 const { useToken } = theme
 const { token } = useToken()
 const { t } = useI18n()
@@ -30,8 +30,6 @@ onMounted(() => updateColors(panelSettingsStore.settings.colorPrimary))
 watch(
   () => panelSettingsStore.settings.colorPrimary,
   (newColor) => {
-    console.log(newColor)
-
     updateColors(newColor)
   },
 )

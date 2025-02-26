@@ -1,71 +1,59 @@
 <template>
   <div>
-    <MyTable title="amir" :column-list="columnList" :data-list="dataList" />
+    <MyTable title="amir" :columnList="columnList" :dataList="dataList" />
   </div>
 </template>
 
 <script setup lang="ts">
 import MyTable from '@/core/components/MyTable.vue'
+import { useTable } from '@/core/composable'
+import { useHttp } from '@/core/composable/http.composable'
 import type { ColumnsType } from 'ant-design-vue/es/table'
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 
 const columnList = ref<ColumnsType>([
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
+    title: 'title',
+    dataIndex: 'title',
+    key: 'title',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'category',
+    dataIndex: 'category',
+    key: 'category',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-    filters: [
-      { text: 'New York', value: 'New York' },
-      { text: 'London', value: 'London' },
-      { text: 'Sidney', value: 'Sidney' },
-    ],
-    filterSearch: true,
-    sorter: (a, b) => a.address.length - b.address.length,
-    onFilter: (value, record) => {
-      return record.address.indexOf(value) === 0
-    },
+    title: 'description',
+    dataIndex: 'description',
+    key: 'description',
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
+    title: 'price',
+    key: 'price',
+    dataIndex: 'price',
   },
   {
-    title: 'Action',
-    key: 'action',
+    title: 'rating.count',
+    key: 'rating.count',
+    dataIndex: ['rating', 'count'],
+  },
+  {
+    title: 'rating.rate',
+    key: 'rating.rate',
+    dataIndex: ['rating', 'rate'],
   },
 ])
-const dataList = reactive([
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-])
+interface Amir {
+  data: any[]
+}
+const { request } = useHttp()
+const { runAsync, data } = request<Amir>({
+  method: 'get',
+  url: '/products',
+})
+const table = useTable()
+const dataList = ref([])
+onMounted(async () => {
+  await runAsync()
+})
 </script>

@@ -6,6 +6,7 @@ import { computed } from 'vue'
 
 export const useAuthStore = defineStore('auth', () => {
   const authService = useAuthService()
+  const authToken = useLocalStorage<string>('authToken', '')
   const userStorage = useLocalStorage('User', {} as AuthDTO.Login.Response)
   const login = async (dto: AuthDTO.Login.Request) => {
     const { data, execute, loading, error } = authService.login
@@ -21,5 +22,5 @@ export const useAuthStore = defineStore('auth', () => {
   }
   const currentUser = computed(() => userStorage.value)
 
-  return { currentUser, login, logout }
+  return { currentUser, login, logout, authToken }
 })

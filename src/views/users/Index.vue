@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <AzTable :columnList="columnList"> </AzTable>
   </div>
 </template>
