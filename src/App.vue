@@ -1,5 +1,4 @@
 <template>
-  <!-- {{ data }} -->
   <AppLayout />
 </template>
 <script setup lang="ts">
@@ -10,12 +9,10 @@ import { computed } from 'vue'
 
 const { t } = useI18n()
 
-// مقدار داینامیک برای title و meta
 const pageTitle = computed(() => t('siteTitle'))
 const metaDescription = computed(() => t('siteDescription'))
 const ogTitle = computed(() => t('dashboardTitle'))
 
-// تنظیم اولیه `useHead`
 useHead({
   title: pageTitle.value,
   meta: [
