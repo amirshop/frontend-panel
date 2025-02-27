@@ -12,6 +12,7 @@ interface UseTable {
 }
 export const useTable = ({ apiUrl, title, columnList }: UseTable) => {
   const dataList = ref<DataList>([])
+  const total = ref<number>(1000)
   const pagination = ref<TablePaginationConfig>({
     current: 1,
     pageSize: 10,
@@ -25,8 +26,6 @@ export const useTable = ({ apiUrl, title, columnList }: UseTable) => {
   )
 
   const fetchTable = async () => {
-    console.log(111111111111111);
-    
     loading.value = true
     const { data, pagination: newPagination } = await runAsync(pagination.value)
     dataList.value = data
@@ -51,3 +50,7 @@ export const useTable = ({ apiUrl, title, columnList }: UseTable) => {
     runAsync,
   }
 }
+const xx = useTable({
+  title: 'dd',
+  columnList: [],
+})

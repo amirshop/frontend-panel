@@ -60,22 +60,22 @@
               <FormItem :label="item.title" v-for="(item, index) in props.filterList" :key="index">
                 <div class="">
                   <Input
-                    v-if="item.type === FilterTypeEnum.STRING"
+                    v-if="item.type === TableFilterDataTypeEnum.STRING"
                     v-model:value="item.value"
                     allow-clear
                   />
                   <InputNumber
-                    v-if="item.type === FilterTypeEnum.NUMBER"
+                    v-if="item.type === TableFilterDataTypeEnum.NUMBER"
                     v-model:value="item.value"
                     allow-clear
                   />
                   <Switch
-                    v-if="item.type === FilterTypeEnum.BOOLEAN"
+                    v-if="item.type === TableFilterDataTypeEnum.BOOLEAN"
                     v-model:checked="item.value"
                     allow-clear
                   />
                   <RangePicker
-                    v-if="item.type === FilterTypeEnum.DATE"
+                    v-if="item.type === TableFilterDataTypeEnum.DATE"
                     v-model:value="item.value"
                     :placeholder="[t('startDate'), t('endDate')]"
                   />
@@ -158,19 +158,18 @@ import { formatDate } from '@/core/utils'
 import { AzButton, AzFullScreen, AzStatus } from '@/core/components'
 import { useI18n } from 'vue-i18n'
 import { isNull, isUndefined, truncate } from 'lodash'
-import { FilterTypeEnum, SortDirEnum } from '@/core/enums'
+import { TableFilterDataTypeEnum, TableSortDirEnum, } from '@/core/enums'
 import { useModal } from '@/core/composable'
-import { Icon } from '@iconify/vue'
 interface FilterList {
   title: string
   key: string
-  type: FilterTypeEnum
+  type: TableFilterDataTypeEnum
   value: any
 }
 interface Props {
   columns: ColumnsType
   filterList: FilterList[]
-  fetch: Function
+  fetch: <T>(value: T) => T;
 }
 
 const azTableRef = ref<HTMLElement | null>(null)
@@ -229,8 +228,8 @@ const getSortParams = (sorter: SorterResult<any> | SorterResult<any>[] | null): 
     sortBy: order ? String(columnKey) : undefined,
     sortDir: order
       ? order === 'ascend' && columnKey
-        ? SortDirEnum.ASCENDING
-        : SortDirEnum.DESCENDING
+        ? TableSortDirEnum.ASCENDING
+        : TableSortDirEnum.DESCENDING
       : undefined
   }
 }

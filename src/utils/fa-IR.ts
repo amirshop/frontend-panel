@@ -35,10 +35,10 @@ export const AG_GRID_LOCALE_IR = {
     inRangeEnd: 'تا',
 
     // Text Filter
-    contains: 'شامل است',
-    notContains: 'شامل نمی‌شود',
-    startsWith: 'شروع می‌شود با',
-    endsWith: 'پایان می‌یابد با',
+        contains: 'شامل است',
+        notContains: 'شامل نمی‌شود',
+        startsWith: 'شروع می‌شود با',
+        endsWith: 'پایان می‌یابد با',
 
     // Date Filter
     dateFormatOoo: 'yyyy-mm-dd',
