@@ -1,14 +1,19 @@
-import type { ColumnsType, TablePaginationConfig } from 'ant-design-vue/es/table'
+import type { ColumnsType, ColumnType, TablePaginationConfig } from 'ant-design-vue/es/table'
 import { ref } from 'vue'
 import { useRequest } from 'vue-request'
 import axios from 'axios'
+import type { TableFilterDataTypeEnum } from '@/core/enums'
+import type { DefaultRecordType } from 'ant-design-vue/es/vc-table/interface'
 
-type DataList = unknown[]
+type DataList = DefaultRecordType[]
+interface CustomColumnsType extends ColumnsType {
+  ColumnType: ColumnType
+}
 
 interface UseTable {
   apiUrl: string
   title: string
-  columnList: ColumnsType
+  columnList: CustomColumnsType
 }
 export const useTable = ({ apiUrl, title, columnList }: UseTable) => {
   const dataList = ref<DataList>([])

@@ -3,6 +3,8 @@
     <template #extra>
       <ExportData :data="props.dataList" />
       <Divider type="vertical" />
+      <FilterTable :filterList="props.filterList" />
+      <Divider type="vertical" />
       <Tooltip :title="t('resetTable')">
         <AzButton
           type="link"
@@ -14,6 +16,7 @@
     </template>
 
     <Table
+      id="az-table"
       :columns="props.columnList"
       :data-source="props.dataList"
       :pagination="props.pagination"
@@ -26,6 +29,7 @@
 <script setup lang="ts">
 import AzButton from '@/core/components/AzButton.vue'
 import ExportData from '@/core/components/ExportData.vue'
+import FilterTable from '@/core/components/FilterTable.vue'
 import { Table, Card, Tooltip, Divider } from 'ant-design-vue/es'
 import type { ColumnsType, TablePaginationConfig } from 'ant-design-vue/es/table'
 import { useI18n } from 'vue-i18n'
@@ -34,6 +38,7 @@ type DataList = unknown[]
 interface Props {
   columnList: ColumnsType
   dataList: DataList
+  filterList: Array<object>
   loading: boolean
   pagination: false | TablePaginationConfig
 }

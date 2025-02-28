@@ -36,7 +36,7 @@ export const useExportFile = () => {
     link.click()
   }
 
-  const image = async (targetId: 'az-table', name = 'TableData') => {
+  const image = async (targetId = 'az-table', name = 'TableData') => {
     const azTable = document.getElementById(targetId)
     if (!azTable) return
     const canvas = await html2canvas(azTable)

@@ -7,7 +7,8 @@
 import { AzTable } from '@/core/components'
 import type { ColumnsType } from 'ant-design-vue/es/table'
 import { reactive } from 'vue'
-
+import { TableFilterDataTypeEnum, TableFilterOperatorBooleanEnum } from "@/core/enums";
+import type { Filter } from '@/core/types/table.interface';
 type TableDataType = {
   key: string
   gender: string
@@ -26,6 +27,7 @@ const columnList = reactive<ColumnsType>([
     dataIndex: 'email',
     key: 'email',
     customFilterDropdown: true,
+    filters:[]
   },
 
   {
@@ -34,6 +36,8 @@ const columnList = reactive<ColumnsType>([
     key: 'phone',
   },
 ])
+
+
 const axiosPostDataToGetTableDataByFiltersByDifferenceTypes = {
   size: 10,
   page: 0,

@@ -3,8 +3,13 @@ export const enum TableFilterDataTypeEnum {
   NUMBER = 'number',
   BOOLEAN = 'boolean',
   DATE = 'date',
+  SELECT = 'select',
 }
 
+export const enum TableFilterOperatorMultiSelectEnum {
+  EQUALS_TEXT = '=', // SQL: x = 'value'
+  NOT_EQUALS_TEXT = '!=', // SQL: x != 'value'
+}
 export const enum TableFilterOperatorBooleanEnum {
   // فیلتر منطقی (BOOLEAN)
   IS_TRUE = 'IS TRUE', // SQL: IS TRUE
@@ -39,14 +44,15 @@ export const enum TableFilterOperatorDateEnum {
   DATE_BEFORE = '<', // SQL: x < 'date'
   DATE_AFTER = '>', // SQL: x > 'date'
   DATE_EQUALS = '=', // SQL: x = 'date'
+  DATE_BETWEEN = 'BETWEEN', // SQL: x = 'date'
   IS_BLANK = 'IS NULL', // SQL: x IS NULL
   IS_NOT_BLANK = 'IS NOT NULL', // SQL: x IS NOT NULL
 }
-export const enum TableFilterOperatorEnum {
-  // فیلتر ترکیبی (AND / OR)
-  AND = 'AND', // SQL: AND
-  OR = 'OR', // SQL: OR
-}
+// export const enum TableFilterOperatorEnum {
+//   // فیلتر ترکیبی (AND / OR)
+//   AND = 'AND', // SQL: AND
+//   OR = 'OR', // SQL: OR
+// }
 
 export const enum TableSortDirEnum {
   ASCENDING = 'asc',
