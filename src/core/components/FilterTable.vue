@@ -1,5 +1,5 @@
 <template>
-  <Dropdown>
+  <Dropdown :trigger="['click']">
     <Tooltip :title="t('exportData')">
       <AzButton
         type="link"
