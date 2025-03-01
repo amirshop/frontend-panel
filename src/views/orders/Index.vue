@@ -50,27 +50,30 @@ const filterList = ref([
   {
     key: 'title',
     dateType: TableFilterDataTypeEnum.STRING,
+    
+    value: ''
   },
-  {
-    key: 'description',
-    dateType: TableFilterDataTypeEnum.STRING,
-  },
+
   {
     key: 'price',
     dateType: TableFilterDataTypeEnum.NUMBER,
+    value: ''
   },
   {
     key: 'category',
     dateType: TableFilterDataTypeEnum.SELECT,
-    list:[]
+    list: [],
+    value: ''
   },
   {
     key: 'category',
     dateType: TableFilterDataTypeEnum.DATE,
+    value: ''
   },
   {
     key: 'category',
     dateType: TableFilterDataTypeEnum.BOOLEAN,
+    value: ''
   },
 ])
 // const filterList: Filter[] = [
