@@ -1,8 +1,5 @@
 <template>
-  <Button
-    class="flex items-center justify-center"
-    :class="{ 'gap-x-2': props.icon }"
-  >
+  <Button class="flex items-center justify-center" :class="{ 'gap-x-2': props.icon }">
     <template #icon v-if="props.icon">
       <Icon :icon="props.icon" />
     </template>
@@ -11,15 +8,13 @@
 </template>
 
 <script setup lang="ts">
-import { Button } from "ant-design-vue/es";
+import { Button } from 'ant-design-vue/es'
+import { Icon } from '@iconify/vue'
 interface Props {
-  icon?: string;
+  icon?: string
 }
-
 const props = withDefaults(defineProps<Props>(), {
-  icon: "",
-});
-
-import { Icon } from "@iconify/vue";
+  icon: '',
+})
 </script>
-<style scoped lang="less"></style>
+<style lang="less"></style>

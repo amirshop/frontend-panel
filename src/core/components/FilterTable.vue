@@ -5,7 +5,7 @@
     </AzButton>
   </Badge>
 
-  <Modal v-model:open="filterModal.isOpen.value" title="Filters" width="80vw">
+  <Modal v-model:open="filterModal.isOpen.value" title="Filters" width="60vw">
     <Form layout="vertical" class="bg-light dark:bg-dark grid lg:grid-cols-2 gap-4 p-4">
       <template v-for="item in props.filterList" :key="item.key">
         <Card>
@@ -13,27 +13,27 @@
             <div class="font-medium text-base">{{ t(item.key) }}</div>
             <AzButton type="link" danger icon="tabler:trash" />
           </div>
-          <div class="grid grid-cols-2 items-center gap-4">
+          <div class="md:grid md:grid-cols-2 md:items-center md:gap-4">
             <template v-if="item.dateType === TableFilterDataTypeEnum.STRING">
-              <FormItem :label="`نوع فیلتر ${item.dateType}`">
-                <Select placeholder="برای فیلتر کردن یکی را انتخاب کنید" class="w-full">
+              <FormItem :label="`نوع فیلتر ${item.dateType}`" class="w-40">
+                <Select placeholder="برای فیلتر کردن یکی را انتخاب کنید">
                   <SelectOption v-for="item in stringFIlters" :value="item.value" :key="item.value">
                     {{ t(item.label) }}
                   </SelectOption>
                 </Select>
               </FormItem>
-              <FormItem label="مقدار فیلتر"> <Input v-model:value="item.value" /></FormItem>
+              <FormItem label="مقدار فیلتر" class="w-40"> <Input v-model:value="item.value" /></FormItem>
             </template>
 
             <template v-if="item.dateType === TableFilterDataTypeEnum.NUMBER">
               <FormItem :label="`نوع فیلتر ${item.dateType}`">
-                <Select placeholder="برای فیلتر کردن یکی را انتخاب کنید" class="w-full">
+                <Select placeholder="برای فیلتر کردن یکی را انتخاب کنید">
                   <SelectOption v-for="item in numberFIlters" :value="item.value" :key="item.value">
                     {{ t(item.label) }}
                   </SelectOption>
                 </Select>
               </FormItem>
-              <FormItem label="مقدار فیلتر"> <InputNumber v-model:value="item.value" class="w-full" /></FormItem>
+              <FormItem label="مقدار فیلتر"> <InputNumber v-model:value="item.value" /></FormItem>
             </template>
 
             <template v-if="item.dateType === TableFilterDataTypeEnum.BOOLEAN">
@@ -62,14 +62,14 @@
             </template>
             <template v-if="item.dateType === TableFilterDataTypeEnum.DATE">
               <FormItem :label="`نوع فیلتر ${item.dateType}`">
-                <Select placeholder="برای فیلتر کردن یکی را انتخاب کنید" class="w-full">
+                <Select placeholder="برای فیلتر کردن یکی را انتخاب کنید">
                   <SelectOption v-for="item in dateFIlters" :value="item.value" :key="item.value">
                     {{ t(item.label) }}
                   </SelectOption>
                 </Select>
               </FormItem>
               <FormItem label="مقدار فیلتر">
-                <DatePicker v-model:value="item.value" show-time class="w-full" />
+                <DatePicker v-model:value="item.value" show-time />
               </FormItem>
             </template>
           </div>

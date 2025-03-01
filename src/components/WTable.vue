@@ -6,9 +6,9 @@
   >
     <Card>
       <template #extra>
-        <ExportData :data="props.dataList" />
-        <Divider type="vertical" />
         <FilterTable :filterList="props.filterList" />
+        <Divider type="vertical" />
+        <ExportData :data="props.dataList" />
         <Divider type="vertical" />
         <Tooltip :title="t('resetTable')">
           <AzButton

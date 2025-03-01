@@ -1,57 +1,56 @@
-import type { ColumnsType, ColumnType, TablePaginationConfig } from 'ant-design-vue/es/table'
-import { ref } from 'vue'
-import { useRequest } from 'vue-request'
+import type { TableColumnType, TablePaginationConfig, TableProps } from 'ant-design-vue'
+import { computed, ref, watch } from 'vue'
 import axios from 'axios'
+import { usePagination } from 'vue-request'
+import type {
+  FilterValue,
+  SorterResult,
+  TableCurrentDataSource,
+} from 'ant-design-vue/es/table/interface'
 import type { DefaultRecordType } from 'ant-design-vue/es/vc-table/interface'
 
-type DataList = DefaultRecordType[]
-
-interface UseTable {
+export const useTable = <T>({
+  apiUrl,
+  columns,
+}: {
   apiUrl: string
-  title: string
-  columnList: ColumnsType
-}
-export const useTable = ({ apiUrl, title, columnList }: UseTable) => {
-  const dataList = ref<DataList>([])
-  const total = ref<number>(1000)
+  columns: TableColumnType<T>[]
+}) => {
   const pagination = ref<TablePaginationConfig>({
-    current: 1,
     pageSize: 10,
+    current: 1,
+    total: 0,
   })
 
-  const fetchData = async (apiUrl: string, pagination: TablePaginationConfig) => {
-    return await axios.get(apiUrl, { body: pagination })
-  }
-  const { runAsync, loading, data } = useRequest((pagination: TablePaginationConfig) =>
-    fetchData(apiUrl, pagination),
-  )
-
-  const fetchTable = async () => {
-    loading.value = true
-    const { data, pagination: newPagination } = await runAsync(pagination.value)
-    dataList.value = data
-    pagination.value = newPagination
-    loading.value = false
+  const fetchData = async () => {
+    const { data } = await axios.post(apiUrl, {
+      page: pagination.value.current ?? 1,
+      size: pagination.value.pageSize ?? 10,
+      
+    })
+    pagination.value.total = data.total ?? 0
+    return data.res ?? []
   }
 
-  const onChange = async (newPagination: TablePaginationConfig) => {
-    pagination.value = newPagination
-    await fetchTable()
+  const { data: dataSource, loading, runAsync } = usePagination<T[]>(fetchData, { manual: true })
+
+  const onChange: TableProps<T>['onChange'] = async (
+    paginationConfig: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>,
+    sorter: SorterResult<DefaultRecordType> | SorterResult<DefaultRecordType>[],
+    extra: TableCurrentDataSource<DefaultRecordType>,
+  ) => {
+    console.log('Table change params:', { paginationConfig, filters, sorter, extra })
+    pagination.value = { ...pagination.value, ...paginationConfig }
+    await runAsync()
   }
 
   return {
-    dataList,
-    columnList,
-    fetchTable,
-    pagination,
-    title,
+    columns,
+    dataSource,
+    pagination: computed(() => pagination.value),
     loading,
     onChange,
-    apiUrl,
     runAsync,
   }
 }
-const xx = useTable({
-  title: 'dd',
-  columnList: [],
-})
