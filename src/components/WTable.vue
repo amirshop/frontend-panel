@@ -1,5 +1,9 @@
 <template>
-  <BadgeRibbon :text="t(props.title)" placement="start" class="px-4 h-10 leading-10 text-lg font-medium">
+  <BadgeRibbon
+    :text="t(props.title)"
+    placement="start"
+    class="px-4 h-10 leading-10 text-lg font-medium"
+  >
     <Card>
       <template #extra>
         <ExportData :data="props.dataList" />
@@ -12,7 +16,9 @@
             size="small"
             @click="() => emits('restTable')"
             icon="tabler:refresh"
-          />
+          >
+            <div class="hidden md:block">{{ t('resetTable') }}</div>
+          </AzButton>
         </Tooltip>
       </template>
 
@@ -35,7 +41,7 @@ import FilterTable from '@/core/components/FilterTable.vue'
 import { Table, Card, Tooltip, Divider, BadgeRibbon } from 'ant-design-vue/es'
 import type { ColumnsType, TablePaginationConfig } from 'ant-design-vue/es/table'
 import { useI18n } from 'vue-i18n'
-
+import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 type DataList = unknown[]
 interface Props {
   columnList: ColumnsType
@@ -47,7 +53,7 @@ interface Props {
 }
 const props = withDefaults(defineProps<Props>(), {})
 const emits = defineEmits(['changeTable', 'restTable'])
-
+const panelSettingsStore = usePanelSettingsStore()
 const { t } = useI18n()
 </script>
 <style lang="less">
