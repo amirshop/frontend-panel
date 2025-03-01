@@ -2,7 +2,7 @@
   <BadgeRibbon
     :text="t(props.title)"
     placement="start"
-    class="px-4 h-10 leading-10 text-lg font-medium"
+    class="leading-8 md:leading-10 md:px-4 font-medium"
   >
     <Card>
       <template #extra>
