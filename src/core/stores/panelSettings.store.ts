@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import 'dayjs/locale/fa'
-import { useFullscreen } from '@vueuse/core'
+import { useFullscreen, useWindowSize } from '@vueuse/core'
 
 import { ref, computed } from 'vue'
 import { ComponentSizeEnum, DirectionEnum, FontFamilyEnum, LanguageEnum } from '@/core/enums'
@@ -72,6 +72,24 @@ export const usePanelSettingsStore = defineStore('Panel setting', () => {
       settings.value.fontFamily = FontFamilyEnum.ENGLISH
     }
   }
+  const { width } = useWindowSize()
+const breakpoint = computed(() => {
+  if (width.value < 480) {
+    return 'xs'
+  } else if (width.value >= 480 && width.value < 576) {
+    return 'sm'
+  } else if (width.value >= 576 && width.value < 768) {
+    return 'md'
+  } else if (width.value >= 768 && width.value < 992) {
+    return 'lg'
+  } else if (width.value >= 992 && width.value < 1200) {
+    return 'xl'
+  } else if (width.value >= 1200 && width.value < 1600) {
+    return 'xxl'
+  } else {
+    return 'xxxl'
+  }
+})
 
   return {
     settings,
@@ -79,5 +97,6 @@ export const usePanelSettingsStore = defineStore('Panel setting', () => {
     theme,
     setLanguageConfig,
     fullscreen: { ...fullscreen, appRef },
+    breakpoint,
   }
 })
