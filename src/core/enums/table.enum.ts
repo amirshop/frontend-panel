@@ -6,7 +6,7 @@ export const enum TableFilterDataTypeEnum {
   SELECT = 'select',
 }
 
-export const enum TableFilterOperatorMultiSelectEnum {
+export const enum TableFilterOperatorSelectEnum {
   EQUALS_TEXT = '=', // SQL: x = 'value'
   NOT_EQUALS_TEXT = '!=', // SQL: x != 'value'
 }
