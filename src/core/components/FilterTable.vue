@@ -6,7 +6,7 @@
   </Badge>
 
   <Modal v-model:open="filterModal.isOpen.value" title="Filters" width="80vw">
-    <Form layout="vertical" class="bg-light grid grid-cols-2 gap-4 p-4">
+    <Form layout="vertical" class="bg-light dark:bg-dark grid lg:grid-cols-2 gap-4 p-4">
       <template v-for="item in props.filterList" :key="item.key">
         <Card>
           <div class="flex justify-between mb-2">
