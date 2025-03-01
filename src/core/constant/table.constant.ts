@@ -1,7 +1,7 @@
 import {
   TableFilterOperatorBooleanEnum,
   TableFilterOperatorDateEnum,
-  TableFilterOperatorMultiSelectEnum,
+  TableFilterOperatorSelectEnum,
   TableFilterOperatorNumberEnum,
   TableFilterOperatorStringEnum,
 } from '../enums'
@@ -119,10 +119,10 @@ export const stringFIlters = [
 export const multiSelectFIlters = [
   {
     label: 'EQUALS_TEXT',
-    value: TableFilterOperatorMultiSelectEnum.EQUALS_TEXT,
+    value: TableFilterOperatorSelectEnum.EQUALS_TEXT,
   },
   {
     label: 'NOT_EQUALS_TEXT',
-    value: TableFilterOperatorMultiSelectEnum.NOT_EQUALS_TEXT,
+    value: TableFilterOperatorSelectEnum.NOT_EQUALS_TEXT,
   },
 ]
