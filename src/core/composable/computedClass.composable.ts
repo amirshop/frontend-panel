@@ -6,37 +6,37 @@ export const useComputedClass = () => {
   const panelSettingsStore = usePanelSettingsStore()
 
   const getClass = ({
-    s = '',
-    m = '',
-    l = '',
-    sC = '',
-    mC = '',
-    lC = '',
+    sm = '',
+    md = '',
+    lg = '',
+    smC = '',
+    mdC = '',
+    lgC = '',
   }: {
-    s?: string
-    m?: string
-    l?: string
-    sC?: string
-    mC?: string
-    lC?: string
+    sm?: string
+    md?: string
+    lg?: string
+    smC?: string
+    mdC?: string
+    lgC?: string
   }): ComputedRef<string> => {
     return computed(() => {
       const { isCompact, componentSize } = panelSettingsStore.settings
 
       const classesMapping: Record<string, Record<ComponentSizeEnum, string>> = {
         true: {
-          [ComponentSizeEnum.LARGE]: lC,
-          [ComponentSizeEnum.MIDDLE]: mC,
-          [ComponentSizeEnum.SMALL]: sC,
+          [ComponentSizeEnum.LARGE]: lgC,
+          [ComponentSizeEnum.MIDDLE]: mdC,
+          [ComponentSizeEnum.SMALL]: smC,
         },
         false: {
-          [ComponentSizeEnum.LARGE]: l,
-          [ComponentSizeEnum.MIDDLE]: m,
-          [ComponentSizeEnum.SMALL]: s,
+          [ComponentSizeEnum.LARGE]: lg,
+          [ComponentSizeEnum.MIDDLE]: md,
+          [ComponentSizeEnum.SMALL]: sm,
         },
       }
 
-      return classesMapping[isCompact ? 'true' : 'false'][componentSize] || m
+      return classesMapping[isCompact ? 'true' : 'false'][componentSize] || md
     })
   }
 
