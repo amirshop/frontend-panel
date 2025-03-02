@@ -1,8 +1,21 @@
 <template>
-  <Drawer :title="t('panelSetting')" :placement="placement" :closable="false">
+  <Drawer :title="t('panelSetting')" :placement="placement" :closable="true">
     <Form layout="vertical" class="flex flex-col h-full">
       <FormItem :label="t('colorMode')">
-        <RadioGroupImage v-model:value="panelSettingsStore.settings.isDark" :items="items" />
+        <RadioGroupImage
+          :imageClass="
+            getClass({
+              smC: 'w-9 h-9',
+              sm: 'w-10 h-10',
+              mdC: 'w-11 h-11',
+              md: 'w-12 h-12',
+              lgC: 'w-13 h-13',
+              lg: 'w-14 h-14',
+            }).value
+          "
+          v-model:value="panelSettingsStore.settings.isDark"
+          :items="items"
+        />
       </FormItem>
 
       <FormItem :label="t('themeColor')">
@@ -68,11 +81,6 @@
       <FormItem :label="t('compactMode')" name="isCompact">
         <Switch v-model:checked="panelSettingsStore.settings.isCompact" />
       </FormItem>
-
-      <Divider />
-      <div class="flex gap-x-4">
-        <Button type="primary" @click="emits('save', false)"> {{ t('save') }} </Button>
-      </div>
     </Form>
   </Drawer>
 </template>
@@ -96,14 +104,17 @@ import { DirectionEnum, ComponentSizeEnum, LanguageEnum, FontFamilyEnum } from '
 import RadioGroupColor from '@/core/components/RadioGroupColor.vue'
 import RadioGroupImage from '@/core/components/RadioGroupImage.vue'
 import { useI18n } from 'vue-i18n'
-import darkModePicture from "@/assets/images/dark-mode.svg";
-import lightModePicture from "@/assets/images/light-mode.svg";
+import darkModePicture from '@/assets/images/dark-mode.svg'
+import lightModePicture from '@/assets/images/light-mode.svg'
+import { useComputedClass } from '../composable/computedClass.composable'
 const panelSettingsStore = usePanelSettingsStore()
 const { t } = useI18n()
 
 const placement = computed(() => {
   return panelSettingsStore.settings.direction === DirectionEnum.LTR ? 'right' : 'left'
 })
+const { getClass } = useComputedClass()
+
 const emits = defineEmits(['save'])
 const colorList = reactive([
   {
