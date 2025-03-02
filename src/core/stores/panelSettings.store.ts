@@ -24,8 +24,9 @@ export const usePanelSettingsStore = defineStore('Panel setting', () => {
     fontFamily: FontFamilyEnum.ENGLISH,
     colorPrimary: '#2893ff',
     isDark: false,
-    isCompact: false,
+    isCompact: false as boolean,
   })
+
   const appRef = ref()
   const fullscreen = useFullscreen(appRef.value)
   const locale = ref(LocaleMapping[settings.value.language])
@@ -73,23 +74,23 @@ export const usePanelSettingsStore = defineStore('Panel setting', () => {
     }
   }
   const { width } = useWindowSize()
-const breakpoint = computed(() => {
-  if (width.value < 480) {
-    return 'xs'
-  } else if (width.value >= 480 && width.value < 576) {
-    return 'sm'
-  } else if (width.value >= 576 && width.value < 768) {
-    return 'md'
-  } else if (width.value >= 768 && width.value < 992) {
-    return 'lg'
-  } else if (width.value >= 992 && width.value < 1200) {
-    return 'xl'
-  } else if (width.value >= 1200 && width.value < 1600) {
-    return 'xxl'
-  } else {
-    return 'xxxl'
-  }
-})
+  const breakpoint = computed(() => {
+    if (width.value < 480) {
+      return 'xs'
+    } else if (width.value >= 480 && width.value < 576) {
+      return 'sm'
+    } else if (width.value >= 576 && width.value < 768) {
+      return 'md'
+    } else if (width.value >= 768 && width.value < 992) {
+      return 'lg'
+    } else if (width.value >= 992 && width.value < 1200) {
+      return 'xl'
+    } else if (width.value >= 1200 && width.value < 1600) {
+      return 'xxl'
+    } else {
+      return 'xxxl'
+    }
+  })
 
   return {
     settings,
