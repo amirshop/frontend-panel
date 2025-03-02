@@ -18,12 +18,12 @@
             <Icon
               :class="
                 getClass({
-                  sC: 'text-4',
-                  s: 'text-4',
-                  mC: 'text-4',
-                  m: 'text-6',
-                  lC: 'text-6',
-                  l: 'text-8',
+                  smC: 'text-4',
+                  sm: 'text-4',
+                  mdC: 'text-4',
+                  md: 'text-6',
+                  lgC: 'text-6',
+                  lg: 'text-8',
                 }).value
               "
               icon="vscode-icons:file-type-json"
@@ -34,12 +34,12 @@
           <Icon
             :class="
               getClass({
-                sC: 'text-4',
-                s: 'text-4',
-                mC: 'text-4',
-                m: 'text-6',
-                lC: 'text-6',
-                l: 'text-8',
+                smC: 'text-4',
+                sm: 'text-4',
+                mdC: 'text-4',
+                md: 'text-6',
+                lgC: 'text-6',
+                lg: 'text-8',
               }).value
             "
             icon="vscode-icons:file-type-xml"
@@ -49,12 +49,12 @@
           <Icon
             :class="
               getClass({
-                sC: 'text-4',
-                s: 'text-4',
-                mC: 'text-4',
-                m: 'text-6',
-                lC: 'text-6',
-                l: 'text-8',
+                smC: 'text-4',
+                sm: 'text-4',
+                mdC: 'text-4',
+                md: 'text-6',
+                lgC: 'text-6',
+                lg: 'text-8',
               }).value
             "
             icon="vscode-icons:file-type-image"
@@ -64,12 +64,12 @@
           <Icon
             :class="
               getClass({
-                sC: 'text-4',
-                s: 'text-4',
-                mC: 'text-4',
-                m: 'text-6',
-                lC: 'text-6',
-                l: 'text-8',
+                smC: 'text-4',
+                sm: 'text-4',
+                mdC: 'text-4',
+                md: 'text-6',
+                lgC: 'text-6',
+                lg: 'text-8',
               }).value
             "
             icon="vscode-icons:file-type-excel"
