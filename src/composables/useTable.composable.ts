@@ -21,12 +21,15 @@ export const useTable = <T>({
     current: 1,
     total: 0,
   })
+  const order = ref({})
+  const filters = ref<Record<string, any>>({})
 
   const fetchData = async () => {
     const { data } = await axios.post(apiUrl, {
       page: pagination.value.current ?? 1,
       size: pagination.value.pageSize ?? 10,
-      
+      order: order.value,
+      filters: filters.value,
     })
     pagination.value.total = data.total ?? 0
     return data.res ?? []
@@ -35,13 +38,25 @@ export const useTable = <T>({
   const { data: dataSource, loading, runAsync } = usePagination<T[]>(fetchData, { manual: true })
 
   const onChange: TableProps<T>['onChange'] = async (
-    paginationConfig: TablePaginationConfig,
-    filters: Record<string, FilterValue | null>,
-    sorter: SorterResult<DefaultRecordType> | SorterResult<DefaultRecordType>[],
-    extra: TableCurrentDataSource<DefaultRecordType>,
+    newPagination: TablePaginationConfig,
+    newFilters: Record<string, FilterValue | null>,
+    newSorter: SorterResult<DefaultRecordType> | SorterResult<DefaultRecordType>[],
+    newExtra: TableCurrentDataSource<DefaultRecordType>,
   ) => {
-    console.log('Table change params:', { paginationConfig, filters, sorter, extra })
-    pagination.value = { ...pagination.value, ...paginationConfig }
+    console.log('Table change params:', { newPagination, newFilters, newSorter, newExtra })
+    pagination.value = { ...pagination.value, ...newPagination }
+
+    const key = newSorter.field
+    const value = newSorter.order == 'ascend' ? 'ASC' : 'DESC'
+    if (newSorter.field) {
+      order.value = {
+        [key]: value,
+      }
+    }
+    filters.value = Object.fromEntries(
+      Object.entries(newFilters).map(([key, val]) => [key, val ? val[0] : null]),
+    )
+
     await runAsync()
   }
 
