@@ -2,15 +2,27 @@
   <RadioGroup class="radio-group-color" @change="(e) => emits('update:modelValue', e.target.value)">
     <Tooltip :title="color.label" v-for="color in props.colorList" :key="color.value">
       <Radio :value="color.value">
-        <div class="w-8 h-8 rounded" :class="color.class" />
+        <div
+          class="rounded"
+          :class="[
+            color.class,
+            getClass({
+              smC: 'w-5 h-5',
+              sm: 'w-6 h-6',
+              mdC: 'w-6 h-6',
+              md: 'w-7 h-7',
+              lgC: 'w-7 h-7',
+              lg: 'w-8 h-8',
+            }).value,
+          ]"
+        />
       </Radio>
     </Tooltip>
   </RadioGroup>
 </template>
 <script setup lang="ts">
-import { useCssVar } from '@vueuse/core'
-import { Radio, RadioGroup, Tooltip } from 'ant-design-vue/es'
-
+import { Radio, RadioGroup, Tooltip, theme } from 'ant-design-vue/es'
+import { useComputedClass } from '../composable/computedClass.composable'
 interface ColorItem {
   label: string
   value: string
@@ -25,6 +37,8 @@ const props = withDefaults(defineProps<Props>(), {
   colorList: () => [],
   selectedColor: 'red',
 })
+const { token } = theme.useToken()
+const { getClass } = useComputedClass()
 const emits = defineEmits(['update:modelValue'])
 </script>
 <style lang="less">
