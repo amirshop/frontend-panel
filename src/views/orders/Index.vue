@@ -74,26 +74,26 @@ const columns: TableColumnType<Product>[] = [
     title: t('عنوان'),
     dataIndex: 'title',
     key: 'title',
-    filterDropdown: tableFiltersDropdown.StringFilterDropdown('title'),
+    filterDropdown: tableFiltersDropdown.StringFilterDropdown('عنوان'),
   },
   {
     title: 'قیمت',
     dataIndex: 'price',
     key: 'price',
     sorter: true,
-    filterDropdown: tableFiltersDropdown.NumberFilterDropdown('price'),
+    filterDropdown: tableFiltersDropdown.NumberFilterDropdown('قیمت'),
   },
   {
-    title: 'isActive',
+    title: 'فعال',
     dataIndex: 'isActive',
     key: 'isActive',
-    filterDropdown: tableFiltersDropdown.BooleanFilterDropdown('isActive'),
+    filterDropdown: tableFiltersDropdown.BooleanFilterDropdown('فعال'),
   },
   {
-    title: 'توضیحات',
+    title: 'تاریخ',
     dataIndex: 'date',
     key: 'date',
-    filterDropdown: tableFiltersDropdown.DateFilterDropdown('date'),
+    filterDropdown: tableFiltersDropdown.DateFilterDropdown('تاریخ'),
 
   },
 ]
@@ -136,6 +136,7 @@ onMounted(async () => {
 <style lang="less">
 .ant-card-extra {
   display: flex;
+  align-items: center;
   gap: 0.4rem;
 }
 </style>

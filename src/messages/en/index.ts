@@ -43,6 +43,7 @@ export default {
   option: 'Option',
   options: 'Options',
   order: 'Order',
+  advanceFilter: 'Advance filter',
   orders: 'Orders',
   panelSetting: 'Panel setting',
   permission: 'Permission',

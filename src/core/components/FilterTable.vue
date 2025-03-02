@@ -1,7 +1,7 @@
 <template>
   <Badge color="red" count="9" status="success" size="small">
     <AzButton type="link" icon="tabler:filter" @click="filterModal.open">
-      <div class="hidden md:block">{{ t('filters') }}</div>
+      <div class="hidden md:block">{{ t('advanceFilter') }}</div>
     </AzButton>
   </Badge>
 

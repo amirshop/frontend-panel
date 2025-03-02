@@ -28,6 +28,7 @@ export default {
   filter: 'فیلتر',
   footer: 'فوتر',
   fullScreen: 'تمام صفحه',
+  advanceFilter: 'فیلتر پیشرفته',
   general: 'عمومی',
   header: 'هدر',
   language: 'زبان',
