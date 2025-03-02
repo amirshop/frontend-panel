@@ -42,6 +42,7 @@ import {
   Input,
   Button,
   InputNumber,
+  Select,
 } from 'ant-design-vue'
 import { useTable } from '@/composables/useTable.composable'
 import { h, onMounted, ref } from 'vue'
@@ -50,9 +51,10 @@ import { useI18n } from 'vue-i18n'
 import ExportData from '@/core/components/ExportData.vue'
 import FilterTable from '@/core/components/FilterTable.vue'
 import { TableFilterDataTypeEnum } from '@/core/enums'
-import { Icon } from '@iconify/vue'
+import { stringFIlters } from '@/core/constant'
+import type { SelectValue } from 'ant-design-vue/es/select'
+import { useTableFiltersDropdown } from '@/core/composable/tableFiltersDropdown.composable'
 const { t } = useI18n()
-
 type Product = {
   id: number
   title: string
@@ -60,72 +62,39 @@ type Product = {
   isActive: boolean
   createdAt: Date
 }
+
+const tableFiltersDropdown = useTableFiltersDropdown()
 const columns: TableColumnType<Product>[] = [
   {
     title: 'ID',
     dataIndex: 'id',
     key: 'id',
-    sorter: true,
-    filterDropdown: () => {
-      return h(Card, {}, [
-        h(Form, { layout: 'vertical' }, [
-          h(FormItem, { label: 'id' }, [h(Input, { allowClear: true })]),
-          h(Button, { type: 'primary', block: true }, 'فیلتر'),
-        ]),
-      ])
-    },
   },
   {
-    title: 'عنوان',
+    title: t('عنوان'),
     dataIndex: 'title',
     key: 'title',
-    filterDropdown: () => {
-      return h(Card, {}, [
-        h(Form, { layout: 'vertical' }, [
-          h(FormItem, { label: 'id' }, [h(Input, { allowClear: true })]),
-          h(Button, { type: 'primary', block: true }, 'فیلتر'),
-        ]),
-      ])
-    },
+    filterDropdown: tableFiltersDropdown.StringFilterDropdown('title'),
   },
   {
     title: 'قیمت',
     dataIndex: 'price',
     key: 'price',
-    filterDropdown: () => {
-      return h(Card, {}, [
-        h(Form, { layout: 'vertical' }, [
-          h(FormItem, { label: 'id' }, [h(InputNumber, { allowClear: true })]),
-          h(Button, { type: 'primary', block: true }, 'فیلتر'),
-        ]),
-      ])
-    },
+    sorter: true,
+    filterDropdown: tableFiltersDropdown.NumberFilterDropdown('price'),
   },
   {
-    title: 'دسته‌بندی',
-    dataIndex: 'category',
-    key: 'category',
-    filterDropdown: () => {
-      return h(Card, {}, [
-        h(Form, { layout: 'vertical' }, [
-          h(FormItem, { label: 'id' }, [h(InputNumber, { allowClear: true })]),
-          h(Button, { type: 'primary', block: true }, 'فیلتر'),
-        ]),
-      ])
-    },
+    title: 'isActive',
+    dataIndex: 'isActive',
+    key: 'isActive',
+    filterDropdown: tableFiltersDropdown.BooleanFilterDropdown('isActive'),
   },
   {
     title: 'توضیحات',
-    dataIndex: 'description',
-    key: 'description',
-    filterDropdown: () => {
-      return h(Card, {}, [
-        h(Form, { layout: 'vertical' }, [
-          h(FormItem, { label: 'id' }, [h(InputNumber, { allowClear: true })]),
-          h(Button, { type: 'primary', block: true }, 'فیلتر'),
-        ]),
-      ])
-    },
+    dataIndex: 'date',
+    key: 'date',
+    filterDropdown: tableFiltersDropdown.DateFilterDropdown('date'),
+
   },
 ]
 const filterList = ref([
