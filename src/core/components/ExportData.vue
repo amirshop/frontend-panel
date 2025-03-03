@@ -92,7 +92,7 @@ const { t } = useI18n()
 const { getClass } = useComputedClass()
 
 interface Props {
-  data: unknown[]
+  data: unknown
 }
 const props = withDefaults(defineProps<Props>(), {})
 </script>
