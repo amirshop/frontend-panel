@@ -24,6 +24,7 @@ import AzButton from '../components/AzButton.vue'
 import type { FilterDropdownProps } from 'ant-design-vue/es/table/interface'
 import type { OrderTest } from '@/types/order/order.model'
 import type { SelectValue } from 'ant-design-vue/es/select'
+import type { ChangeEvent, MouseEventHandler } from 'ant-design-vue/es/_util/EventInterface'
 
 export const useTableFiltersDropdown = () => {
   const { t } = useI18n()
@@ -38,7 +39,7 @@ export const useTableFiltersDropdown = () => {
     const filter = ref({
       felid: props.column.key,
       operator: stringFIlters[0].value,
-      criteria: 0,
+      criteria: '',
     })
     return h(Card, { title, size: 'small' }, () => [
       h(Form, { layout: 'vertical', size: 'small' }, () => [
@@ -59,11 +60,29 @@ export const useTableFiltersDropdown = () => {
             label: t('filterValue'),
             size: 'small',
           },
-          () => h(Input, { size: 'small' }),
+          () =>
+            h(Input, {
+              size: 'small',
+              onInput: (e: ChangeEvent) => {
+                filter.value.criteria = e.target.value
+              },
+            }),
         ),
         h('div', { class: 'flex gap-x-4' }, [
-          h(AzButton, { type: 'primary', block: true, size: 'small', icon: 'tabler:search' }, () =>
-            t('filter'),
+          h(
+            AzButton,
+            {
+              type: 'primary',
+              block: true,
+              size: 'small',
+              icon: 'tabler:search',
+              onClick: () => {
+                props.setSelectedKeys([{ filter: filter.value }])
+                console.log('🚀 ~ useTableFiltersDropdown ~ 1:', 1)
+                props.confirm()
+              },
+            },
+            () => t('filter'),
           ),
           h(AzButton, { type: 'default', block: true }, () => t('clear')),
         ]),
@@ -152,9 +171,19 @@ export const useTableFiltersDropdown = () => {
           }),
         ),
 
-        h('div', { class: 'flex gap-x-4' }, [
-          h(AzButton, { type: 'primary', block: true, size: 'small', icon: 'tabler:search' }, () =>
-            t('filter'),
+        h('div', { class: 'flex gap-x-4' }, () => [
+          h(
+            AzButton,
+            {
+              type: 'primary',
+              block: true,
+              size: 'small',
+              icon: 'tabler:search',
+              onClick: () => {
+                props.confirm()
+              },
+            },
+            () => t('filter'),
           ),
           h(AzButton, { type: 'default', block: true }, () => t('clear')),
         ]),

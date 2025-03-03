@@ -53,9 +53,11 @@ export const useTable = <T>({
         [key]: value,
       }
     }
-    filters.value = Object.fromEntries(
-      Object.entries(newFilters).map(([key, val]) => [key, val ? val[0] : null]),
-    )
+    filters.value = Object.entries(newFilters).map(([key, val]) => ({
+      felid: key,
+      operator: val ? 'equals' : 'notEquals', // مثال از نوع اپراتور
+      criteria: val ? val[0] : null,
+    }))
 
     await runAsync()
   }

@@ -70,6 +70,7 @@ const columns: TableColumnType<OrderTest>[] = [
     title: t('title'),
     dataIndex: 'title',
     key: 'title',
+    responsive: ['md'],
     filterDropdown: (props) =>
       useTableFiltersDropdown().StringFilterDropdown({
         title: t('title'),
@@ -80,10 +81,6 @@ const columns: TableColumnType<OrderTest>[] = [
     title: 'قیمت',
     dataIndex: 'price',
     key: 'price',
-    // filterIcon: ({ column, filtered }) => {
-    //   const isFilter = column.dataIndex === 'price' && filtered ? true : false
-    //   return h(Badge, { size: 'small', dot: isFilter }, [h(Icon, { icon: 'tabler:filter' })])
-    // },
     filterDropdown: (props) =>
       useTableFiltersDropdown().NumberFilterDropdown({
         title: t('price'),
