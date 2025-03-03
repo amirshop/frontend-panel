@@ -56,49 +56,76 @@ import { stringFIlters } from '@/core/constant'
 import type { SelectValue } from 'ant-design-vue/es/select'
 import { useTableFiltersDropdown } from '@/core/components/tableFiltersDropdown.component'
 import { Icon } from '@iconify/vue/dist/iconify.js'
+import type { OrderTest } from '@/types/order/order.model'
 const { t } = useI18n()
-type Product = {
-  id: number
-  title: string
-  price: number
-  isActive: boolean
-  createdAt: Date
-}
 
 const tableFiltersDropdown = useTableFiltersDropdown()
-const columns: TableColumnType<Product>[] = [
+const columns: TableColumnType<OrderTest>[] = [
   {
     title: 'ID',
     dataIndex: 'id',
     key: 'id',
   },
   {
-    title: t('عنوان'),
+    title: t('title'),
     dataIndex: 'title',
     key: 'title',
-    filterDropdown: (props) => useTableFiltersDropdown().StringFilterDropdown(t('عنوان'), props),
+    filterDropdown: (props) =>
+      useTableFiltersDropdown().StringFilterDropdown({
+        title: t('title'),
+        props,
+      }),
   },
   {
     title: 'قیمت',
     dataIndex: 'price',
     key: 'price',
-    filterIcon: ({ column, filtered }) => {
-      const isFilter = column.dataIndex === 'price' && filtered ? true : false
-      return h(Badge, { size: 'small', dot: isFilter }, [h(Icon, { icon: 'tabler:filter' })])
-    },
-    filterDropdown: (props) => useTableFiltersDropdown().NumberFilterDropdown(t('قیمت'), props),
+    // filterIcon: ({ column, filtered }) => {
+    //   const isFilter = column.dataIndex === 'price' && filtered ? true : false
+    //   return h(Badge, { size: 'small', dot: isFilter }, [h(Icon, { icon: 'tabler:filter' })])
+    // },
+    filterDropdown: (props) =>
+      useTableFiltersDropdown().NumberFilterDropdown({
+        title: t('price'),
+        props,
+      }),
   },
   {
     title: 'فعال',
     dataIndex: 'isActive',
     key: 'isActive',
-    filterDropdown: (props) => useTableFiltersDropdown().BooleanFilterDropdown(t('قیمت'), props),
+    filterDropdown: (props) =>
+      useTableFiltersDropdown().BooleanFilterDropdown({
+        title: t('isActive'),
+        props,
+      }),
   },
   {
     title: 'تاریخ',
     dataIndex: 'createdAt',
     key: 'createdAt',
-    filterDropdown: (props) => useTableFiltersDropdown().DateFilterDropdown(t('تاریخ'), props),
+    filterDropdown: (props) =>
+      useTableFiltersDropdown().SelectFilterDropdown({
+        title: t('createdAt'),
+        props,
+        list: [
+          { label: 'show', value: 1 },
+          { label: 'Book', value: 2 },
+          { label: 'Home', value: 3 },
+          { label: 'Car', value: 4 },
+          { label: 'Bike', value: 5 },
+        ],
+      }),
+  },
+  {
+    title: 'تاریخ',
+    dataIndex: 'createdAt',
+    key: 'createdAt',
+    filterDropdown: (props) =>
+      useTableFiltersDropdown().DateFilterDropdown({
+        title: t('isActive'),
+        props,
+      }),
   },
 ]
 const filterList = ref([
