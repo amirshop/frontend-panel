@@ -43,6 +43,7 @@ import {
   Button,
   InputNumber,
   Select,
+  Badge,
 } from 'ant-design-vue'
 import { useTable } from '@/composables/useTable.composable'
 import { h, onMounted, ref } from 'vue'
@@ -53,7 +54,8 @@ import FilterTable from '@/core/components/FilterTable.vue'
 import { TableFilterDataTypeEnum } from '@/core/enums'
 import { stringFIlters } from '@/core/constant'
 import type { SelectValue } from 'ant-design-vue/es/select'
-import { useTableFiltersDropdown } from '@/core/composable/tableFiltersDropdown.composable'
+import { useTableFiltersDropdown } from '@/core/components/tableFiltersDropdown.component'
+import { Icon } from '@iconify/vue/dist/iconify.js'
 const { t } = useI18n()
 type Product = {
   id: number
@@ -74,27 +76,29 @@ const columns: TableColumnType<Product>[] = [
     title: t('عنوان'),
     dataIndex: 'title',
     key: 'title',
-    filterDropdown: tableFiltersDropdown.StringFilterDropdown('عنوان'),
+    filterDropdown: (props) => useTableFiltersDropdown().StringFilterDropdown(t('عنوان'), props),
   },
   {
     title: 'قیمت',
     dataIndex: 'price',
     key: 'price',
-    sorter: true,
-    filterDropdown: tableFiltersDropdown.NumberFilterDropdown('قیمت'),
+    filterIcon: ({ column, filtered }) => {
+      const isFilter = column.dataIndex === 'price' && filtered ? true : false
+      return h(Badge, { size: 'small', dot: isFilter }, [h(Icon, { icon: 'tabler:filter' })])
+    },
+    filterDropdown: (props) => useTableFiltersDropdown().NumberFilterDropdown(t('قیمت'), props),
   },
   {
     title: 'فعال',
     dataIndex: 'isActive',
     key: 'isActive',
-    filterDropdown: tableFiltersDropdown.BooleanFilterDropdown('فعال'),
+    filterDropdown: (props) => useTableFiltersDropdown().BooleanFilterDropdown(t('قیمت'), props),
   },
   {
     title: 'تاریخ',
-    dataIndex: 'date',
-    key: 'date',
-    filterDropdown: tableFiltersDropdown.DateFilterDropdown('تاریخ'),
-
+    dataIndex: 'createdAt',
+    key: 'createdAt',
+    filterDropdown: (props) => useTableFiltersDropdown().DateFilterDropdown(t('تاریخ'), props),
   },
 ]
 const filterList = ref([
