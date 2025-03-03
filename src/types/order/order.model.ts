@@ -15,3 +15,11 @@ export interface OrderModel {
   createdAt: Date
   updatedAt: Date
 }
+
+export type OrderTest = {
+  id: string
+  title: string
+  price: number
+  isActive: boolean
+  createdAt: Date
+}
