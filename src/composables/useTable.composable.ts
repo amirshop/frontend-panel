@@ -32,7 +32,7 @@ export const useTable = <T>({
       filters: filters.value,
     })
     pagination.value.total = data.total ?? 0
-    return data.res ?? []
+    return data.data ?? []
   }
 
   const { data: dataSource, loading, runAsync } = usePagination<T[]>(fetchData, { manual: true })
