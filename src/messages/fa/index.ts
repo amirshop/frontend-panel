@@ -100,5 +100,9 @@ export default {
   user: 'کاربر',
   users: 'کاربران',
   IS_TRUE: 'روشن',
-  IS_FALSE: 'خاموش'
+  price: 'قیمت',
+  siteDescription: 'توضیحات سایت',
+  filterList: 'لیست فیلتر‌ها',
+  title: 'عنوان',
+  IS_FALSE: 'خاموش',
 }
