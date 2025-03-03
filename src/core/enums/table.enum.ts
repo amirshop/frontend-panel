@@ -32,13 +32,14 @@ export const enum TableFilterOperatorStringEnum {
   // فیلتر متنی (STRING)
   CONTAINS = 'LIKE', // SQL: x LIKE '%value%'
   NOT_CONTAINS = 'NOT LIKE', // SQL: x NOT LIKE '%value%'
-  STARTS_WITH = 'LIKE', // SQL: x LIKE 'value%'
-  ENDS_WITH = 'LIKE', // SQL: x LIKE '%value'
+  STARTS_WITH = 'LIKE_START', // SQL: x LIKE 'value%'
+  ENDS_WITH = 'LIKE_END', // SQL: x LIKE '%value'
   EQUALS_TEXT = '=', // SQL: x = 'value'
   NOT_EQUALS_TEXT = '!=', // SQL: x != 'value'
   IS_BLANK = 'IS NULL', // SQL: x IS NULL
   IS_NOT_BLANK = 'IS NOT NULL', // SQL: x IS NOT NULL
 }
+
 export const enum TableFilterOperatorDateEnum {
   // فیلتر تاریخی (DATE)
   DATE_BEFORE = '<', // SQL: x < 'date'
