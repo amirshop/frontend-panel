@@ -103,7 +103,6 @@ export default {
   tag: 'Tag',
   tags: 'Tags',
   themeColor: 'Theme color',
-  title: 'Title',
   user: 'User',
   users: 'Users',
 }

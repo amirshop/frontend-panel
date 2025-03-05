@@ -64,7 +64,7 @@ export const useTableFiltersDropdown = () => {
             h(Input, {
               size: 'small',
               onInput: (e: ChangeEvent) => {
-                filter.value.criteria = e.target.value
+                filter.value.criteria = e.target.value ?? ''
               },
             }),
         ),
@@ -77,14 +77,35 @@ export const useTableFiltersDropdown = () => {
               size: 'small',
               icon: 'tabler:search',
               onClick: () => {
-                props.setSelectedKeys([{ filter: filter.value }])
-                console.log('🚀 ~ useTableFiltersDropdown ~ 1:', 1)
+                // props.setSelectedKeys([''])
+                props.filters = {
+                  text: filter.value.operator,
+                  value: filter.value.criteria,
+                }
+                console.log(props)
+
                 props.confirm()
               },
             },
             () => t('filter'),
           ),
-          h(AzButton, { type: 'default', block: true }, () => t('clear')),
+          h(
+            AzButton,
+            {
+              type: 'default',
+              block: true,
+              onClick: () => {
+                console.log('clear')
+                filter.value = {
+                  felid: props.column.key,
+                  operator: stringFIlters[0].value,
+                  criteria: '',
+                }
+                props.clearFilters?.()
+              },
+            },
+            () => t('clear'),
+          ),
         ]),
       ]),
     ])

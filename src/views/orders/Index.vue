@@ -72,7 +72,7 @@ const columns: TableColumnType<OrderTest>[] = [
     key: 'title',
     responsive: ['md'],
     filterDropdown: (props) =>
-      useTableFiltersDropdown().StringFilterDropdown({
+      tableFiltersDropdown.StringFilterDropdown({
         title: t('title'),
         props,
       }),
@@ -82,7 +82,7 @@ const columns: TableColumnType<OrderTest>[] = [
     dataIndex: 'price',
     key: 'price',
     filterDropdown: (props) =>
-      useTableFiltersDropdown().NumberFilterDropdown({
+      tableFiltersDropdown.NumberFilterDropdown({
         title: t('price'),
         props,
       }),
@@ -92,7 +92,7 @@ const columns: TableColumnType<OrderTest>[] = [
     dataIndex: 'isActive',
     key: 'isActive',
     filterDropdown: (props) =>
-      useTableFiltersDropdown().BooleanFilterDropdown({
+      tableFiltersDropdown.BooleanFilterDropdown({
         title: t('isActive'),
         props,
       }),
@@ -102,7 +102,7 @@ const columns: TableColumnType<OrderTest>[] = [
     dataIndex: 'createdAt',
     key: 'createdAt',
     filterDropdown: (props) =>
-      useTableFiltersDropdown().SelectFilterDropdown({
+      tableFiltersDropdown.SelectFilterDropdown({
         title: t('createdAt'),
         props,
         list: [
@@ -119,7 +119,7 @@ const columns: TableColumnType<OrderTest>[] = [
     dataIndex: 'createdAt',
     key: 'createdAt',
     filterDropdown: (props) =>
-      useTableFiltersDropdown().DateFilterDropdown({
+      tableFiltersDropdown.DateFilterDropdown({
         title: t('isActive'),
         props,
       }),
@@ -128,7 +128,7 @@ const columns: TableColumnType<OrderTest>[] = [
 const filterList = ref([
   {
     key: 'title',
-    dateType: TableFilterDataTypeEnum.STRING,
+    // dateType: TableFilterDataTypeEnum.STRING,
   },
 
   {

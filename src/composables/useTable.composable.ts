@@ -45,6 +45,7 @@ export const useTable = <T>({
   ) => {
     console.log('Table change params:', { newPagination, newFilters, newSorter, newExtra })
     pagination.value = { ...pagination.value, ...newPagination }
+    console.log(newFilters)
 
     const key = newSorter.field
     const value = newSorter.order == 'ascend' ? 'ASC' : 'DESC'

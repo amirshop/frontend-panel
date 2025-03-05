@@ -22,7 +22,9 @@
                   </SelectOption>
                 </Select>
               </FormItem>
-              <FormItem label="مقدار فیلتر" class="w-40"> <Input v-model:value="item.value" /></FormItem>
+              <FormItem label="مقدار فیلتر" class="w-40">
+                <Input v-model:value="item.value"
+              /></FormItem>
             </template>
 
             <template v-if="item.dateType === TableFilterDataTypeEnum.NUMBER">
@@ -101,16 +103,25 @@ import { useModal } from '../composable'
 import {
   TableFilterDataTypeEnum,
   TableFilterOperatorBooleanEnum,
+  TableFilterOperatorDateEnum,
   TableFilterOperatorNumberEnum,
+  TableFilterOperatorSelectEnum,
+  TableFilterOperatorStringEnum,
 } from '@/core/enums'
 import { booleanFIlters, dateFIlters, numberFIlters, stringFIlters } from '@/core/constant'
 
 const { t } = useI18n()
 
 interface Filter {
-  key: string
+  felid: ColumnSharedType<T>
   dateType: TableFilterDataTypeEnum
-  value: string
+  operator:
+    | TableFilterOperatorSelectEnum
+    | TableFilterOperatorBooleanEnum
+    | TableFilterOperatorNumberEnum
+    | TableFilterOperatorStringEnum
+    | TableFilterOperatorDateEnum
+  criteria: ''
 }
 interface Props {
   filterList: Filter[]

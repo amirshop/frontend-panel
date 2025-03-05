@@ -2,6 +2,11 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export default [
   {
+    path: 'test',
+    name: 'TheTest',
+    component: () => import('@/views/orders/Test.vue'),
+  },
+  {
     path: '',
     name: 'TheDashboard',
     component: () => import('@/views/dashboard/Index.vue'),
@@ -54,7 +59,7 @@ export default [
         path: 'reviews',
         name: 'TheReviews',
         component: () => import('@/views/products/reviews/Index.vue'),
-      }
+      },
     ],
   },
   {
