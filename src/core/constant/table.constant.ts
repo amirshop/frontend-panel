@@ -6,7 +6,7 @@ import {
   TableFilterOperatorStringEnum,
 } from '../enums'
 
-export const booleanFIlters = [
+export const booleanFilters = [
   {
     label: 'IS_TRUE',
     value: TableFilterOperatorBooleanEnum.IS_TRUE,
@@ -16,7 +16,7 @@ export const booleanFIlters = [
     value: TableFilterOperatorBooleanEnum.IS_FALSE,
   },
 ]
-export const numberFIlters = [
+export const numberFilters = [
   {
     label: 'LESS_THAN',
     value: TableFilterOperatorNumberEnum.LESS_THAN,
@@ -59,7 +59,7 @@ export const numberFIlters = [
   },
 ]
 
-export const dateFIlters = [
+export const dateFilters = [
   {
     label: 'DATE_BEFORE',
     value: TableFilterOperatorDateEnum.DATE_BEFORE,
@@ -82,7 +82,7 @@ export const dateFIlters = [
   },
 ]
 
-export const stringFIlters = [
+export const stringFilters = [
   {
     label: 'CONTAINS',
     value: TableFilterOperatorStringEnum.CONTAINS,
@@ -116,7 +116,7 @@ export const stringFIlters = [
     value: TableFilterOperatorStringEnum.IS_NOT_BLANK,
   },
 ]
-export const multiSelectFIlters = [
+export const multiSelectFilters = [
   {
     label: 'EQUALS_TEXT',
     value: TableFilterOperatorSelectEnum.EQUALS_TEXT,

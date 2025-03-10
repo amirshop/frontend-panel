@@ -2,25 +2,21 @@
   <div class="table-container">
     <Table
       :columns="columns"
-      :data-source="amirTable.dataSource.value"
-      :loading="amirTable.loading.value"
-      :pagination="amirTable.pagination.value"
+      :data-source="amirTable.tableData.value"
+      :loading="amirTable.isLoading.value"
+      :pagination="amirTable.paginationConfig.value"
       @change="amirTable.handleTableChange"
       bordered
       size="middle"
-    >
-    </Table>
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import _ from 'lodash'
 import type { TableColumnType } from 'ant-design-vue'
-
-import { Table, Badge } from 'ant-design-vue'
-import { useAmirTable } from '@/composables/useAmirTable'
+import { Table } from 'ant-design-vue'
+import { useAntdAdvancedTable } from '@/composables/useAntdAdvancedTable'
 import { onMounted } from 'vue'
-import { useAmirFilter } from '@/composables/useAmirFilter'
 
 // Types
 interface Order {
@@ -30,9 +26,9 @@ interface Order {
   isActive: boolean
   createdAt: string
 }
-const amirTable = useAmirTable<Order>()
-const amirFilter = useAmirFilter()
-// Table Columns
+
+const amirTable = useAntdAdvancedTable<Order>()
+
 const columns: TableColumnType<Order>[] = [
   {
     title: 'ID',
@@ -40,34 +36,32 @@ const columns: TableColumnType<Order>[] = [
     key: 'id',
     sorter: true,
     width: 100,
+    filterDropdown: (props) => amirTable.renderNumberFilter({ title: 'ID', props }),
   },
   {
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
-    filterDropdown: (props) =>
-      amirFilter.stringFilter<Order>({
-        title: 'title',
-        props: props,
-        onFilter: async () => {
-          amirTable.filters.value = amirFilter.filter.value
-          await amirTable.fetchData()
-        },
-      }),
+    filterDropdown: (props) => amirTable.renderStringFilter({ title: 'Title', props }),
   },
   {
     title: 'Price',
     dataIndex: 'price',
     key: 'price',
-    filterDropdown: (props) =>
-      amirFilter.stringFilter<Order>({
-        title: 'title',
-        props: props,
-        onFilter: async () => {
-          amirTable.filters.value = amirFilter.filter.value
-          await amirTable.fetchData()
-        },
-      }),
+    sorter: true,
+    filterDropdown: (props) => amirTable.renderNumberFilter({ title: 'Price', props }),
+  },
+  {
+    title: 'Active',
+    dataIndex: 'isActive',
+    key: 'isActive',
+    filterDropdown: (props) => amirTable.renderBooleanFilter({ title: 'Active', props }),
+  },
+  {
+    title: 'Created At',
+    dataIndex: 'createdAt',
+    key: 'createdAt',
+    filterDropdown: (props) => amirTable.renderDateFilter({ title: 'Created At', props }),
   },
 ]
 
