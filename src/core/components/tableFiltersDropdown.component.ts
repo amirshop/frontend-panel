@@ -1,107 +1,103 @@
 import { h, ref } from 'vue'
 import {
-  TableFilterDataTypeEnum,
-  TableFilterOperatorBooleanEnum,
-  TableFilterOperatorNumberEnum,
-  TableFilterOperatorStringEnum,
-} from '../enums'
-import {
-  Button,
-  Card,
-  DatePicker,
   Form,
   FormItem,
+  Select,
   Input,
   InputNumber,
+  DatePicker,
   RadioGroup,
-  Select,
+  Button,
   type RadioChangeEvent,
+  Card,
 } from 'ant-design-vue/es'
-import { booleanFIlters, dateFIlters, numberFIlters, stringFIlters } from '../constant'
-import { useI18n } from 'vue-i18n'
-import { Icon } from '@iconify/vue'
-import AzButton from '../components/AzButton.vue'
 import type { FilterDropdownProps } from 'ant-design-vue/es/table/interface'
-import type { OrderTest } from '@/types/order/order.model'
+import { stringFIlters, numberFIlters, dateFIlters, booleanFIlters } from '../constant' // فرض می‌کنم این ثابت‌ها رو دارید
+import {
+  TableFilterOperatorStringEnum,
+  TableFilterOperatorNumberEnum,
+  TableFilterOperatorBooleanEnum,
+} from '../enums'
+import { useI18n } from 'vue-i18n'
 import type { SelectValue } from 'ant-design-vue/es/select'
-import type { ChangeEvent, MouseEventHandler } from 'ant-design-vue/es/_util/EventInterface'
 
-export const useTableFiltersDropdown = () => {
+// تعریف نوع برای فیلترها
+interface FilterState {
+  field: string
+  operator:
+    | TableFilterOperatorStringEnum
+    | TableFilterOperatorNumberEnum
+    | TableFilterOperatorBooleanEnum
+    | string
+  criteria: string | number | boolean | SelectValue | null
+}
+
+// شیء مرکزی برای ذخیره فیلترها با کلید ستون
+const filters = ref<Record<string, FilterState>>({})
+
+export const useFilter = () => {
   const { t } = useI18n()
 
-  const StringFilterDropdown = ({
-    title,
-    props,
-  }: {
-    title: string
-    props: FilterDropdownProps<OrderTest>
-  }) => {
-    const filter = ref({
-      felid: props.column.key,
-      operator: stringFIlters[0].value,
-      criteria: '',
-    })
-    return h(Card, { title, size: 'small' }, () => [
-      h(Form, { layout: 'vertical', size: 'small' }, () => [
-        h(FormItem, { label: t('filterType'), size: 'small' }, () =>
+  // تابع کمکی برای مقداردهی اولیه فیلتر
+  const initializeFilter = (key: string, defaultOperator: string) => {
+    if (!filters.value[key]) {
+      filters.value[key] = {
+        field: key,
+        operator: defaultOperator,
+        criteria: '',
+      }
+    }
+  }
+
+  // فیلتر رشته‌ای
+  const StringFilterDropdown = <T>({ props }: { props: FilterDropdownProps<T> }) => {
+    const key = props.column.key as string
+    initializeFilter(key, stringFIlters[0].value)
+
+    return h(Card, [
+      h(Form, { layout: 'vertical' }, () => [
+        h(
+          FormItem,
           h(Select, {
-            class: 'w-full',
-            size: 'small',
-            onChange: (e) => {
-              filter.value.operator = e as TableFilterOperatorStringEnum
+            value: filters.value[key].operator,
+            onChange: (value) => {
+              filters.value[key].operator = value as TableFilterOperatorStringEnum
             },
-            value: filter.value.operator,
             options: stringFIlters.map(({ label, value }) => ({ label: t(label), value })),
           }),
         ),
         h(
           FormItem,
-          {
-            label: t('filterValue'),
-            size: 'small',
-          },
-          () =>
-            h(Input, {
-              size: 'small',
-              onInput: (e: ChangeEvent) => {
-                filter.value.criteria = e.target.value ?? ''
-              },
-            }),
+          h(Input, {
+            value: filters.value[key].criteria,
+            onInput: (e) => {
+              filters.value[key].criteria = e.target.value ?? ''
+            },
+          }),
         ),
         h('div', { class: 'flex gap-x-4' }, [
           h(
-            AzButton,
+            Button,
             {
               type: 'primary',
-              block: true,
-              size: 'small',
-              icon: 'tabler:search',
               onClick: () => {
-                // props.setSelectedKeys([''])
-                props.filters = {
-                  text: filter.value.operator,
-                  value: filter.value.criteria,
-                }
-                console.log(props)
-
+                console.log('String Filter:', filters.value[key])
                 props.confirm()
               },
             },
             () => t('filter'),
           ),
           h(
-            AzButton,
+            Button,
             {
-              type: 'default',
-              block: true,
               onClick: () => {
-                console.log('clear')
-                filter.value = {
-                  felid: props.column.key,
+                filters.value[key] = {
+                  field: key,
                   operator: stringFIlters[0].value,
                   criteria: '',
                 }
                 props.clearFilters?.()
+                props.confirm()
               },
             },
             () => t('clear'),
@@ -111,205 +107,233 @@ export const useTableFiltersDropdown = () => {
     ])
   }
 
-  const NumberFilterDropdown = ({
-    title,
-    props,
-  }: {
-    title: string
-    props: FilterDropdownProps<OrderTest>
-  }) => {
-    const filter = ref({
-      felid: props.column.key,
-      operator: numberFIlters[4].value,
-      criteria: 0,
-    })
-    return h(Card, { title, size: 'small' }, () => [
-      h(Form, { layout: 'vertical', size: 'small' }, () => [
-        h(FormItem, { label: t('filterType'), size: 'small' }, () =>
-          h(Select, {
-            class: 'w-full',
-            size: 'small',
-            onChange: (e) => {
-              filter.value.operator = e as TableFilterOperatorNumberEnum
-            },
-            value: filter.value.operator,
-            options: numberFIlters.map(({ label, value }) => ({
-              label: t(label),
-              value,
-            })),
-          }),
-        ),
-        h(FormItem, { size: 'small', label: t('filterValue') }, () =>
-          h(InputNumber, {
-            class: 'w-full',
-            size: 'small',
-            value: filter.value.criteria,
-            onInput: (text: string) => {
-              filter.value.criteria = Number(text)
-            },
-          }),
-        ),
-        h('div', { class: 'flex gap-x-4' }, [
-          h(
-            AzButton,
-            {
-              type: 'primary',
-              block: true,
-              size: 'small',
-              icon: 'tabler:search',
-              onClick: () => {
-                props.confirm()
-              },
-            },
-            () => t('filter'),
-          ),
-          h(AzButton, { type: 'default', block: true }, () => t('clear')),
-        ]),
-      ]),
-    ])
-  }
-  const BooleanFilterDropdown = ({
-    title,
-    props,
-  }: {
-    title: string
-    props: FilterDropdownProps<OrderTest>
-  }) => {
-    const filter = ref({
-      felid: props.column.key,
-      operator: TableFilterOperatorBooleanEnum.IS_FALSE,
-    })
-    return h(Card, { title, size: 'small' }, () =>
-      h(Form, { layout: 'vertical', size: 'small' }, [
-        h(FormItem, { label: t('filterType'), size: 'small' }, () =>
-          h(RadioGroup, {
-            value: filter.value.operator,
-            onChange: (e: RadioChangeEvent) => {
-              filter.value.operator = e.target.value
-            },
-            options: booleanFIlters.map(({ label, value }) => ({ label: t(label), value })),
-            size: 'small',
-          }),
-        ),
+  // فیلتر عددی
+  const NumberFilterDropdown = <T>({ props }: { props: FilterDropdownProps<T> }) => {
+    const key = props.column.key as string
+    initializeFilter(key, numberFIlters[0].value)
 
-        h('div', { class: 'flex gap-x-4' }, () => [
-          h(
-            AzButton,
-            {
-              type: 'primary',
-              block: true,
-              size: 'small',
-              icon: 'tabler:search',
-              onClick: () => {
-                props.confirm()
-              },
-            },
-            () => t('filter'),
-          ),
-          h(AzButton, { type: 'default', block: true }, () => t('clear')),
-        ]),
-      ]),
-    )
-  }
-
-  const SelectFilterDropdown = ({
-    title,
-    props,
-    list,
-  }: {
-    title: string
-    props: FilterDropdownProps<OrderTest>
-    list: Array<{ label: string; value: string | number }>
-  }) => {
-    const { confirm, clearFilters } = props
-
-    const filter = ref({
-      felid: props.column.key,
-      criteria: [],
-    })
-
-    return h(Card, { title, size: 'small' }, () =>
-      h(Form, { layout: 'vertical', size: 'small' }, () => [
-        h(FormItem, { label: t('filterList'), size: 'small' }, () =>
-          h(Select, {
-            value: filter.value.criteria,
-            onChange: (value: SelectValue) => {
-              console.log('🚀 ~ Selected Filter:', value)
-              console.log('🚀 ~ useTableFiltersDropdown ~ filter.value:', filter.value)
-              filter.value.criteria = value
-              console.log('🚀 ~ useTableFiltersDropdown ~ filter.value:', filter.value)
-            },
-            class: 'w-full',
-            size: 'small',
-            mode: 'tags',
-            options: list.map(({ label, value }) => ({ label: t(label), value })),
-          }),
-        ),
-
-        h('div', { class: 'flex gap-x-4' }, [
-          h(
-            AzButton,
-            {
-              type: 'primary',
-              block: true,
-              size: 'small',
-              icon: 'tabler:search',
-              onClick: () => confirm(),
-            },
-            () => t('filter'),
-          ),
-          h(
-            AzButton,
-            {
-              type: 'default',
-              block: true,
-              onClick: () => {
-                filter.value.criteria = null
-                clearFilters?.()
-                confirm()
-              },
-            },
-            () => t('clear'),
-          ),
-        ]),
-      ]),
-    )
-  }
-
-  const DateFilterDropdown = ({
-    title,
-    props,
-  }: {
-    title: string
-    props: FilterDropdownProps<OrderTest>
-  }) => {
-    return h(Card, { title, size: 'small' }, [
-      h(Form, { layout: 'vertical', size: 'small' }, [
-        h(FormItem, { label: t('filterType'), size: 'small' }, [
-          h(Select, {
-            class: 'w-full',
-            size: 'small',
-            options: dateFIlters.map(({ label, value }) => ({ label: t(label), value })),
-          }),
-        ]),
+    return h('div', [
+      h(Form, { layout: 'vertical' }, () => [
         h(
           FormItem,
-          {
-            label: t('filterValue'),
-            size: 'small',
-          },
-          [h(DatePicker, { size: 'small' })],
+          h(Select, {
+            value: filters.value[key].operator,
+            onChange: (value) => {
+              filters.value[key].operator = value as TableFilterOperatorNumberEnum
+            },
+            options: numberFIlters.map(({ label, value }) => ({ label: t(label), value })),
+          }),
+        ),
+        h(
+          FormItem,
+          h(InputNumber, {
+            value: filters.value[key].criteria,
+            onInput: (value: number) => {
+              filters.value[key].criteria = value
+            },
+          }),
         ),
         h('div', { class: 'flex gap-x-4' }, [
-          h(AzButton, { type: 'primary', block: true, size: 'small', icon: 'tabler:search' }, [
-            t('filter'),
-          ]),
-          h(AzButton, { type: 'default', block: true }, [t('clear')]),
+          h(
+            Button,
+            {
+              type: 'primary',
+              onClick: () => {
+                console.log('Number Filter:', filters.value[key])
+                props.confirm()
+              },
+            },
+            () => t('filter'),
+          ),
+          h(
+            Button,
+            {
+              onClick: () => {
+                filters.value[key] = {
+                  field: key,
+                  operator: numberFIlters[0].value,
+                  criteria: 0,
+                }
+                props.clearFilters?.()
+                props.confirm()
+              },
+            },
+            () => t('clear'),
+          ),
         ]),
       ]),
     ])
   }
+
+  // فیلتر تاریخ
+  const DateFilterDropdown = <T>({ props }: { props: FilterDropdownProps<T> }) => {
+    const key = props.column.key as string
+    initializeFilter(key, dateFIlters[0].value)
+
+    return h('div', [
+      h(Form, { layout: 'vertical' }, () => [
+        h(
+          FormItem,
+          h(Select, {
+            value: filters.value[key].operator,
+            onChange: (value) => {
+              filters.value[key].operator = value as string
+            },
+            options: dateFIlters.map(({ label, value }) => ({ label: t(label), value })),
+          }),
+        ),
+        h(
+          FormItem,
+          h(DatePicker, {
+            value: filters.value[key].criteria,
+            onChange: (date: any) => {
+              filters.value[key].criteria = date
+            },
+          }),
+        ),
+        h('div', { class: 'flex gap-x-4' }, [
+          h(
+            Button,
+            {
+              type: 'primary',
+              onClick: () => {
+                console.log('Date Filter:', filters.value[key])
+                props.confirm()
+              },
+            },
+            () => t('filter'),
+          ),
+          h(
+            Button,
+            {
+              onClick: () => {
+                filters.value[key] = {
+                  field: key,
+                  operator: dateFIlters[0].value,
+                  criteria: null,
+                }
+                props.clearFilters?.()
+                props.confirm()
+              },
+            },
+            () => t('clear'),
+          ),
+        ]),
+      ]),
+    ])
+  }
+
+  // فیلتر بولین
+  const BooleanFilterDropdown = <T>({ props }: { props: FilterDropdownProps<T> }) => {
+    const key = props.column.key as string
+    initializeFilter(key, booleanFIlters[0].value)
+
+    return h('div', [
+      h(Form, { layout: 'vertical' }, () => [
+        h(
+          FormItem,
+          h(RadioGroup, {
+            value: filters.value[key].operator,
+            onChange: (e: RadioChangeEvent) => {
+              filters.value[key].operator = e.target.value as TableFilterOperatorBooleanEnum
+              filters.value[key].criteria = e.target.value === booleanFIlters[0].value // IS_TRUE = true, IS_FALSE = false
+            },
+            options: booleanFIlters.map(({ label, value }) => ({ label: t(label), value })),
+          }),
+        ),
+        h('div', { class: 'flex gap-x-4' }, [
+          h(
+            Button,
+            {
+              type: 'primary',
+              onClick: () => {
+                console.log('Boolean Filter:', filters.value[key])
+                props.confirm()
+              },
+            },
+            () => t('filter'),
+          ),
+          h(
+            Button,
+            {
+              onClick: () => {
+                filters.value[key] = {
+                  field: key,
+                  operator: booleanFIlters[0].value,
+                  criteria: false,
+                }
+                props.clearFilters?.()
+                props.confirm()
+              },
+            },
+            () => t('clear'),
+          ),
+        ]),
+      ]),
+    ])
+  }
+
+  // فیلتر انتخابی (Select)
+  const SelectFilterDropdown = <T>({
+    props,
+    options,
+  }: {
+    props: FilterDropdownProps<T>
+    options: Array<{ label: string; value: string | number }>
+  }) => {
+    const key = props.column.key as string
+    initializeFilter(key, 'IN')
+    if (!Array.isArray(filters.value[key].criteria)) {
+      filters.value[key].criteria = []
+    }
+
+    return h('div', [
+      h(Form, { layout: 'vertical' }, () => [
+        h(
+          FormItem,
+          h(Select, {
+            value: filters.value[key].criteria,
+            onChange: (value: SelectValue) => {
+              filters.value[key].criteria = value
+            },
+            mode: 'multiple',
+            options: options.map(({ label, value }) => ({ label: t(label), value })),
+          }),
+        ),
+        h('div', { class: 'flex gap-x-4' }, [
+          h(
+            Button,
+            {
+              type: 'primary',
+              onClick: () => {
+                console.log('Select Filter:', filters.value[key])
+                props.confirm()
+              },
+            },
+            () => t('filter'),
+          ),
+          h(
+            Button,
+            {
+              onClick: () => {
+                filters.value[key] = {
+                  field: key,
+                  operator: 'IN',
+                  criteria: [],
+                }
+                props.clearFilters?.()
+                props.confirm()
+              },
+            },
+            () => t('clear'),
+          ),
+        ]),
+      ]),
+    ])
+  }
+
   return {
+    filters,
     StringFilterDropdown,
     NumberFilterDropdown,
     DateFilterDropdown,

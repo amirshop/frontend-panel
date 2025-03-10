@@ -2,6 +2,11 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export default [
   {
+    path: 'amir',
+    name: 'TheAmir',
+    component: () => import('@/views/dashboard/Amir.vue'),
+  },
+  {
     path: 'test',
     name: 'TheTest',
     component: () => import('@/views/orders/Test.vue'),
