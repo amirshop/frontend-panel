@@ -46,6 +46,8 @@ export const useShopSettingQuery = () => {
     onError: (error) => {
       console.error('Error updating shop setting:', error)
     },
+  
+    
   })
 
   // Delete shop setting

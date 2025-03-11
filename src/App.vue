@@ -1,11 +1,14 @@
 <template>
   <AppLayout />
+    <VueQueryDevtools />
+
 </template>
 <script setup lang="ts">
 import AppLayout from '@/core/layouts/AppLayout.vue'
 // import { useHead } from '@vueuse/head'
 import { useI18n } from 'vue-i18n'
 import { computed, onMounted } from 'vue'
+import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 
 // const { t } = useI18n()
 
