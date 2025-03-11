@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import MyTable from '@/core/components/MyTable.vue'
+import MyTable from '@/temp/MyTable.vue'
 import type { ColumnsType } from 'ant-design-vue/es/table'
 import { reactive, ref } from 'vue'
 

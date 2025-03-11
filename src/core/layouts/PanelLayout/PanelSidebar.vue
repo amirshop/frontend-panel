@@ -38,6 +38,7 @@ import { useMenus } from '@/menus'
 import { AzButton } from '@/core/components'
 
 const menus = useMenus()
+
 import { useWindowSize } from '@vueuse/core'
 import { usePanelSettingsStore } from '@/core/stores/panelSettings.store'
 

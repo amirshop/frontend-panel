@@ -1,74 +1,41 @@
-import type { TableColumnType, TablePaginationConfig, TableProps } from 'ant-design-vue'
-import { computed, ref, watch } from 'vue'
-import axios from 'axios'
+import type { TablePaginationConfig, TableProps } from 'ant-design-vue'
+import { computed, ref } from 'vue'
 import { usePagination } from 'vue-request'
+import axios from 'axios'
 import type {
+  ColumnsType,
   FilterValue,
   SorterResult,
   TableCurrentDataSource,
 } from 'ant-design-vue/es/table/interface'
-import type { DefaultRecordType } from 'ant-design-vue/es/vc-table/interface'
 
-export const useTable = <T>({
-  apiUrl,
-  columns,
-}: {
-  apiUrl: string
-  columns: TableColumnType<T>[]
-}) => {
-  const pagination = ref<TablePaginationConfig>({
-    pageSize: 10,
-    current: 1,
-    total: 0,
-  })
-  const order = ref({})
-  const filters = ref<Record<string, any>>({})
+export const useTable = <T, D>() => {
+  const columns = ref<ColumnsType<T>>([])
+  const dataSource = ref<Array<unknown>>([])
+  const pagination = ref<TablePaginationConfig>({})
+  const loading = ref<boolean>(false)
+  const sticky = ref<boolean>(false)
+  const sort = ref()
 
-  const fetchData = async () => {
-    const { data } = await axios.post(apiUrl, {
-      page: pagination.value.current ?? 1,
-      size: pagination.value.pageSize ?? 10,
-      order: order.value,
-      filters: filters.value,
-    })
-    pagination.value.total = data.total ?? 0
-    return data.data ?? []
+  const fetchData = (params?: T) => {
+    return axios.get<T>('https://randomuser.me/api?noinfo', { params })
   }
 
-  const { data: dataSource, loading, runAsync } = usePagination<T[]>(fetchData, { manual: true })
-
-  const onChange: TableProps<T>['onChange'] = async (
+  const handleTableChange: TableProps['onChange'] = async (
     newPagination: TablePaginationConfig,
     newFilters: Record<string, FilterValue | null>,
-    newSorter: SorterResult<DefaultRecordType> | SorterResult<DefaultRecordType>[],
-    newExtra: TableCurrentDataSource<DefaultRecordType>,
+    newSorter: SorterResult<T> | SorterResult<T>[],
+    newExtra: TableCurrentDataSource<T>,
   ) => {
-    console.log('Table change params:', { newPagination, newFilters, newSorter, newExtra })
-    pagination.value = { ...pagination.value, ...newPagination }
-    console.log(newFilters)
-
-    const key = newSorter.field
-    const value = newSorter.order == 'ascend' ? 'ASC' : 'DESC'
-    if (newSorter.field) {
-      order.value = {
-        [key]: value,
-      }
-    }
-    filters.value = Object.entries(newFilters).map(([key, val]) => ({
-      felid: key,
-      operator: val ? 'equals' : 'notEquals', // مثال از نوع اپراتور
-      criteria: val ? val[0] : null,
-    }))
-
-    await runAsync()
+    await fetchData()
   }
 
   return {
     columns,
+    sticky,
     dataSource,
-    pagination: computed(() => pagination.value),
+    pagination,
     loading,
-    onChange,
-    runAsync,
+    handleTableChange,
   }
 }

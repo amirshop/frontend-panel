@@ -1,12 +1,26 @@
-import type { AuthDTO } from '@/core/types/auth.model'
-import { useHttp } from '@/core/composable/http.composable'
+import type { IAuth } from '@/core/interfaces/auth.interface'
+import { useHttp } from '@/core/services/http.composable'
 
 export const useAuthService = () => {
-  const login = useHttp<AuthDTO.Login.Request, AuthDTO.Login.Response>({
-    method: 'POST',
-    url: '/auth/signin',
-    immediate: false,
-  })
+  const login = async () => {
+    return await useHttp<IAuth.Login.Request, IAuth.Login.Response>({
+      method: 'POST',
+      url: 'auth/login',
+    })
+  }
+  const register = async (body: IAuth.Login.Request) => {
+    return await useHttp<IAuth.Register.Request, IAuth.Register.Response>({
+      method: 'POST',
+      url: 'auth/register',
+      body,
+    })
+  }
+  const verify = async () => {
+    return await useHttp<IAuth.Login.Request, IAuth.Login.Response>({
+      method: 'GET',
+      url: 'auth/verify',
+    })
+  }
 
-  return { login }
+  return { login, register, verify }
 }

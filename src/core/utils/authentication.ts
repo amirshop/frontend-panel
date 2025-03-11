@@ -1,7 +1,7 @@
 import { useLocalStorage } from '@vueuse/core'
-import type { AuthDTO } from '@/core/types/auth.model'
+import type { IAuth } from '@/core/interfaces/auth.interface'
 export const isAuthenticated = () => {
-  const storage = useLocalStorage('User', {} as AuthDTO.User)
+  const storage = useLocalStorage('User', {} as IAuth.User)
   const token = storage.value.accessToken
   if (!token) return false
 

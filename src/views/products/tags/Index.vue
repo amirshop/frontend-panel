@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import MyTable from '@/core/components/MyTable.vue'
+import MyTable from '@/temp/MyTable.vue'
 import { useTable } from '@/core/composable'
-import { useHttp } from '@/core/composable/http.composable'
+import { useHttp } from '@/temp/http.composable.ts'
 import type { ColumnsType } from 'ant-design-vue/es/table'
 import { onMounted, reactive, ref } from 'vue'
 

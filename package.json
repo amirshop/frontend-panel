@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@surely-vue/table": "^4.3.17",
+    "@tanstack/vue-query": "^5.67.2",
     "@vueuse/core": "^12.6.1",
     "@vueuse/head": "^2.0.0",
     "@zoomit/dayjs-jalali-plugin": "^0.0.7",

@@ -3,7 +3,7 @@ import { message } from 'ant-design-vue'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 import { join } from 'lodash'
 import { computed, type Ref } from 'vue'
-import type { AuthDTO } from '../types/auth.model'
+import type { IAuth } from '../interfaces/auth.interface'
 
 interface ConfigModel {
   url: string
@@ -31,7 +31,7 @@ class AxiosService {
       timeout: 5000,
     })
     this.auth = computed(() => {
-      const storage = useLocalStorage('User', {} as AuthDTO.User)
+      const storage = useLocalStorage('User', {} as IAuth.User)
       return storage.value.tokenType + ' ' + storage.value.accessToken
     })
     this.setupInterceptors()
@@ -109,6 +109,6 @@ class AxiosService {
 
 const axiosService = new AxiosService()
 
-function useAxios() {
+export function useAxios() {
   return axiosService
 }

@@ -7,11 +7,6 @@ export const useMenus = () => {
   const { t } = useI18n()
   const menuItems = computed<ItemType[]>(() => [
     {
-      key: 'TheAmir',
-      label: t('amir'),
-      icon: () => h(Icon, { icon: 'tabler:layout-dashboard', height: 18 }),
-    },
-    {
       key: 'TheTest',
       label: t('test'),
       icon: () => h(Icon, { icon: 'tabler:layout-dashboard', height: 18 }),

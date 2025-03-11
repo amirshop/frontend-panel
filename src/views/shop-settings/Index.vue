@@ -50,12 +50,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Button, Card, Form, FormItem, Divider, Input } from 'ant-design-vue/es'
 import { useI18n } from 'vue-i18n'
 import { useShopSettingsStore } from '@/stores/shopSettings.store'
+import { useShopSettingQuery } from '@/queries/useShopSetting.query'
 import PictureCropper from '@/core/components/PictureCropper.vue'
 const shopSettingsStore = useShopSettingsStore()
+
+const shopSettingsQuery = useShopSettingQuery()
+onMounted(async () => {
+  try {
+    await shopSettingsQuery.getSetting('1')
+  } catch (error) {}
+})
+
 const { t } = useI18n()
 
 const handleCrop = (result: string) => {

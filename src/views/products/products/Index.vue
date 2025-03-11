@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import MyTable from '@/core/components/MyTable.vue'
-import { useHttp } from '@/core/composable/http.composable'
+import MyTable from '@/temp/MyTable.vue'
+import { useHttp } from '@/temp/http.composable.ts'
 import { useFetch } from '@vueuse/core'
 import type { ColumnsType } from 'ant-design-vue/es/table'
 import axios from 'axios'

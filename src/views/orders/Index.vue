@@ -45,18 +45,18 @@ import {
   Select,
   Badge,
 } from 'ant-design-vue'
-import { useTable } from '@/composables/useTable.composable'
+import { useTable } from '@/temp/useTable.composable'
 import { h, onMounted, ref } from 'vue'
 import { AzButton } from '@/core/components'
 import { useI18n } from 'vue-i18n'
-import ExportData from '@/core/components/ExportData.vue'
-import FilterTable from '@/core/components/FilterTable.vue'
+import ExportData from '@/temp/ExportData.vue'
+import FilterTable from '@/temp/FilterTable.vue'
 import { TableFilterDataTypeEnum } from '@/core/enums'
 import { stringFIlters } from '@/core/constant'
 import type { SelectValue } from 'ant-design-vue/es/select'
-import { useTableFiltersDropdown } from '@/core/components/tableFiltersDropdown.component'
+import { useTableFiltersDropdown } from '@/temp/tableFiltersDropdown.component'
 import { Icon } from '@iconify/vue/dist/iconify.js'
-import type { OrderTest } from '@/types/order/order.model'
+import type { OrderTest } from '@/types/order/order.interface'
 const { t } = useI18n()
 
 const tableFiltersDropdown = useTableFiltersDropdown()
